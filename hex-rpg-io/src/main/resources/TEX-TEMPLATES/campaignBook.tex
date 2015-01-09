@@ -1,0 +1,118 @@
+\documentclass[pdftex,a4paper]{book}
+
+%Package-import
+\usepackage{multicol,color,titlesec,marginnote,framed}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx}
+%\usepackage{showframe} %For layout-debugging
+
+%Colors
+\definecolor{referee-light}{HTML}{EEEEEE}
+\definecolor{referee-dark}{HTML}{443355}
+
+%New commands
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\RefereeOnly}[1]{\color{referee-dark}\textit{{#1}}}
+\newcommand{\RefereeNotes}[1]{\marginnote{\RefereeOnly{{#1}}}[0.5cm]}
+\newcommand{\RefereeInfo}[1]{
+    ~\\
+    \noindent
+    \fcolorbox{referee-dark}{referee-light}{
+        \parbox[b][][t]{0.98\textwidth}{
+            \RefereeOnly{\textsc{Referee Only}\\{#1}}
+        }
+    }
+}
+
+%Style-rules
+\marginparsep = 0.5cm
+\titlespacing*{\chapter}{60pt}{170pt}{48pt}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{5pt}{\Huge}
+
+\begin{document}
+\frontmatter
+
+%title
+\begin{titlepage}
+\begin{center}
+
+\includegraphics[width=0.15\textwidth]{./images/Call_of_Cthulhu_Logo}~\\[1.5cm]
+% HEX Campaign Type-Label:
+\textsc{\LARGE Cthulhu by Gaslight}\\[1.5cm]
+
+% HEX Campaign super-type
+\textsc{\large A Call of Cthulhu Campaign}\\[0.5cm]
+
+% HEX Campaign Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Wetherington Park \\[0.4cm] }
+\HRule
+
+\vfill
+%Pagefooter
+{\large \today} \\[1cm]
+\textsc{© 2015 -- Hex Publishing}
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter*{Introduction}
+\markboth{\MakeUppercase{Introduction}}{}
+\addcontentsline{toc}{chapter}{Introduction}
+% HEX Campaign shortDescription
+A campaign set in the victorian era, centered around Wetherington Park, a remote old estate in central Lincolnshire.
+\begin{description}
+  % HEX Story title and Story shortDescription
+  \item[The Beginning] This campaign starts in the autumn of 1893. The investigators are called in to help solve a brutal murder in a Lincolnshire village, which leads them further in to the dark world of The Mythos.
+  \item[The Lindow Murder] A murder most foul has occured in Lindow, and the investigators are called for help by an old friend, Milton Comley, who is now the local curate.
+\end{description}
+
+\mainmatter
+\cleardoublepage
+% HEX Story
+% HEX Story title
+\part{The Lindow Murder}
+% HEX Story refereeInfo
+\RefereeNotes{The murder will soon be followed by one or more, depending on how quickly the investigators solves the mystery.}
+% HEX Story description
+A letter arrives from an old friend, Milton Comley, who asks for help. There has been a murder in the village he is currently working in, and he fears it is too much for both him and the local constable.
+
+Mr Comley is currently employed as a curate in Lindow, a small village in Lincolnshire. He has been employed there for the last three years and considered it to be the ideal work for him. That is, until the murder took place.
+
+Going by train to Boston they are met by an old man driving a stage coach. He takes them through the countryside to the village Lindow, some miles to the north of the town and the journey ends at the Vickarage, next to the small anglo-saxon church.
+
+% HEX Episode
+% HEX Episode title
+\chapter{At the Vickarage}
+% HEX Episode refereeInfo
+\RefereeNotes{Anteckningar om den här episoden}
+% HEX Episode description
+A letter arrives from an old friend, Milton Comley, who asks for help. There has been a murder in the village he is currently working in, and he fears it is too much for both him and the local constable.
+
+Mr Comley is currently employed as a curate in Lindow, a small village in Lincolnshire. He has been employed there for the last three years and considered it to be the ideal work for him. That is, until the murder took place.
+
+Going by train to Boston they are met by an old man driving a stage coach. He takes them through the countryside to the village Lindow, some miles to the north of the town and the journey ends at the Vickarage, next to the small anglo-saxon church.
+
+A letter arrives from an old friend, Milton Comley, who asks for help. There has been a murder in the village he is currently working in, and he fears it is too much for both him and the local constable.
+
+Mr Comley is currently employed as a curate in Lindow, a small village in Lincolnshire. He has been employed there for the last three years and considered it to be the ideal work for him. That is, until the murder took place.
+
+Going by train to Boston they are met by an old man driving a stage coach. He takes them through the countryside to the village Lindow, some miles to the north of the town and the journey ends at the Vickarage, next to the small anglo-saxon church.
+
+A letter arrives from an old friend, Milton Comley, who asks for help. There has been a murder in the village he is currently working in, and he fears it is too much for both him and the local constable.
+
+Mr Comley is currently employed as a curate in Lindow, a small village in Lincolnshire. He has been employed there for the last three years and considered it to be the ideal work for him. That is, until the murder took place.
+
+Going by train to Boston they are met by an old man driving a stage coach. He takes them through the countryside to the village Lindow, some miles to the north of the town and the journey ends at the Vickarage, next to the small anglo-saxon church.
+
+
+\RefereeInfo{Info om den här episoden. Info om den här episoden. Info om den här episoden. Info om den här episoden. Info om den här episoden. Info om den här episoden. }
+
+\backmatter
+\chapter{Concluding Words}
+That is the end of the World News, Good Night!
+
+\end{document}
