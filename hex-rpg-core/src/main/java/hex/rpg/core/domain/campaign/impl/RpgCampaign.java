@@ -164,4 +164,9 @@ public class RpgCampaign implements Campaign {
         }
         this.supplements.add(supplement);
     }
+
+    @Override
+    public boolean hasSupplements() {
+        return !getSupplements().isEmpty();
+    }
 }

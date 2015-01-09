@@ -135,6 +135,11 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     }
 
     @Override
+    public byte[] getContentAsByteArray() {
+        return content;
+    }
+
+    @Override
     public void setContent(byte[] content) {
         this.content = content;
     }
@@ -162,5 +167,10 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     @Override
     public void setCampaign(Campaign campaign) {
         this.campaign = campaign;
+    }
+
+    @Override
+    public boolean hasSupplements() {
+        return false;
     }
 }

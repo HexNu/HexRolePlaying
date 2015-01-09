@@ -135,6 +135,11 @@ public class RpgStorySupplement implements StorySupplement {
     }
 
     @Override
+    public byte[] getContentAsByteArray() {
+        return content;
+    }
+
+    @Override
     public void setContent(byte[] content) {
         this.content = content;
     }
@@ -162,5 +167,10 @@ public class RpgStorySupplement implements StorySupplement {
     @Override
     public void setStory(Story story) {
         this.story = story;
+    }
+
+    @Override
+    public boolean hasSupplements() {
+        return false;
     }
 }

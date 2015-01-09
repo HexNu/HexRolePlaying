@@ -135,6 +135,11 @@ public class RpgEpisodeSupplement implements EpisodeSupplement {
     }
 
     @Override
+    public byte[] getContentAsByteArray() {
+        return content;
+    }
+
+    @Override
     public void setContent(byte[] content) {
         this.content = content;
     }
@@ -162,5 +167,10 @@ public class RpgEpisodeSupplement implements EpisodeSupplement {
     @Override
     public void setEpisode(Episode episode) {
         this.episode = episode;
+    }
+
+    @Override
+    public boolean hasSupplements() {
+        return false;
     }
 }

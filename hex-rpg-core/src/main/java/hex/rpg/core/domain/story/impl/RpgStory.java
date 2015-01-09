@@ -176,6 +176,11 @@ public class RpgStory implements Story {
     }
 
     @Override
+    public boolean hasSupplements() {
+        return !getSupplements().isEmpty();
+    }
+
+    @Override
     public int compareTo(Object obj) {
         if (obj instanceof Story) {
             return this.getIndex() - ((Story) obj).getIndex();

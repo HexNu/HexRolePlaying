@@ -153,6 +153,11 @@ public class RpgEpisode implements Episode {
     }
 
     @Override
+    public boolean hasSupplements() {
+        return !getSupplements().isEmpty();
+    }
+
+    @Override
     public int compareTo(Object obj) {
         if (obj instanceof Episode) {
             return this.getIndex() - ((Episode) obj).getIndex();

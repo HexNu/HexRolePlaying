@@ -16,6 +16,10 @@ public interface NarrativeEntity extends DomainEntity {
 
     void setRefereeInfo(String refereeInfo);
 
+    String getRefereeNotes();
+
+    void setRefereeNotes(String refereeNotes);
+
     String getShortDescription();
 
     void setShortDescription(String shortDescription);
@@ -23,12 +27,10 @@ public interface NarrativeEntity extends DomainEntity {
     String getDescription();
 
     void setDescription(String description);
-    
-    String getRefereeNotes();
-    
-    void setRefereeNotes(String refereeNotes);
 
     List<Supplement> getSupplements();
 
     void addSupplement(Supplement supplement);
+
+    boolean hasSupplements();
 }

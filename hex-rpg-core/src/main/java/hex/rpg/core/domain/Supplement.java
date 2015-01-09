@@ -7,7 +7,7 @@ import java.io.InputStream;
  * @author hln
  */
 public interface Supplement extends NarrativeEntity {
-    
+
     public static final Type DEFAULT_CAMPAIGN_TYPE = Type.ILLUSTRATION,
             DEFAULT_STORY_TYPE = Type.MAP,
             DEFAULT_EPISODE_TYPE = Type.HANDOUT;
@@ -21,6 +21,8 @@ public interface Supplement extends NarrativeEntity {
     void setType(Type type);
 
     InputStream getContent();
+
+    byte[] getContentAsByteArray();
 
     void setContent(byte[] content);
 
