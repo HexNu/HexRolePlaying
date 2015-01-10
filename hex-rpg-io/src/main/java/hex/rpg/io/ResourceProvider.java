@@ -12,7 +12,7 @@ import javax.xml.transform.stream.StreamSource;
 public enum ResourceProvider {
 
     CAMPAIGN_BOOK_XSL("xsl/campaign-book.xsl"),
-    CALL_OF_CTHULHU_LOGO("xsl/images/Call_of_Cthulhu_Logo.png");
+    CALL_OF_CTHULHU_LOGO("images/logos/Call_of_Cthulhu_Logo.png");
     private final String path;
 
     private ResourceProvider(String path) {

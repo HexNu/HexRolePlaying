@@ -93,7 +93,7 @@ public class CreateZippedTexStream {
         try {
             byte[] resource = ResourceProvider.getLogoByName(campaign.getType().getLabel()).getResourceAsByteArray();
             if (resource != null) {
-                ZipEntry zipEntry = new ZipEntry("images/" + campaign.getType().getLabel().replaceAll(" ", "_") + "_Logo.png");
+                ZipEntry zipEntry = new ZipEntry("Images/" + campaign.getType().getLabel().replaceAll(" ", "_") + "_Logo.png");
                 out.putNextEntry(zipEntry);
                 out.write(resource);
                 out.closeEntry();

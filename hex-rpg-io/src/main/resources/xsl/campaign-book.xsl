@@ -51,7 +51,7 @@
         <xsl:text>%Title Page&#10;</xsl:text>
         <xsl:text>\begin{titlepage}&#10;</xsl:text>
         <xsl:text>\begin{center}&#10;</xsl:text>
-        <xsl:text>\includegraphics[width=0.15\textwidth]{./images/</xsl:text>
+        <xsl:text>\includegraphics[width=0.15\textwidth]{Images/</xsl:text>
         <xsl:value-of select="translate(campaign/campaign-type/@type,' ','_')"/>
         <xsl:text>_Logo}~\\[1.5cm]&#10;</xsl:text>
         <xsl:text>\textsc{\LARGE </xsl:text>
@@ -94,15 +94,24 @@
             <xsl:sort select="@file-path"/>
             <xsl:apply-templates select="." mode="in-content"/>
         </xsl:for-each>
+        <xsl:text>&#10;</xsl:text>
         <xsl:text>\mainmatter&#10;</xsl:text>
         <xsl:text>\cleardoublepage&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>%Stories&#10;</xsl:text>
         <xsl:apply-templates select="campaign/stories/story"/>
         <xsl:text>&#10;</xsl:text>
+        <xsl:text>\part{\sc Appendices}&#10;</xsl:text>
+        <xsl:text>\appendix&#10;</xsl:text>
+        <xsl:text>\chapter{Figures with description}&#10;</xsl:text>
+        <xsl:text>\cleardoublepage&#10;</xsl:text>
+        <xsl:apply-templates select="//supplement">
+            <xsl:sort select="@file-path"/>
+        </xsl:apply-templates>
+        <xsl:text>&#10;</xsl:text>
         <xsl:text>\backmatter&#10;</xsl:text>
         <xsl:text>\chapter{Concluding Words}&#10;</xsl:text>
-        <xsl:text>That is the end of the World News, Good Night!&#10;</xsl:text>
+        <xsl:text>That was the end of the World News. Good Night!&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>\end{document}&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
@@ -139,7 +148,7 @@
         <xsl:text>}&#10;</xsl:text>
         <xsl:text>\textit{</xsl:text>
         <xsl:value-of select="description"/>
-        <xsl:text>}&#10;\\[0.3cm]</xsl:text>
+        <xsl:text>}&#10;\\[0.3cm]&#10;</xsl:text>
         <xsl:if test="referee-notes">
             <xsl:text>\RefereeNotes{</xsl:text>
             <xsl:value-of select="referee-notes"/>
@@ -173,8 +182,29 @@
                 <xsl:value-of select="title"/>
                 <xsl:text> -- \textit{</xsl:text>
                 <xsl:value-of select="short-description"/>
-                <xsl:text>}}</xsl:text>
+                <xsl:text>}}&#10;</xsl:text>
                 <xsl:text>\end{figure}</xsl:text>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="supplement">
+        <xsl:choose>
+            <xsl:when test="contains(@media-type, 'image')">
+                <xsl:text>&#10;\section{</xsl:text>
+                <xsl:text>\sc </xsl:text>
+                <xsl:value-of select="title"/>
+                <xsl:text>}&#10;</xsl:text>
+                <xsl:text>\includegraphics[width=\linewidth]{</xsl:text>
+                <xsl:value-of select="@file-path"/>
+                <xsl:text>}&#10;</xsl:text>
+                <xsl:if test="contains(description, '\\')">
+                    <xsl:text>\clearpage&#10;</xsl:text>
+                </xsl:if>
+                <xsl:text>\noindent&#10;</xsl:text>
+                <xsl:text>\textit{</xsl:text>
+                <xsl:value-of select="description"/>
+                <xsl:text>}&#10;</xsl:text>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
