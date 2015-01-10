@@ -1,9 +1,7 @@
-package hex.rpg.xml.nodes;
+package hex.rpg.xml.pack.nodes;
 
-import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.story.Story;
-import hex.rpg.xml.AbstractRpgNode;
+import hex.rpg.xml.pack.AbstractRpgNode;
 import hex.rpg.xml.HexRpgNode;
 import se.digitman.lightxml.XmlNode;
 
@@ -21,13 +19,15 @@ public class CampaignNode extends AbstractRpgNode<Campaign> {
     public XmlNode getXmlNode() {
         XmlNode result = buildNode(HexRpgNode.CAMPAIGN);
         Campaign campaign = (Campaign) entity();
-        XmlNode typeNode = HexRpgNode.CAMPAIGN_TYPE.getXmlNode(campaign.getType().getLabel());
+        XmlNode typeNode = HexRpgNode.CAMPAIGN_TYPE.getXmlNode(campaign.getType().getFlavour());
         typeNode.addAttribute("code", campaign.getType().name());
-        typeNode.addAttribute("super", campaign.getType().getSuperType());
+        typeNode.addAttribute("type", campaign.getType().getLabel());
         result.addChild(typeNode);
+        XmlNode storiesNode = HexRpgNode.STORIES.getXmlNode();
         campaign.getStories().stream().forEach((story) -> {
-            result.addChild(new StoryNode(story).getXmlNode());
+            storiesNode.addChild(new StoryNode(story).getXmlNode());
         });
+        result.addChild(storiesNode);
         return result;
     }
 

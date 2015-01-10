@@ -170,6 +170,34 @@ public class RpgStorySupplement implements StorySupplement {
     }
 
     @Override
+    public String createPath() {
+        String result = BASE_PATH + "Story/supplement-" + id;
+        if (getFileExtension() != null) {
+            result += "." + getFileExtension();
+        }
+        return result;
+    }
+
+    private String getFileExtension() {
+        if (mediaType.startsWith("text")) {
+            return "txt";
+        } else if (mediaType.startsWith("image")) {
+            return mediaType.substring(mediaType.lastIndexOf("/") + 1);
+        } else if (mediaType.contains("+")) {
+            return mediaType.substring(mediaType.lastIndexOf("+") + 1);
+        }
+        return null;
+    }
+
+    @Override
+    public int compareTo(Supplement obj) {
+        if (obj instanceof Supplement) {
+            return this.getId().intValue() - ((Supplement) obj).getId().intValue();
+        }
+        return 0;
+    }
+
+    @Override
     public boolean hasSupplements() {
         return false;
     }

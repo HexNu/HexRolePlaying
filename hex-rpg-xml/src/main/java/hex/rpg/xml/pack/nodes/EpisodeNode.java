@@ -1,7 +1,7 @@
-package hex.rpg.xml.nodes;
+package hex.rpg.xml.pack.nodes;
 
 import hex.rpg.core.domain.story.Episode;
-import hex.rpg.xml.AbstractRpgNode;
+import hex.rpg.xml.pack.AbstractRpgNode;
 import hex.rpg.xml.HexRpgNode;
 import se.digitman.lightxml.XmlNode;
 
@@ -20,7 +20,7 @@ public class EpisodeNode extends AbstractRpgNode<Episode> {
         XmlNode result = buildNode(HexRpgNode.EPISODE);
         Episode episode = (Episode) entity();
         result.addAttribute("index", episode.getIndex());
-        result.addText(episode.getContent());
+        result.addChild(HexRpgNode.CONTENT.getXmlNode(episode.getContent()));
         return result;
     }
 

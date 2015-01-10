@@ -3,7 +3,6 @@ package hex.rpg.api.dto.out;
 import hex.rpg.api.dto.AbstractDTO;
 import hex.rpg.api.dto.LinkDTOBuilder;
 import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.story.Story;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class CampaignDTO extends AbstractDTO {
     public CampaignDTO(Campaign campaign, LinkDTOBuilder linkBuilder) {
         id = campaign.getId();
         title = campaign.getTitle();
-        type = campaign.getType().getLabel();
+        type = campaign.getType().getFlavour();
         shortDescription = campaign.getShortDescription();
         description = campaign.getDescription();
         refereeInfo = campaign.getRefereeInfo();

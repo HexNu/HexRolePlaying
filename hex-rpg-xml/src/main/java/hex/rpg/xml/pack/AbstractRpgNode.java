@@ -1,8 +1,8 @@
-package hex.rpg.xml;
+package hex.rpg.xml.pack;
 
 import hex.rpg.core.domain.NarrativeEntity;
-import hex.rpg.core.domain.Supplement;
-import hex.rpg.xml.nodes.SupplementNode;
+import hex.rpg.xml.HexRpgNode;
+import hex.rpg.xml.pack.nodes.SupplementNode;
 import se.digitman.lightxml.XmlNode;
 
 /**
@@ -33,9 +33,9 @@ public abstract class AbstractRpgNode<T> {
         if (entity() != null) {
             node.addChild(HexRpgNode.TITLE.getXmlNode(entity().getTitle()));
             node.addChild(HexRpgNode.SHORT_DESCRIPTION.getXmlNode(entity().getShortDescription()));
+            node.addChild(HexRpgNode.REFEREE_NOTES.getXmlNode(entity().getRefereeNotes()));
             node.addChild(HexRpgNode.DESCRIPTION.getXmlNode(entity().getDescription()));
             node.addChild(HexRpgNode.REFEREE_INFO.getXmlNode(entity().getRefereeInfo()));
-            node.addChild(HexRpgNode.REFEREE_NOTES.getXmlNode(entity().getRefereeNotes()));
             if (entity().hasSupplements()) {
                 XmlNode supplementsNode = HexRpgNode.SUPPLEMENTS.getXmlNode();
                 entity().getSupplements().stream().forEach((supplement) -> {

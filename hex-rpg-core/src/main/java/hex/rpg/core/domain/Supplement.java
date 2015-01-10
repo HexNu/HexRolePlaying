@@ -6,11 +6,12 @@ import java.io.InputStream;
  *
  * @author hln
  */
-public interface Supplement extends NarrativeEntity {
+public interface Supplement extends NarrativeEntity, Comparable<Supplement> {
 
     public static final Type DEFAULT_CAMPAIGN_TYPE = Type.ILLUSTRATION,
             DEFAULT_STORY_TYPE = Type.MAP,
             DEFAULT_EPISODE_TYPE = Type.HANDOUT;
+    public static final String BASE_PATH = "Supplements/";
 
     String getMediaType();
 
@@ -27,6 +28,8 @@ public interface Supplement extends NarrativeEntity {
     void setContent(byte[] content);
 
     Integer getSize();
+    
+    String createPath();
 
     public enum Type {
 

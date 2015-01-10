@@ -32,7 +32,7 @@ public abstract class AbstractResource {
 
     public String getKey() {
         if (key == null || key.length() == 0) {
-            return "CoC";
+            return "DnD";
         }
         return key;
     }

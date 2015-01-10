@@ -1,8 +1,8 @@
-package hex.rpg.xml.nodes;
+package hex.rpg.xml.pack.nodes;
 
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
-import hex.rpg.xml.AbstractRpgNode;
+import hex.rpg.xml.pack.AbstractRpgNode;
 import hex.rpg.xml.HexRpgNode;
 import se.digitman.lightxml.XmlNode;
 

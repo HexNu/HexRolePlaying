@@ -25,20 +25,20 @@ public interface Campaign extends NarrativeEntity {
         COC("Call of Cthulhu 1920", "Call of Cthulhu"),
         COC_GASLIGHT("Cthulhu by Gaslight", "Call of Cthulhu"),
         COC_NOW("Cthulhu Now", "Call of Cthulhu");
+        private final String flavour;
         private final String label;
-        private final String superType;
 
-        private Type(String label, String superType) {
+        private Type(String flavour, String label) {
+            this.flavour = flavour;
             this.label = label;
-            this.superType = superType;
+        }
+
+        public String getFlavour() {
+            return flavour;
         }
 
         public String getLabel() {
             return label;
-        }
-
-        public String getSuperType() {
-            return superType;
         }
     }
 }

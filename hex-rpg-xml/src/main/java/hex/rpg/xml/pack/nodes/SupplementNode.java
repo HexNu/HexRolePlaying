@@ -1,10 +1,9 @@
-package hex.rpg.xml.nodes;
+package hex.rpg.xml.pack.nodes;
 
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.xml.AbstractRpgNode;
+import hex.rpg.xml.pack.AbstractRpgNode;
 import hex.rpg.xml.HexRpgNode;
 import se.digitman.lightxml.XmlNode;
-import se.digitman.util.Base64Coder;
 
 /**
  *
@@ -18,13 +17,12 @@ public class SupplementNode extends AbstractRpgNode<Supplement> {
 
     @Override
     public XmlNode getXmlNode() {
-        XmlNode node = buildNode(HexRpgNode.SUPPLEMENT);
         Supplement supplement = (Supplement) entity();
-        node.addText(Base64Coder.encodeLines(supplement.getContentAsByteArray()));
+        XmlNode node = buildNode(HexRpgNode.SUPPLEMENT);
+        node.addAttribute("file-path", supplement.createPath());
         node.addAttribute("type", supplement.getType().name().toLowerCase());
         node.addAttribute("media-type", supplement.getMediaType());
         node.addAttribute("size", supplement.getSize());
         return node;
     }
-
 }
