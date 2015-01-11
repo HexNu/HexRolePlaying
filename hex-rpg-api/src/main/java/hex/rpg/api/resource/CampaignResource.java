@@ -9,7 +9,7 @@ import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
 import hex.rpg.service.command.campaign.GetCampaignCommand;
 import hex.rpg.service.command.campaign.GetEpisodeCommand;
-import hex.rpg.service.command.campaign.GetStoryCommand;
+import hex.rpg.service.command.story.GetStoryCommand;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;

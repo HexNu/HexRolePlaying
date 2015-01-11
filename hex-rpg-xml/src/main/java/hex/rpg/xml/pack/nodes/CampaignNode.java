@@ -21,7 +21,7 @@ public class CampaignNode extends AbstractRpgNode<Campaign> {
         Campaign campaign = (Campaign) entity();
         XmlNode typeNode = HexRpgNode.CAMPAIGN_TYPE.getXmlNode(campaign.getType().getFlavour());
         typeNode.addAttribute("code", campaign.getType().name());
-        typeNode.addAttribute("type", campaign.getType().getLabel());
+        typeNode.addAttribute("label", campaign.getType().getLabel());
         result.addChild(typeNode);
         XmlNode storiesNode = HexRpgNode.STORIES.getXmlNode();
         campaign.getStories().stream().forEach((story) -> {

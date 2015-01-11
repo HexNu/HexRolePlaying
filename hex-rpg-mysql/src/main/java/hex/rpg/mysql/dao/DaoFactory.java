@@ -26,4 +26,12 @@ public class DaoFactory {
     public EpisodeDao getEpisodeDao() {
         return new EpisodeDao(em);
     }
+    
+    public PlayingCharacterDao getPlayingCharacterDao() {
+        return new PlayingCharacterDao(em);
+    }
+    
+    public NonPlayingCharacterDao getNonPlayingCharacterDao() {
+        return new NonPlayingCharacterDao(em);
+    }
 }

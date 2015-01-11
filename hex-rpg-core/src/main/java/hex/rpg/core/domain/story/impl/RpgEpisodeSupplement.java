@@ -191,10 +191,7 @@ public class RpgEpisodeSupplement implements EpisodeSupplement {
 
     @Override
     public int compareTo(Supplement obj) {
-        if (obj instanceof Supplement) {
-            return this.getId().intValue() - ((Supplement) obj).getId().intValue();
-        }
-        return 0;
+        return this.getId().intValue() - ((Supplement) obj).getId().intValue();
     }
 
     @Override

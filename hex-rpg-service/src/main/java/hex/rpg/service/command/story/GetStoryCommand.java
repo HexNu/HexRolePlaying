@@ -1,4 +1,4 @@
-package hex.rpg.service.command.campaign;
+package hex.rpg.service.command.story;
 
 import hex.rpg.core.domain.story.Story;
 import hex.rpg.service.command.AbstractServiceCommand;

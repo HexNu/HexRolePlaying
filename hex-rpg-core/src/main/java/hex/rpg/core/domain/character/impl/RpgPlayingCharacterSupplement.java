@@ -1,9 +1,9 @@
-package hex.rpg.core.domain.campaign.impl;
+package hex.rpg.core.domain.character.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.campaign.CampaignSupplement;
+import hex.rpg.core.domain.character.PlayingCharacter;
+import hex.rpg.core.domain.character.PlayingCharacterSupplement;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -23,8 +23,8 @@ import javax.persistence.Table;
  * @author hln
  */
 @Entity
-@Table(name = "CampaignSupplement")
-public class RpgCampaignSupplement implements CampaignSupplement {
+@Table(name = "PlayingCharacterSupplement")
+public class RpgPlayingCharacterSupplement implements PlayingCharacterSupplement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,8 +44,8 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     @Lob
     @Column(length = 64 * Constants.MB)
     private byte[] content;
-    @ManyToOne(targetEntity = RpgCampaign.class)
-    private Campaign campaign;
+    @ManyToOne(targetEntity = RpgPlayingCharacter.class)
+    private PlayingCharacter character;
     @Enumerated(EnumType.STRING)
     private Type type;
 
@@ -160,18 +160,18 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     }
 
     @Override
-    public Campaign getCampaign() {
-        return campaign;
+    public PlayingCharacter getPlayingCharacter() {
+        return character;
     }
 
     @Override
-    public void setCampaign(Campaign campaign) {
-        this.campaign = campaign;
+    public void setPlayingCharacter(PlayingCharacter character) {
+        this.character = character;
     }
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Campaign/supplement-" + id;
+        String result = BASE_PATH + "Story/supplement-" + id;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

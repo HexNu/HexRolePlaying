@@ -52,7 +52,7 @@
         <xsl:text>\begin{titlepage}&#10;</xsl:text>
         <xsl:text>\begin{center}&#10;</xsl:text>
         <xsl:text>\includegraphics[width=0.15\textwidth]{Images/</xsl:text>
-        <xsl:value-of select="translate(campaign/campaign-type/@type,' ','_')"/>
+        <xsl:value-of select="translate(campaign/campaign-type/@label,' ','_')"/>
         <xsl:text>_Logo}~\\[1.5cm]&#10;</xsl:text>
         <xsl:text>\textsc{\LARGE </xsl:text>
         <xsl:value-of select="campaign/campaign-type"/>
