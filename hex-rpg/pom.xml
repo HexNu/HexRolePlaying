@@ -9,6 +9,7 @@
         <module>../hex-rpg-core</module>
         <module>../hex-rpg-mysql</module>
         <module>../hex-rpg-xml</module>
+        <module>../hex-rpg-stf</module>
         <module>../hex-rpg-io</module>
         <module>../hex-rpg-service</module>
         <module>../hex-rpg-api</module>
