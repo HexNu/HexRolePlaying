@@ -55,6 +55,11 @@ public class RpgPlayingCharacterSupplement implements PlayingCharacterSupplement
     }
 
     @Override
+    public Long getParentId() {
+        return getPlayingCharacter().getId();
+    }
+
+    @Override
     public String getName() {
         return title;
     }
@@ -171,7 +176,7 @@ public class RpgPlayingCharacterSupplement implements PlayingCharacterSupplement
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Story/supplement-" + id;
+        String result = BASE_PATH + "PlayingCharacter/supplement-" + id;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

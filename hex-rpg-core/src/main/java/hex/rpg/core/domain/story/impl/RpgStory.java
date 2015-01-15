@@ -61,6 +61,11 @@ public class RpgStory implements Story {
     }
 
     @Override
+    public Long getParentId() {
+        return getCampaign().getId();
+    }
+
+    @Override
     public String getName() {
         return title;
     }

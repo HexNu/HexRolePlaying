@@ -56,6 +56,11 @@ public class RpgEpisode implements Episode {
     }
 
     @Override
+    public Long getParentId() {
+        return getStory().getId();
+    }
+
+    @Override
     public String getName() {
         return title;
     }

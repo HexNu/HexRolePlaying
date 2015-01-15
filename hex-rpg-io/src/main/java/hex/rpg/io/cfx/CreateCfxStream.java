@@ -1,11 +1,12 @@
 package hex.rpg.io.cfx;
 
 import hex.rpg.core.Constants;
-import hex.rpg.core.domain.NarrativeEntity;
 import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.story.Story;
-import hex.rpg.xml.pack.nodes.RootNode;
+import hex.rpg.core.domain.character.PlayingCharacter;
+import hex.rpg.io.AbstractZippedStream;
+import hex.rpg.xml.pack.HexRpgDocument;
+import hex.rpg.xml.pack.node.RootNode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,27 +20,37 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import se.digitman.lightxml.XmlDocument;
-import se.digitman.lightxml.XmlNode;
 
 /**
  *
  * @author hln
  */
-public class CreateCfxStream {
+public class CreateCfxStream extends AbstractZippedStream {
 
-    private final XmlDocument result;
-    private final List<Campaign> campaigns;
+    private final HexRpgDocument result;
     private final Set<Supplement> supplements = new HashSet<>();
+    private final List<PlayingCharacter> playingCharacters;
 
-    public CreateCfxStream(List<Campaign> campaigns) {
-        this.campaigns = campaigns;
-        XmlNode node = new RootNode(campaigns).getXmlNode();
-        result = new XmlDocument(node);
+    public CreateCfxStream(Campaign campaign, List<PlayingCharacter> playingCharacters) {
+        super(campaign);
+        this.playingCharacters = playingCharacters;
+        RootNode rootNode = new RootNode();
+        rootNode.addCampaign(campaign);
+        if (playingCharacters != null && !playingCharacters.isEmpty()) {
+            rootNode.addPlayingCharacters(playingCharacters);
+        }
+        result = new HexRpgDocument(rootNode);
     }
 
+    @Override
     public InputStream execute() {
-        campaigns.stream().forEach((entity) -> {
+        collectSupplements(campaign);
+        if (playingCharacters != null && !playingCharacters.isEmpty()) {
+            playingCharacters.stream().forEach((entity) -> {
+                collectSupplements(entity);
+            });
+        }
+        campaign.getCharacters().stream().forEach((entity) -> {
             collectSupplements(entity);
         });
         return createZip();
@@ -52,10 +63,12 @@ public class CreateCfxStream {
             ZipOutputStream out = new ZipOutputStream(fileOut);
             ZipEntry xmlEntry = new ZipEntry("content.xml");
             out.putNextEntry(xmlEntry);
-            out.write(result.toString().getBytes(Constants.UTF_8));
+            out.write(result.get().toString().getBytes(Constants.UTF_8));
             out.closeEntry();
             out.flush();
             addSupplementsToZip(out);
+            addLogoToZip(out);
+            addPortraitsToZip(out);
             out.flush();
             out.close();
             return new FileInputStream(resultFile);
@@ -65,34 +78,5 @@ public class CreateCfxStream {
             Logger.getLogger(CreateCfxStream.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-
-    private void addSupplementsToZip(ZipOutputStream out) {
-        supplements.stream().forEach((s) -> {
-            try {
-                ZipEntry zipEntry = new ZipEntry(s.createPath());
-                out.putNextEntry(zipEntry);
-                out.write(s.getContentAsByteArray());
-                out.closeEntry();
-                out.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(CreateCfxStream.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-    }
-
-    private void collectSupplements(NarrativeEntity entity) {
-        entity.getSupplements().stream().forEach((supplement) -> {
-            supplements.add(supplement);
-        });
-        if (entity instanceof Campaign) {
-            ((Campaign) entity).getStories().stream().forEach((story) -> {
-                collectSupplements(story);
-            });
-        } else if (entity instanceof Story) {
-            ((Story) entity).getEpisodes().stream().forEach((episode) -> {
-                collectSupplements(episode);
-            });
-        }
     }
 }

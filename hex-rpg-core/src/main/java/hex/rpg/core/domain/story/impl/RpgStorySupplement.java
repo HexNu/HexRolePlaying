@@ -55,6 +55,11 @@ public class RpgStorySupplement implements StorySupplement {
     }
 
     @Override
+    public Long getParentId() {
+        return getStory().getId();
+    }
+
+    @Override
     public String getName() {
         return title;
     }
@@ -191,7 +196,7 @@ public class RpgStorySupplement implements StorySupplement {
 
     @Override
     public int compareTo(Supplement obj) {
-        return this.getId().intValue() - ((Supplement) obj).getId().intValue();
+        return this.getId().compareTo(((Supplement) obj).getId());
     }
 
     @Override

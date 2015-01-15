@@ -4,11 +4,8 @@ import hex.rpg.core.Constants;
 import hex.rpg.core.domain.CharacterEntity;
 import hex.rpg.core.domain.CharacterEntity.Gender;
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.campaign.impl.RpgCampaign;
 import hex.rpg.core.domain.character.PlayerNote;
 import hex.rpg.core.domain.character.PlayingCharacter;
-import hex.rpg.core.domain.story.impl.RpgStorySupplement;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -27,7 +24,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -63,18 +59,27 @@ public class RpgPlayingCharacter implements PlayingCharacter {
     @Lob
     @Column(length = 4 * Constants.MB)
     private byte[] portrait;
+    @Column
+    private String mediaType;
     @Column(length = 1 * Constants.KB)
     private String shortDescription;
     @Column(length = 8 * Constants.KB)
     private String description;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "character", targetEntity = RpgPlayingCharacterSupplement.class)
     private final Set<Supplement> supplements = new HashSet<>();
+    @Column
     private String habitation;
+    @Column
     private String stats;
 
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Long getParentId() {
+        return null;
     }
 
     @Override
@@ -118,6 +123,11 @@ public class RpgPlayingCharacter implements PlayingCharacter {
     @Override
     public void addNote(PlayerNote note) {
         notes.add(note);
+    }
+
+    @Override
+    public boolean hasNotes() {
+        return !notes.isEmpty();
     }
 
     @Override
@@ -194,7 +204,22 @@ public class RpgPlayingCharacter implements PlayingCharacter {
     public void setPortrait(byte[] portrait) {
         this.portrait = portrait;
     }
-    
+
+    @Override
+    public String getPortraitMediaType() {
+        return mediaType;
+    }
+
+    @Override
+    public void setPortraitMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    @Override
+    public String createPortraitFilePath() {
+        return "Portrait/" + name.replaceAll(" ", "_") + "." + mediaType.substring(mediaType.lastIndexOf("/") + 1);
+    }
+
     @Override
     public String getShortDescription() {
         return shortDescription;

@@ -2,6 +2,7 @@ package hex.rpg.core.domain.character.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.character.PlayerNote;
+import hex.rpg.core.domain.character.PlayingCharacter;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class RpgPlayerNote implements PlayerNote {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne(targetEntity = RpgPlayingCharacter.class)
-    private Character character;
+    private PlayingCharacter character;
     @Column
     private String label;
     @Temporal(TemporalType.DATE)
@@ -36,6 +37,11 @@ public class RpgPlayerNote implements PlayerNote {
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Long getParentId() {
+        return getCharacter().getId();
     }
 
     @Override
@@ -79,5 +85,16 @@ public class RpgPlayerNote implements PlayerNote {
             return 1;
         }
         return this.getDate().compareTo(otherNote.getDate());
+    }
+
+    @Override
+    public PlayingCharacter getCharacter() {
+        return character;
+    }
+
+
+    @Override
+    public void setPlayingCharacter(PlayingCharacter character) {
+        this.character = character;
     }
 }

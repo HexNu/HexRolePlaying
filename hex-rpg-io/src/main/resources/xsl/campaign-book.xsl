@@ -16,7 +16,7 @@
         <xsl:text>\documentclass[pdftex,a4paper]{book}&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>%Imports&#10;</xsl:text>
-        <xsl:text>\usepackage{multicol,color,titlesec,marginnote,framed}&#10;</xsl:text>
+        <xsl:text>\usepackage{multicol,color,titlesec,marginnote,wrapfig}&#10;</xsl:text>
         <xsl:text>\usepackage[usenames,dvipsnames]{xcolor}&#10;</xsl:text>
         <xsl:text>\usepackage[utf8]{inputenc}&#10;</xsl:text>
         <xsl:text>\usepackage[pdftex]{graphicx}&#10;</xsl:text>
@@ -38,6 +38,9 @@
         <xsl:text>        }&#10;</xsl:text>
         <xsl:text>    }&#10;</xsl:text>
         <xsl:text>}&#10;</xsl:text>
+        <xsl:text>\newcommand{\Person}[1]{\textsc{{#1}}}&#10;</xsl:text>
+        <xsl:text>\newcommand{\Creature}[1]{\textsc{{#1}}}&#10;</xsl:text>
+        <xsl:text>\newcommand{\Place}[1]{\textsc{{#1}}}&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>%Style Instructions&#10;</xsl:text>
         <xsl:text>\marginparsep = 0.5cm&#10;</xsl:text>
@@ -51,7 +54,7 @@
         <xsl:text>%Title Page&#10;</xsl:text>
         <xsl:text>\begin{titlepage}&#10;</xsl:text>
         <xsl:text>\begin{center}&#10;</xsl:text>
-        <xsl:text>\includegraphics[width=0.15\textwidth]{Images/</xsl:text>
+        <xsl:text>\includegraphics[width=0.15\textwidth]{Image/</xsl:text>
         <xsl:value-of select="translate(campaign/campaign-type/@label,' ','_')"/>
         <xsl:text>_Logo}~\\[1.5cm]&#10;</xsl:text>
         <xsl:text>\textsc{\LARGE </xsl:text>
@@ -90,7 +93,8 @@
         </xsl:for-each>
         <xsl:text>\end{description}&#10;</xsl:text>
         <xsl:value-of select="campaign/description"/>
-        <xsl:for-each select="campaign/supplements/supplement">
+        <xsl:text>\\&#10;</xsl:text>
+        <xsl:for-each select="campaign/supplement/supplement">
             <xsl:sort select="@file-path"/>
             <xsl:apply-templates select="." mode="in-content"/>
         </xsl:for-each>
@@ -108,6 +112,11 @@
         <xsl:apply-templates select="//supplement">
             <xsl:sort select="@file-path"/>
         </xsl:apply-templates>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:text>\chapter{Persons with description}&#10;</xsl:text>
+        <xsl:text>\clearpage&#10;</xsl:text>
+        <xsl:apply-templates select="//non-playing-character"/>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>\backmatter&#10;</xsl:text>
         <xsl:text>\chapter{Concluding Words}&#10;</xsl:text>
@@ -148,7 +157,7 @@
         <xsl:text>}&#10;</xsl:text>
         <xsl:text>\textit{</xsl:text>
         <xsl:value-of select="description"/>
-        <xsl:text>}&#10;\\[0.3cm]&#10;</xsl:text>
+        <xsl:text>}\\[0.3cm]&#10;</xsl:text>
         <xsl:if test="referee-notes">
             <xsl:text>\RefereeNotes{</xsl:text>
             <xsl:value-of select="referee-notes"/>
@@ -183,7 +192,7 @@
                 <xsl:text> -- \textit{</xsl:text>
                 <xsl:value-of select="short-description"/>
                 <xsl:text>}}&#10;</xsl:text>
-                <xsl:text>\end{figure}</xsl:text>
+                <xsl:text>\end{figure}&#10;</xsl:text>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -207,6 +216,52 @@
                 <xsl:text>}&#10;</xsl:text>
             </xsl:when>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="non-playing-character">
+        <xsl:text>&#10;%Person Details&#10;</xsl:text>
+        <xsl:text>\begin{minipage}{\linewidth}</xsl:text>
+        <xsl:text>\section{\textsc{</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>}}&#10;</xsl:text>
+        <xsl:if test="short-description != ''">
+            <xsl:text>&#10;\textit{</xsl:text>
+            <xsl:value-of select="short-description"/>
+            <xsl:text>}\\[0.3cm]&#10;</xsl:text>
+        </xsl:if>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:if test="occupation != ''">
+            <xsl:text>Occupation: \textit{</xsl:text>
+            <xsl:value-of select="occupation"/>
+            <xsl:text>}\\%&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="habitation != ''">
+            <xsl:text>Habitation: \textit{</xsl:text>
+            <xsl:value-of select="habitation"/>
+            <xsl:text>}\\%&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="birthdate != ''">
+            <xsl:text>Birthdate: \textit{</xsl:text>
+            <xsl:value-of select="birthdate"/>
+            <xsl:text>}\\&#10;</xsl:text>
+        </xsl:if>
+        <xsl:value-of select="description"/>
+        <xsl:text>\\[0.3cm]&#10;</xsl:text>
+        <xsl:if test="referee-notes != ''">
+            <xsl:value-of select="concat('RefereeNotes{', referee-notes, '}')"/>
+            <xsl:text>&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="@portrait-media-type != ''">
+            <xsl:text>\includegraphics[width=0.33\linewidth]{</xsl:text>
+            <xsl:value-of select="@portrait-file-path"/>
+            <xsl:text>}\\&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="referee-info != ''">
+            <xsl:text>\RefereeInfo{</xsl:text>
+            <xsl:value-of select="referee-info"/>
+            <xsl:text>}\\&#10;</xsl:text>
+        </xsl:if>
+        <xsl:text>\end{minipage}&#10;</xsl:text>
     </xsl:template>
 
 </xsl:stylesheet>

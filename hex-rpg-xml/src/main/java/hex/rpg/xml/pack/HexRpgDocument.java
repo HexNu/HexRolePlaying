@@ -1,7 +1,8 @@
 package hex.rpg.xml.pack;
 
+import hex.rpg.xml.pack.node.RootNode;
+import java.util.Set;
 import se.digitman.lightxml.XmlDocument;
-import se.digitman.lightxml.XmlNode;
 
 /**
  *
@@ -10,9 +11,11 @@ import se.digitman.lightxml.XmlNode;
 public class HexRpgDocument {
 
     private final XmlDocument result;
+    private final RootNode rootNode;
 
-    public HexRpgDocument(XmlNode node) {
-        this.result = new XmlDocument(node);
+    public HexRpgDocument(RootNode rootNode) {
+        this.rootNode = rootNode;
+        this.result = new XmlDocument(this.rootNode.getXmlNode());
     }
 
     public String getAsString() {
@@ -21,6 +24,18 @@ public class HexRpgDocument {
 
     public XmlDocument get() {
         return result;
+    }
+
+    public Set<String> getNames() {
+        return rootNode.getNames();
+    }
+
+    public Set<String> getPlaces() {
+        return rootNode.getPlaces();
+    }
+
+    public Set<String> getCreatures() {
+        return rootNode.getCreatures();
     }
 
 }

@@ -20,4 +20,6 @@ public interface PlayingCharacter extends CharacterEntity {
     List<PlayerNote> getNotes();
 
     void addNote(PlayerNote note);
+    
+    boolean hasNotes();
 }

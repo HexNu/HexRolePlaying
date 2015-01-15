@@ -11,7 +11,7 @@ public interface Supplement extends NarrativeEntity, Comparable<Supplement> {
     public static final Type DEFAULT_CAMPAIGN_TYPE = Type.ILLUSTRATION,
             DEFAULT_STORY_TYPE = Type.MAP,
             DEFAULT_EPISODE_TYPE = Type.HANDOUT;
-    public static final String BASE_PATH = "Supplements/";
+    public static final String BASE_PATH = "Supplement/";
 
     String getMediaType();
 

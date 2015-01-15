@@ -1,6 +1,5 @@
 package hex.rpg.core.domain;
 
-import hex.rpg.core.domain.campaign.Campaign;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
@@ -36,12 +35,18 @@ public interface CharacterEntity extends DomainEntity, Comparable<CharacterEntit
     String getGamingStats();
 
     void setGamingStats(String stats);
-    
+
     InputStream getPortrait();
-    
+
     byte[] getPortraitAsByteArray();
-    
+
     void setPortrait(byte[] content);
+
+    String getPortraitMediaType();
+
+    void setPortraitMediaType(String mediaType);
+
+    String createPortraitFilePath();
 
     String getShortDescription();
 
@@ -59,6 +64,37 @@ public interface CharacterEntity extends DomainEntity, Comparable<CharacterEntit
 
     public enum Gender {
 
-        FEMALE, MALE, OTHER, NA;
+        FEMALE("F", "Female"),
+        MALE("M", "Male"),
+        OTHER("O", "Other"),
+        NA("N/A", "Not applicable");
+        private final String code;
+        private final String label;
+
+        private Gender(String code, String label) {
+            this.code = code;
+            this.label = label;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public Gender getByString(String string) {
+            try {
+                valueOf(string);
+            } catch (IllegalArgumentException e) {
+                for (Gender g : values()) {
+                    if (g.getCode().equalsIgnoreCase(string) || g.getLabel().equalsIgnoreCase(string)) {
+                        return g;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

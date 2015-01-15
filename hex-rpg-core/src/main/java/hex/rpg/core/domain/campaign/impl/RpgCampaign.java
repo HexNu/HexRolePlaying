@@ -4,12 +4,15 @@ import hex.rpg.core.Constants;
 import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.core.domain.campaign.CampaignSupplement;
+import hex.rpg.core.domain.character.NonPlayingCharacter;
+import hex.rpg.core.domain.character.impl.RpgNonPlayingCharacter;
 import hex.rpg.core.domain.story.Story;
 import hex.rpg.core.domain.story.impl.RpgStory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -50,12 +53,19 @@ public class RpgCampaign implements Campaign {
     private String refereeNotes;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "campaign", targetEntity = RpgStory.class)
     private final Set<Story> stories = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "campaign", targetEntity = RpgNonPlayingCharacter.class)
+    private final Set<NonPlayingCharacter> characters = new LinkedHashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "campaign", targetEntity = RpgCampaignSupplement.class)
     private final Set<Supplement> supplements = new HashSet<>();
 
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Long getParentId() {
+        return null;
     }
 
     @Override
@@ -150,6 +160,21 @@ public class RpgCampaign implements Campaign {
     @Override
     public void addStory(Story story) {
         addStory(stories.size(), story);
+    }
+
+    @Override
+    public List<NonPlayingCharacter> getCharacters() {
+        return new ArrayList<>(characters);
+    }
+
+    @Override
+    public void addCharacter(NonPlayingCharacter character) {
+        this.characters.add(character);
+    }
+
+    @Override
+    public void addCharacters(List<NonPlayingCharacter> characters) {
+        this.characters.addAll(characters);
     }
 
     @Override

@@ -9,6 +9,8 @@ import java.io.Serializable;
 public interface DomainEntity extends Serializable {
 
     Long getId();
+    
+    Long getParentId();
 
     String getName();
 }

@@ -19,6 +19,7 @@ public class CreateZippedTexCampaignFileCommand extends AbstractServiceCommand<I
 
     @Override
     public InputStream execute() {
-        return new CreateZippedTexStream(campaign).execute();
+        CreateZippedTexStream createZippedTexStream = new CreateZippedTexStream(campaign);
+        return createZippedTexStream.execute();
     }
 }

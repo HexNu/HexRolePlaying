@@ -9,6 +9,10 @@ import java.util.Date;
  */
 public interface PlayerNote extends DomainEntity, Comparable<PlayerNote> {
 
+    PlayingCharacter getCharacter();
+    
+    void setPlayingCharacter(PlayingCharacter character);
+    
     String getLabel();
     
     void setLabel(String label);

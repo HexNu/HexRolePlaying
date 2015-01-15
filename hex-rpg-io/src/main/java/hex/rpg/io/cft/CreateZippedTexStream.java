@@ -1,11 +1,10 @@
 package hex.rpg.io.cft;
 
 import hex.rpg.core.Constants;
-import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.campaign.Campaign;
+import hex.rpg.io.AbstractZippedStream;
 import hex.rpg.io.ResourceProvider;
-import hex.rpg.xml.pack.HexRpgDocument;
-import hex.rpg.xml.pack.nodes.RootNode;
+import hex.rpg.xml.pack.node.RootNode;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,26 +16,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import se.digitman.lightxml.XmlDocument;
 import se.digitman.lightxml.transform.XmlTransformer;
 
 /**
  *
  * @author hln
  */
-public class CreateZippedTexStream {
+public class CreateZippedTexStream extends AbstractZippedStream {
 
-    private final XmlDocument xmlDoc;
-    private final Campaign campaign;
+    private final RootNode rootNode;
 
     public CreateZippedTexStream(Campaign campaign) {
-        this.campaign = campaign;
-        this.xmlDoc = new HexRpgDocument(new RootNode(campaign).getXmlNode()).get();
-
+        super(campaign);
+        rootNode = new RootNode(true);
+        rootNode.addCampaign(campaign);
     }
 
+    @Override
     public InputStream execute() {
-        String texString = new XmlTransformer(xmlDoc, ResourceProvider.CAMPAIGN_BOOK_XSL.getResourceAsStream()).getResultAsString();
+        String texString = new XmlTransformer(rootNode.getXmlNode(), ResourceProvider.CAMPAIGN_BOOK_XSL.getResourceAsStream()).getResultAsString();
         try {
             File resultFile = new File("/tmp/result.cft");
             FileOutputStream fileOut = new FileOutputStream(resultFile);
@@ -48,6 +46,7 @@ public class CreateZippedTexStream {
             out.flush();
             addLogoToZip(out);
             addSupplementsToZip(out);
+            addPortraitsToZip(out);
             out.flush();
             out.close();
             return new FileInputStream(resultFile);
@@ -57,50 +56,5 @@ public class CreateZippedTexStream {
             Logger.getLogger(CreateZippedTexStream.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-
-    private void addSupplementsToZip(ZipOutputStream out) {
-        campaign.getSupplements().stream().forEach((supplement) -> {
-            addSupplementToZip(out, supplement);
-        });
-        campaign.getStories().stream().map((story) -> {
-            story.getSupplements().stream().forEach((supplement) -> {
-                addSupplementToZip(out, supplement);
-            });
-            return story;
-        }).forEach((story) -> {
-            story.getEpisodes().stream().forEach((episode) -> {
-                episode.getSupplements().stream().forEach((supplement) -> {
-                    addSupplementToZip(out, supplement);
-                });
-            });
-        });
-    }
-
-    private void addSupplementToZip(ZipOutputStream out, Supplement supplement) {
-        try {
-            ZipEntry zipEntry = new ZipEntry(supplement.createPath());
-            out.putNextEntry(zipEntry);
-            out.write(supplement.getContentAsByteArray());
-            out.closeEntry();
-            out.flush();
-        } catch (IOException ex) {
-            Logger.getLogger(CreateZippedTexStream.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void addLogoToZip(ZipOutputStream out) {
-        try {
-            byte[] resource = ResourceProvider.getLogoByName(campaign.getType().getLabel()).getResourceAsByteArray();
-            if (resource != null) {
-                ZipEntry zipEntry = new ZipEntry("Images/" + campaign.getType().getLabel().replaceAll(" ", "_") + "_Logo.png");
-                out.putNextEntry(zipEntry);
-                out.write(resource);
-                out.closeEntry();
-                out.flush();
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(CreateZippedTexStream.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

@@ -4,7 +4,6 @@ import hex.rpg.core.Constants;
 import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.character.NonPlayingCharacter;
 import hex.rpg.core.domain.character.NonPlayingCharacterSupplement;
-import hex.rpg.core.domain.character.PlayingCharacter;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -25,7 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PlayingCharacterSupplement")
-public class RpgNonPlayingCharacterSupplement implements NonPlayingCharacterSupplement{
+public class RpgNonPlayingCharacterSupplement implements NonPlayingCharacterSupplement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,6 +52,11 @@ public class RpgNonPlayingCharacterSupplement implements NonPlayingCharacterSupp
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Long getParentId() {
+        return getNonPlayingCharacter().getId();
     }
 
     @Override
@@ -172,7 +176,7 @@ public class RpgNonPlayingCharacterSupplement implements NonPlayingCharacterSupp
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Story/supplement-" + id;
+        String result = BASE_PATH + "NonPlayingCharacter/supplement-" + id;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }
