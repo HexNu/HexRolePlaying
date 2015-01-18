@@ -21,19 +21,31 @@ public interface Supplement extends NarrativeEntity, Comparable<Supplement> {
 
     void setType(Type type);
 
+    Integer getIndex();
+
+    void setIndex(Integer index);
+
     InputStream getContent();
 
     byte[] getContentAsByteArray();
 
     void setContent(byte[] content);
-
-    Integer getSize();
     
+    Integer getSize();
+
     String createPath();
 
     public enum Type {
 
         ILLUSTRATION, MAP, HANDOUT, OTHER;
 
+        public static Type getByString(String string) {
+            for (Type type : values()) {
+                if (type.name().equalsIgnoreCase(string)) {
+                    return type;
+                }
+            }
+            return null;
+        }
     }
 }

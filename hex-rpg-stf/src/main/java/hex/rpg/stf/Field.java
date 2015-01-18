@@ -36,7 +36,7 @@ public interface Field {
          * For episodes this is the text content.
          *
          * For supplements and character entities: If this is NOT text-content,
-         * this should point to a file that is the conent, ie image-file.
+         * this should point to a file that is the content, ie image-file.
          *
          * Field: content; (text for PlayerNote)
          */
@@ -102,11 +102,7 @@ public interface Field {
          * Field: type; Campaign.Type or Supplement.Type
          *
          */
-        Y,
-        /**
-         * Field: size;
-         */
-        Z;
+        Y;
 
         public String tag() {
             return name() + ":";

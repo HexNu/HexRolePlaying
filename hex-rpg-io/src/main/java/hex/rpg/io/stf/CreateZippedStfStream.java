@@ -4,7 +4,7 @@ import hex.rpg.core.Constants;
 import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.io.AbstractZippedStream;
 import hex.rpg.io.cft.CreateZippedTexStream;
-import hex.rpg.stf.out.SimpleTextFormatDocument;
+import hex.rpg.stf.out.STFDocument;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,11 +22,11 @@ import java.util.zip.ZipOutputStream;
  * @author hln
  */
 public class CreateZippedStfStream extends AbstractZippedStream {
-    private final SimpleTextFormatDocument doc;
+    private final STFDocument doc;
 
     public CreateZippedStfStream(Campaign campaign) {
         super(campaign);
-        this.doc = new SimpleTextFormatDocument();
+        this.doc = new STFDocument();
         doc.createCampaign(campaign);
     }
 

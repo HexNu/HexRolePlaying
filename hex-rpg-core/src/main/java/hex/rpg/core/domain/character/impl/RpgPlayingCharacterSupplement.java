@@ -33,6 +33,8 @@ public class RpgPlayingCharacterSupplement implements PlayingCharacterSupplement
     private String title;
     @Column(length = 32 * Constants.KB)
     private String refereeInfo;
+    @Column
+    private Integer supplementIndex;
     @Column(length = Constants.KB)
     private String shortDescription;
     @Column(length = 32 * Constants.KB)
@@ -72,6 +74,16 @@ public class RpgPlayingCharacterSupplement implements PlayingCharacterSupplement
     @Override
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public Integer getIndex() {
+        return supplementIndex;
+    }
+
+    @Override
+    public void setIndex(Integer index) {
+        this.supplementIndex = index;
     }
 
     @Override

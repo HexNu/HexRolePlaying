@@ -51,7 +51,6 @@ public abstract class AbstractSegment<T extends DomainEntity> implements Segment
             builder.append(Field.Label.I).append(e.getRefereeInfo());
             builder.append(Field.Label.N).append(e.getRefereeNotes());
             builder.append(Field.Label.M).append(e.getMediaType());
-            builder.append(Field.Label.Z).append(e.getSize());
             builder.append(Field.Label.Y).append(e.getType().name());
 
         } else if (entity instanceof NarrativeEntity) {

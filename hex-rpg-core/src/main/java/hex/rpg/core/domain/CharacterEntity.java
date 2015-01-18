@@ -84,7 +84,7 @@ public interface CharacterEntity extends DomainEntity, Comparable<CharacterEntit
             return label;
         }
 
-        public Gender getByString(String string) {
+        public static Gender getByString(String string) {
             try {
                 valueOf(string);
             } catch (IllegalArgumentException e) {

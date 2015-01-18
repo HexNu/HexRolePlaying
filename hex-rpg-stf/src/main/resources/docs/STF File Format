@@ -1,0 +1,195 @@
+This is a description of the Simple Text File document format.
+
+Campaign File
+There is currently one type of file, the Campaign file. This must have a 
+Campaign entity as its first.
+
+Player File
+This file type is in progress. This should have a Player as its first entity.
+
+All file-types can have processing instructions at the start of the file.
+
+- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -
+
+PROCESSING INSTRUCTIONS
+
+Instructions must start at a new line with double percentage signs (%%) followed 
+by the instruction and ending with the value (or values):
+
+%% [name of instruction][space(-s)][instruction value(-s)]
+
+The value-part of the line will be trimmed of spaces (beginning and end).
+If the instruction takes two or more parameters, they should be separated with 
+space(-s). These can consist of a single word or a key-value pair with equals 
+sign between (key=value)
+
+Base path: 
+points to a folder that is common for all files. You can use the base
+path to group files that are included in the campaign. In this case you only 
+have to specify the path from the base path for each file you whish to include.
+The basepath may have only one parameter, and spaces in the path will be 
+considered as part of the path.
+
+    Example 1:
+    %% basepath     /home/aaa/Documents/RolePlaying/Wetherington_Hall/
+    (or)
+    %%basepath /home/aaa/Documents/RolePlaying/Wetherington_Hall/
+    ...
+    P: Portrait/Milton_Comley.png
+
+    (Full path: "/home/aaa/Documents/RolePlaying/Wetherington_Hall/Portrait/Milton_Comley.png")
+
+    Example 1:
+    %% basepath     /home/aaa/Documents/Role Playing/Wetherington Hall/
+    ...
+    P: Portrait/Milton Comley.png
+
+    (Full path: "/home/aaa/Documents/Role Playing/Wetherington Hall/Portrait/Milton Comley.png")
+
+
+- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -
+
+ENTITIES
+
+Campaign
+
+    Fields: x*, D, I, N, S, T, Y
+        * If x-field contains a value, the parser keeps this and will replace
+        an existing campaign with this id with the imported one. 
+        If the x-field has a value set for the campaign, all other entities must 
+        have valid x-values, as they will also be replaced. A new Campaign 
+        should never have av value set for the x-field.
+
+CampaignSupplement
+    Fields: SupplementFields*
+
+Story
+    Fields: x, p, D, I, N, S, T, X
+
+StorySupplement
+    Fields: SupplementFields*
+
+Episode
+    Fields: x, p, C, D, I, N, S, T, X
+
+EpisodeSupplement
+    Fields: SupplementFields*
+
+NonPlayingCharacter
+    Fields: x, p, A, B, D, G, H, I, M, N, O, P, S, T
+
+NonPlayingCharacterSupplement
+    Fields: SupplementFields*
+
+    
+* SupplementFields: x, p, C, D, I, M, N, S, T, X, Y
+
+- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -
+
+FIELDS
+
+List of fields:
+
+p: ParentID
+x: ID
+A: PlayerAlias
+B: Date
+C: Content
+D: Description
+G: Gender
+H: Habitation
+I: RefereeInfo
+J: GamingStatistics
+M: MediaType
+N: RefereeNotes
+O: Occupation
+P: Portrait
+S: ShortDescription
+T: Title
+U: PlayerName
+X: Index
+Y: Type
+
+Explanations:
+
+x: Id for the entity
+
+p: Id for the entity's parent.
+
+A: Alias for the Player (only in player files)
+
+B: Birth date for Character
+
+C: Content
+    Content can be of two kinds: 
+    * text for Episode, maximum 64 kB
+    * byte array for Supplement, maximum 64 MB
+
+D: Description, a longer description
+
+G: Gender:
+    * Female (FEMALE, F, Female)
+    * Male (MALE, M, Male)
+    * Other (OTHER, O, Other)
+    * N/A (NA, N/A, Not applicable)
+
+H: Habitation, preferably from detail to general:
+    Lindow, Lincolnshire, England
+
+I: Referee info, longer text with information for the part or character. 
+    Intended solely for the referee!
+
+J: Gaming statistics for Character.
+
+M: MediaType. Used for Supplements and Characters. For character types 
+    this points to the portrait, and MUST be of an image/* type.
+
+N: Referee notes, shorter text that points to some important point. 
+    Intended solely for the referee.
+
+O: Occupation
+
+P: Portrait of character (monster). This MUST be an image (se M:)
+
+S: Short description. A short summary.
+
+T: Title. for Character this is the characters name.
+
+U: Player name.
+
+X: Index in parent. If present, this points to the entitys index in its parents 
+    list and all entities of this kind must be sorted accordingly.
+
+Y: Type. Used for Campaign and Supplement.
+    Supplement types: Handout, Image, Letter, Other.
+
+- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -
+
+FIELD TEXT MARKUP
+Markup in the text is used for collecting names in an episode etc.
+The markup consists of start "«" and end "»". It can be used for a single word
+or a group of words. Presently it is used for names, places and creatures:
+
+Start "«" [AltGr + Z]
+End "«" [AltGr + X]
+Name "£" [AltGr + 3]
+Place "@" [AltGr + 2]
+Creature "¢" [AltGr + Shift + 5]
+
+If text are placed within paranthesis that part will not be displayed in the
+text but WILL be indexed:
+    As Mr. «£(Milton) Comley» walked in to the room...
+will be displayed:
+    As Mr. Comley walked in to the room...
+and index:
+    Milton Comley
+
+
+- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -
+
+MEDIA TYPES
+
+File type: 
+    ".stf",     "application/vnd.hex.rpg-stf+zip"
+    ".stff",    "text/vnd.hex.rpg-stff"
+

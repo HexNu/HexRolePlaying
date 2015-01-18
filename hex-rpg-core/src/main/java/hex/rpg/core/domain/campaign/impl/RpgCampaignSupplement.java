@@ -40,6 +40,8 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     @Column(length = 2 * Constants.KB)
     private String refereeNotes;
     @Column
+    private Integer supplementIndex;
+    @Column
     private String mediaType;
     @Lob
     @Column(length = 64 * Constants.MB)
@@ -72,6 +74,16 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     @Override
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public Integer getIndex() {
+        return supplementIndex;
+    }
+
+    @Override
+    public void setIndex(Integer index) {
+        this.supplementIndex = index;
     }
 
     @Override

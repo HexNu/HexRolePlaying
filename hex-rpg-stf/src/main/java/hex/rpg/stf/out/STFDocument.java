@@ -8,11 +8,11 @@ import hex.rpg.stf.out.segment.CampaignSegment;
  *
  * @author hln
  */
-public class SimpleTextFormatDocument {
+public class STFDocument {
 
     private final DocumentBuilder docBuilder;
 
-    public SimpleTextFormatDocument() {
+    public STFDocument() {
         this.docBuilder = new DocumentBuilder();
     }
 
