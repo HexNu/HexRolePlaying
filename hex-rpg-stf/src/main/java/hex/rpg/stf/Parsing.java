@@ -8,7 +8,8 @@ public interface Parsing {
 
     public static final String REGEX_BASEPATH = "^[%]{2}\\s{0,}basepath\\s*.*",
             REGEX_SPLIT_BASEPATH_LINE = "basepath\\s*",
-            REGEX_PROCESSING_INSTRUCTION = "^[%]{2}.*";
+            REGEX_PROCESSING_INSTRUCTION = "^[%]{2}.*",
+            REGEX_COMMENT_LINE = "^[%]{1}.*";
 
     public enum Instruction {
 

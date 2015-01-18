@@ -45,7 +45,7 @@ public abstract class AbstractSegment<T extends DomainEntity> implements Segment
         if (entity instanceof Supplement) {
             Supplement e = (Supplement) entity;
             builder.append(Field.Label.T).append(e.getTitle());
-            builder.append(Field.Label.P).append(e.createPath());
+            builder.append(Field.Label.C).append(e.createPath());
             builder.append(Field.Label.S).append(e.getShortDescription());
             builder.append(Field.Label.D).append(e.getDescription());
             builder.append(Field.Label.I).append(e.getRefereeInfo());

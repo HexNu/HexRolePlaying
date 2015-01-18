@@ -43,7 +43,7 @@ import se.digitman.util.DateUtilities;
 public class STFDocumentParser {
 
     private final InputStream stream;
-    private final CampaignCarrier campaignCarrier = new CampaignCarrier();
+    private final CampaignWrapper campaignWrapper = new CampaignWrapper();
     private String basePath;
 
     public STFDocumentParser(InputStream stream) {
@@ -55,14 +55,14 @@ public class STFDocumentParser {
         setBasePath(basePath);
     }
 
-    public boolean parse() {
+    public Campaign parse() {
         if (stream != null) {
             InputStreamReader reader;
             try {
                 reader = new InputStreamReader(stream, Constants.UTF_8);
             } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(STFDocumentParser.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
+                return null;
             }
             BufferedReader bufferedReader = new BufferedReader(reader);
             String currentLine;
@@ -74,25 +74,28 @@ public class STFDocumentParser {
                         if (currentLine.matches(Parsing.REGEX_BASEPATH)) {
                             setBasePath(currentLine);
                         }
-                    }
-                    if (collectingEntityData && currentLine.matches(Segment.REGEX_END_OF_SEGMENT)) {
-                        parseData(lineCollector.toString());
-                        collectingEntityData = false;
-                        lineCollector = new StringBuilder();
-                    }
-                    if (marksNewSegment(currentLine)) {
-                        collectingEntityData = true;
-                    }
-                    if (collectingEntityData) {
-                        lineCollector.append(currentLine).append("\n");
+                    } else if (currentLine.matches(Parsing.REGEX_COMMENT_LINE)) {
+                        Logger.getLogger(STFDocumentParser.class.getName()).log(Level.INFO, currentLine);
+                    } else {
+                        if (collectingEntityData && currentLine.matches(Segment.REGEX_END_OF_SEGMENT)) {
+                            parseData(lineCollector.toString());
+                            collectingEntityData = false;
+                            lineCollector = new StringBuilder();
+                        }
+                        if (marksNewSegment(currentLine)) {
+                            collectingEntityData = true;
+                        }
+                        if (collectingEntityData) {
+                            lineCollector.append(currentLine).append("\n");
+                        }
                     }
                 }
             } catch (IOException ex) {
                 Logger.getLogger(STFDocumentParser.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
+                return null;
             }
         }
-        return true;
+        return campaignWrapper.build();
     }
 
     private void setBasePath(String basePath) {
@@ -114,22 +117,22 @@ public class STFDocumentParser {
         StringBuilder content = new StringBuilder();
         for (String line : lines) {
             if (line.matches(Segment.REGEX_NEW_FIELD)) {
-                putFieldValue(entity, currentField, content.toString());
+                if (currentField != null) {
+                    putFieldValue(entity, currentField, content.toString());
+                }
                 content = new StringBuilder();
                 currentField = line.substring(0, line.indexOf(Field.LABEL_SEPARATOR));
                 content.append(line.substring(line.indexOf(Field.LABEL_SEPARATOR) + 1));
-            } else if (line.matches(Segment.REGEX_END_OF_SEGMENT)) {
-                addToCampaign(currentId, currentParentId, entity);
-                currentId = null;
-                currentParentId = null;
-            } else if (line.startsWith(Field.Label.x + Field.LABEL_SEPARATOR)) {
-                currentId = Long.valueOf(line.substring(2));
-            } else if (line.startsWith(Field.Label.p + Field.LABEL_SEPARATOR)) {
-                currentParentId = Long.valueOf(line.substring(2));
             } else {
                 content.append(line);
             }
+            if (line.startsWith(Field.Label.x + Field.LABEL_SEPARATOR)) {
+                currentId = Long.valueOf(line.substring(2));
+            } else if (line.startsWith(Field.Label.p + Field.LABEL_SEPARATOR)) {
+                currentParentId = Long.valueOf(line.substring(2));
+            }
         }
+        campaignWrapper.addToWrapper(currentId, currentParentId, entity);
         return entity;
     }
 
@@ -160,98 +163,97 @@ public class STFDocumentParser {
     private void putFieldValue(DomainEntity domainEntity, String field, String content) {
         if (domainEntity instanceof NarrativeEntity) {
             NarrativeEntity entity = (NarrativeEntity) domainEntity;
-            if (field.equals(Field.Label.T.name())) {
-                entity.setTitle(content);
-            }
-            if (field.equals(Field.Label.D.name())) {
-                entity.setDescription(content);
-            }
-            if (field.equals(Field.Label.S.name())) {
-                entity.setShortDescription(content);
-            }
-            if (field.equals(Field.Label.I.name())) {
-                entity.setRefereeInfo(content);
-            }
-            if (field.equals(Field.Label.N.name())) {
-                entity.setRefereeNotes(content);
-            }
-            if (field.equals(Field.Label.Y.name())) {
-                if (domainEntity instanceof Campaign) {
-                    ((Campaign) domainEntity).setType(Campaign.Type.getByString(content));
-                } else if (domainEntity instanceof Supplement) {
-                    ((Supplement) domainEntity).setType(Supplement.Type.getByString(field));
-                }
-            }
-            if (field.equals(Field.Label.X.name())) {
-                if (domainEntity instanceof Story) {
-                    ((Story) domainEntity).setIndex(Integer.valueOf(content));
-                } else if (domainEntity instanceof Episode) {
-                    ((Episode) domainEntity).setIndex(Integer.valueOf(content));
-                } else if (domainEntity instanceof Supplement) {
-                    ((Supplement) domainEntity).setIndex(Integer.valueOf(content));
-                }
-            }
-            if (field.equals(Field.Label.C.name())) {
-                if (domainEntity instanceof Episode) {
-                    ((Episode) domainEntity).setContent(content);
-                } else if (domainEntity instanceof Supplement) {
-                    byte[] supplementContent = createByteArray(content);
-                    ((Supplement) domainEntity).setContent(supplementContent);
-                }
-            }
-            if (field.equals(Field.Label.M.name())) {
-                if (domainEntity instanceof Supplement) {
-                    ((Supplement) domainEntity).setMediaType(content);
-                }
-            }
-            if (field.equals(Field.Label.M.name())) {
-                if (domainEntity instanceof Supplement) {
-                    ((Supplement) domainEntity).setMediaType(content);
-                }
+            switch (field) {
+                case "T":
+                    entity.setTitle(content);
+                    break;
+                case "D":
+                    entity.setDescription(content);
+                    break;
+                case "S":
+                    entity.setShortDescription(content);
+                    break;
+                case "I":
+                    entity.setRefereeInfo(content);
+                    break;
+                case "N":
+                    entity.setRefereeNotes(content);
+                    break;
+                case "Y":
+                    if (domainEntity instanceof Campaign) {
+                        ((Campaign) domainEntity).setType(Campaign.Type.getByString(content));
+                    } else if (domainEntity instanceof Supplement) {
+                        ((Supplement) domainEntity).setType(Supplement.Type.getByString(field));
+                    }
+                    break;
+                case "X":
+                    if (domainEntity instanceof Story) {
+                        ((Story) domainEntity).setIndex(Integer.valueOf(content) - 1);
+                    } else if (domainEntity instanceof Episode) {
+                        ((Episode) domainEntity).setIndex(Integer.valueOf(content) - 1);
+                    } else if (domainEntity instanceof Supplement) {
+                        ((Supplement) domainEntity).setIndex(Integer.valueOf(content) - 1);
+                    }
+                    break;
+                case "C":
+                    if (domainEntity instanceof Episode) {
+                        ((Episode) domainEntity).setContent(content);
+                    } else if (domainEntity instanceof Supplement) {
+                        byte[] supplementContent = createByteArray(content);
+                        ((Supplement) domainEntity).setContent(supplementContent);
+                    }
+                    break;
+                case "M":
+                    if (domainEntity instanceof Supplement) {
+                        ((Supplement) domainEntity).setMediaType(content);
+                    }
+                    break;
             }
         } else if (domainEntity instanceof NonPlayingCharacter) {
             NonPlayingCharacter entity = (NonPlayingCharacter) domainEntity;
-            if (field.equals(Field.Label.B.name())) {
-                entity.setBirthdate(new DateUtilities(content).get());
-            }
-            if (field.equals(Field.Label.T.name())) {
-                entity.setName(content);
-            }
-            if (field.equals(Field.Label.S.name())) {
-                entity.setShortDescription(content);
-            }
-            if (field.equals(Field.Label.D.name())) {
-                entity.setDescription(content);
-            }
-            if (field.equals(Field.Label.G.name())) {
-                entity.setGender(CharacterEntity.Gender.getByString(content));
-            }
-            if (field.equals(Field.Label.H.name())) {
-                entity.setHabitation(content);
-            }
-            if (field.equals(Field.Label.M.name())) {
-                entity.setPortraitMediaType(content);
-            }
-            if (field.equals(Field.Label.C.name())) {
-                if (content != null && content.startsWith("/")) {
-                    byte[] portrait = createByteArray(content);
-                    entity.setPortrait(portrait);
-                }
-            }
-            if (field.equals(Field.Label.O.name())) {
-                entity.setOccupation(content);
-            }
-            if (field.equals(Field.Label.I.name())) {
-                entity.setRefereeInfo(content);
-            }
-            if (field.equals(Field.Label.N.name())) {
-                entity.setRefereeNotes(content);
-            }
-            if (field.equals(Field.Label.R.name())) {
-                entity.setSpecies(content);
-            }
-            if (field.equals(Field.Label.J.name())) {
-                entity.setGamingStats(content);
+            switch (field) {
+                case "B":
+                    entity.setBirthdate(new DateUtilities(content).get());
+                    break;
+                case "T":
+                    entity.setName(content);
+                    break;
+                case "S":
+                    entity.setShortDescription(content);
+                    break;
+                case "D":
+                    entity.setDescription(content);
+                    break;
+                case "G":
+                    entity.setGender(CharacterEntity.Gender.getByString(content));
+                    break;
+                case "H":
+                    entity.setHabitation(content);
+                    break;
+                case "M":
+                    entity.setPortraitMediaType(content);
+                    break;
+                case "P":
+                    if (content != null) {
+                        byte[] portrait = createByteArray(content);
+                        entity.setPortrait(portrait);
+                    }
+                    break;
+                case "O":
+                    entity.setOccupation(content);
+                    break;
+                case "I":
+                    entity.setRefereeInfo(content);
+                    break;
+                case "N":
+                    entity.setRefereeNotes(content);
+                    break;
+                case "R":
+                    entity.setSpecies(content);
+                    break;
+                case "J":
+                    entity.setGamingStats(content);
+                    break;
             }
         }
     }
@@ -294,11 +296,31 @@ public class STFDocumentParser {
         return false;
     }
 
-    private void addToCampaign(Long tempId, Long tempParentId, DomainEntity entity) {
-        campaignCarrier.addEntity(tempId, tempParentId, entity);
+    public CampaignWrapper getCampaignWrapper() {
+        return campaignWrapper;
     }
 
-    public CampaignCarrier getCampaignCarrier() {
-        return campaignCarrier;
+    public static void main(String[] args) {
+        try {
+
+            String path = "/home/hln/Skrivbord/Wetherington_Hall.stf_FILES/Wetherington_Hall.stff";
+            FileInputStream stream = new FileInputStream(new File(path));
+            STFDocumentParser parser = new STFDocumentParser(stream);
+            Campaign campaign = parser.parse();
+            System.out.println(campaign.getTitle());
+            for (Story story : campaign.getStories()) {
+                System.out.println(story.getTitle());
+                for (Supplement supplement : story.getSupplements()) {
+                    System.out.println(supplement.getTitle());
+                    System.out.println(supplement.getContentAsByteArray().length);
+                }
+            }
+            for (NonPlayingCharacter npc : campaign.getCharacters()) {
+                System.out.println(npc.getName());
+                System.out.println(npc.getPortraitAsByteArray().length);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(STFDocumentParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

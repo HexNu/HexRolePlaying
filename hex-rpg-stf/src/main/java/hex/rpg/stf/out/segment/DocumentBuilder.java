@@ -38,7 +38,7 @@ public class DocumentBuilder {
     }
 
     public final DocumentBuilder append(Class c) {
-        result.append(c.getName().substring(c.getName().lastIndexOf(".") + 1)).append("\n");
+        result.append(c.getName().substring(c.getName().lastIndexOf(".") + 4)).append("\n");
         return this;
     }
 

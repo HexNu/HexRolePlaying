@@ -24,7 +24,7 @@ space(-s). These can consist of a single word or a key-value pair with equals
 sign between (key=value)
 
 Base path: 
-points to a folder that is common for all files. You can use the base
+Points to a folder that is common for all files. You can use the base
 path to group files that are included in the campaign. In this case you only 
 have to specify the path from the base path for each file you whish to include.
 The basepath may have only one parameter, and spaces in the path will be 
@@ -32,20 +32,32 @@ considered as part of the path.
 
     Example 1:
     %% basepath     /home/aaa/Documents/RolePlaying/Wetherington_Hall/
-    (or)
+    ...
+    P: Portrait/Milton_Comley.png
+
+    (Full path: "/home/aaa/Documents/RolePlaying/Wetherington_Hall/Portrait/Milton_Comley.png")
+
+
+    Example 2:
     %%basepath /home/aaa/Documents/RolePlaying/Wetherington_Hall/
     ...
     P: Portrait/Milton_Comley.png
 
     (Full path: "/home/aaa/Documents/RolePlaying/Wetherington_Hall/Portrait/Milton_Comley.png")
 
-    Example 1:
+    Example 3:
     %% basepath     /home/aaa/Documents/Role Playing/Wetherington Hall/
     ...
     P: Portrait/Milton Comley.png
 
     (Full path: "/home/aaa/Documents/Role Playing/Wetherington Hall/Portrait/Milton Comley.png")
 
+Template:
+Tells which template that should be used for the book. Currently there is but 
+one template, FormalBook which will be the default template subsequently.
+
+    Example 1:
+    %% template     FormalBook
 
 - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -
 
