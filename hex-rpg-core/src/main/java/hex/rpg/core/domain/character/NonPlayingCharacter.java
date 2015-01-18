@@ -1,12 +1,15 @@
 package hex.rpg.core.domain.character;
 
 import hex.rpg.core.domain.CharacterEntity;
+import hex.rpg.core.domain.campaign.Campaign;
 
 /**
  *
  * @author hln
  */
 public interface NonPlayingCharacter extends CharacterEntity {
+
+    void setCampaign(Campaign campaign);
 
     String getRefereeInfo();
 

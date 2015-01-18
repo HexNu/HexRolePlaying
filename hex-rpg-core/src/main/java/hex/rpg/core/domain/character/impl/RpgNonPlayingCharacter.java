@@ -94,6 +94,11 @@ public class RpgNonPlayingCharacter implements NonPlayingCharacter {
     }
 
     @Override
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
+    }
+
+    @Override
     public String getRefereeInfo() {
         return refereeInfo;
     }
