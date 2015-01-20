@@ -13,6 +13,7 @@
         <module>../hex-rpg-stf</module>
         <module>../hex-rpg-io</module>
         <module>../hex-rpg-service</module>
+        <module>../hex-rpg-dto</module>
         <module>../hex-rpg-api</module>
     </modules>
     <properties>
