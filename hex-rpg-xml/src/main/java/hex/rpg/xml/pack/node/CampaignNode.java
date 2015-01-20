@@ -29,6 +29,11 @@ public class CampaignNode extends AbstractRpgNode<Campaign> {
             storiesNode.addChild(new StoryNode(story, isTexFormated(), getNames(), getPlaces(), getCreatures()).getXmlNode());
         });
         result.addChild(storiesNode);
+        XmlNode charactersNode = HexRpgNode.NON_PLAYING_CHARACTERS.getXmlNode();
+        campaign.getCharacters().stream().forEach((character) -> {
+           charactersNode.addChild(new NonPlayingCharacterNode(character, isTexFormated(), getNames(), getPlaces(), getCreatures()).getXmlNode());
+        });
+        result.addChild(charactersNode);
         return result;
     }
 

@@ -10,26 +10,29 @@ import java.util.List;
  *
  * @author hln
  */
-public class EpisodeDTO extends AbstractDTO {
+public class FullEpisodeDTO extends AbstractDTO {
+
     private final Long id;
     private final String title;
+    private final Integer index;
     private final String shortDescription;
     private final String description;
     private final String content;
     private final String refereeInfo;
     private final String refereeNotes;
-    private final List<SupplementListItemDTO> supplements = new ArrayList<>();
+    private final List<FullSupplementDTO> supplements = new ArrayList<>();
 
-    public EpisodeDTO(Episode episode, LinkDTOBuilder linkBuilder) {
+    public FullEpisodeDTO(Episode episode, LinkDTOBuilder linkBuilder) {
         id = episode.getId();
         title = episode.getTitle();
+        index = episode.getIndex();
         shortDescription = episode.getShortDescription();
         description = episode.getDescription();
         content = episode.getContent();
         refereeInfo = episode.getRefereeInfo();
         refereeNotes = episode.getRefereeNotes();
         episode.getSupplements().stream().forEach((supplement) -> {
-            supplements.add(new SupplementListItemDTO(supplement, linkBuilder));
+            supplements.add(new FullSupplementDTO(supplement, linkBuilder));
         });
     }
 
@@ -39,6 +42,10 @@ public class EpisodeDTO extends AbstractDTO {
 
     public String getTitle() {
         return title;
+    }
+
+    public Integer getIndex() {
+        return index;
     }
 
     public String getShortDescription() {
@@ -61,7 +68,7 @@ public class EpisodeDTO extends AbstractDTO {
         return refereeNotes;
     }
 
-    public List<SupplementListItemDTO> getSupplements() {
+    public List<FullSupplementDTO> getSupplements() {
         return supplements;
     }
 

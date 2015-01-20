@@ -68,7 +68,7 @@ public class CampaignWrapper {
                 if (nonPlayingCharacterSupplementCarrier.getTempParentId().equals(nonPlayingCharacterCarrier.getTempId())) {
                     NonPlayingCharacterSupplement nonPlayingCharacterSupplement = nonPlayingCharacterSupplementCarrier.getEntity();
                     nonPlayingCharacter.addSupplement(nonPlayingCharacterSupplement);
-                    nonPlayingCharacterSupplement.setNonPlayingCharacter(nonPlayingCharacter);
+                    nonPlayingCharacterSupplement.setCharacter(nonPlayingCharacter);
                 }
             }
         }

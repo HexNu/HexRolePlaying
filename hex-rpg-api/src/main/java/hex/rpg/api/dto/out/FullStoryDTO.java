@@ -10,25 +10,31 @@ import java.util.List;
  *
  * @author hln
  */
-public class StoryDTO extends AbstractDTO {
+public class FullStoryDTO extends AbstractDTO {
 
     private final Long id;
     private final String title;
+    private final Integer index;
     private final String shortDescription;
     private final String description;
     private final String refereeInfo;
     private final String refereeNotes;
-    private final List<EpisodeListItemDTO> episodes = new ArrayList<>();
+    private final List<FullEpisodeDTO> episodes = new ArrayList<>();
+    private final List<FullSupplementDTO> supplements = new ArrayList<>();
 
-    public StoryDTO(Story story, LinkDTOBuilder linkBuilder) {
+    public FullStoryDTO(Story story, LinkDTOBuilder linkBuilder) {
         id = story.getId();
         title = story.getTitle();
+        index = story.getIndex();
         shortDescription = story.getShortDescription();
         description = story.getDescription();
         refereeInfo = story.getRefereeInfo();
         refereeNotes = story.getRefereeNotes();
+        story.getSupplements().stream().forEach((supplement) -> {
+            supplements.add(new FullSupplementDTO(supplement, linkBuilder));
+        });
         story.getEpisodes().stream().forEach((episode) -> {
-            episodes.add(new EpisodeListItemDTO(episode, linkBuilder));
+            episodes.add(new FullEpisodeDTO(episode, linkBuilder));
         });
     }
 
@@ -38,6 +44,10 @@ public class StoryDTO extends AbstractDTO {
 
     public String getTitle() {
         return title;
+    }
+
+    public Integer getIndex() {
+        return index;
     }
 
     public String getShortDescription() {
@@ -56,7 +66,12 @@ public class StoryDTO extends AbstractDTO {
         return refereeNotes;
     }
 
-    public List<EpisodeListItemDTO> getEpisodes() {
+    public List<FullEpisodeDTO> getEpisodes() {
         return episodes;
     }
+
+    public List<FullSupplementDTO> getSupplements() {
+        return supplements;
+    }
+
 }

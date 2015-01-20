@@ -1,4 +1,4 @@
-package hex.rpg.core.domain.character.impl;
+package hex.rpg.jpa.domain.character.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.character.PlayerNote;

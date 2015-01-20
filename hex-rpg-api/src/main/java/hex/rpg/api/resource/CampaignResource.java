@@ -3,12 +3,13 @@ package hex.rpg.api.resource;
 import hex.rpg.api.dto.LinkDTOBuilder;
 import hex.rpg.api.dto.out.CampaignDTO;
 import hex.rpg.api.dto.out.EpisodeDTO;
+import hex.rpg.api.dto.out.FullCampaignDTO;
 import hex.rpg.api.dto.out.StoryDTO;
 import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
 import hex.rpg.service.command.campaign.GetCampaignCommand;
-import hex.rpg.service.command.campaign.GetEpisodeCommand;
+import hex.rpg.service.command.episode.GetEpisodeCommand;
 import hex.rpg.service.command.story.GetStoryCommand;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -26,6 +27,19 @@ public class CampaignResource extends AbstractResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}/full")
+    public Response getFullCampaign(@PathParam("id") Long id) {
+        Campaign campaign = commandExecutor.execute(new GetCampaignCommand(id), getKey());
+        if (campaign == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        LinkDTOBuilder linkDTOBuilder = new LinkDTOBuilder(getBaseUri());
+        FullCampaignDTO result = new FullCampaignDTO(campaign, linkDTOBuilder);
+        return Response.ok(result).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Response getCampaign(@PathParam("id") Long id) {
         Campaign campaign = commandExecutor.execute(new GetCampaignCommand(id), getKey());
@@ -36,7 +50,7 @@ public class CampaignResource extends AbstractResource {
         CampaignDTO result = new CampaignDTO(campaign, linkDTOBuilder);
         return Response.ok(result).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{campaignId}/{id}")
@@ -49,7 +63,7 @@ public class CampaignResource extends AbstractResource {
         StoryDTO result = new StoryDTO(story, linkDTOBuilder);
         return Response.ok(result).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{campaignId}/{storyId}/{id}")

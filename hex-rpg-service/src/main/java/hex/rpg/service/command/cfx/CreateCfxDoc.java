@@ -16,18 +16,15 @@ import se.digitman.lightxml.XmlDocument;
 public class CreateCfxDoc extends AbstractServiceCommand<XmlDocument> {
 
     private final List<Campaign> campaigns = new ArrayList<>();
-    private final List<PlayingCharacter> playingCharacters = new ArrayList<>();
 
     public CreateCfxDoc(List<Campaign> campaigns, List<PlayingCharacter> playingCharacters) {
         this.campaigns.addAll(campaigns);
-        this.playingCharacters.addAll(playingCharacters);
     }
 
     @Override
     public XmlDocument execute() {
         RootNode rootNode = new RootNode();
         rootNode.addCampaigns(campaigns);
-        rootNode.addPlayingCharacters(playingCharacters);
         return new HexRpgDocument(rootNode).get();
     }
 }

@@ -8,7 +8,7 @@ import hex.rpg.core.domain.Supplement;
  */
 public interface NonPlayingCharacterSupplement extends Supplement {
 
-    NonPlayingCharacter getNonPlayingCharacter();
+    NonPlayingCharacter getCharacter();
     
-    void setNonPlayingCharacter(NonPlayingCharacter character);
+    void setCharacter(NonPlayingCharacter character);
 }

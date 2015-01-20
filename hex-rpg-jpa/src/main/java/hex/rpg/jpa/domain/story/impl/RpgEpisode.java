@@ -1,19 +1,14 @@
-package hex.rpg.core.domain.story.impl;
+package hex.rpg.jpa.domain.story.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.campaign.impl.RpgCampaign;
 import hex.rpg.core.domain.story.Episode;
+import hex.rpg.core.domain.story.EpisodeSupplement;
 import hex.rpg.core.domain.story.Story;
-import hex.rpg.core.domain.story.StorySupplement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +25,8 @@ import javax.persistence.Table;
  * @author hln
  */
 @Entity
-@Table(name = "Story")
-public class RpgStory implements Story {
+@Table(name = "Episode")
+public class RpgEpisode implements Episode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,16 +39,16 @@ public class RpgStory implements Story {
     private String shortDescription;
     @Column(length = 32 * Constants.KB)
     private String description;
+    @Column(length = 64 * Constants.KB)
+    private String content;
     @Column(length = 8 * Constants.KB)
     private String refereeNotes;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "story", targetEntity = RpgEpisode.class)
-    private final Set<Episode> episodes = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "story", targetEntity = RpgStorySupplement.class)
-    private final Set<Supplement> supplements = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "episode", targetEntity = RpgEpisodeSupplement.class)
+    private final List<Supplement> supplements = new ArrayList<>();
     @Column
-    private int indexInCampaign;
-    @ManyToOne(targetEntity = RpgCampaign.class)
-    private Campaign campaign;
+    private int indexInStory;
+    @ManyToOne(targetEntity = RpgStory.class)
+    private Story story;
 
     @Override
     public Long getId() {
@@ -62,7 +57,7 @@ public class RpgStory implements Story {
 
     @Override
     public Long getParentId() {
-        return getCampaign().getId();
+        return getStory().getId();
     }
 
     @Override
@@ -121,61 +116,45 @@ public class RpgStory implements Story {
     }
 
     @Override
-    public Campaign getCampaign() {
-        return campaign;
+    public Story getStory() {
+        return this.story;
     }
 
     @Override
-    public void setCampaign(Campaign campaign) {
-        this.campaign = campaign;
-    }
-
-    @Override
-    public List<Episode> getEpisodes() {
-        List<Episode> result = new ArrayList<>(episodes);
-        Collections.sort(result);
-        return result;
-    }
-
-    @Override
-    public void addEpisode(int index, Episode episode) {
-        this.episodes.add(episode);
-        episode.setStory(this);
-        episode.setIndex(index);
-        Iterator<Episode> iterator = episodes.iterator();
-        while (iterator.hasNext()) {
-            Episode e = iterator.next();
-            if (!Objects.equals(e.getId(), episode.getId()) && e.getIndex() >= index) {
-                index++;
-                e.setIndex(index);
-            }
-        }
-    }
-
-    @Override
-    public void addEpisode(Episode episode) {
-        addEpisode(episodes.size(), episode);
+    public void setStory(Story story) {
+        this.story = story;
     }
 
     @Override
     public int getIndex() {
-        return indexInCampaign;
+        return indexInStory;
     }
 
     @Override
     public void setIndex(int index) {
-        this.indexInCampaign = index;
+        this.indexInStory = index;
+    }
+
+    @Override
+    public String getContent() {
+        return content;
+    }
+
+    @Override
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
     public List<Supplement> getSupplements() {
-        return new ArrayList<>(supplements);
+        Collections.sort(supplements);
+        return supplements;
     }
 
     @Override
     public void addSupplement(Supplement supplement) {
-        if (supplement instanceof StorySupplement) {
-            ((StorySupplement) supplement).setStory(this);
+        if (supplement instanceof EpisodeSupplement) {
+            ((EpisodeSupplement) supplement).setEpisode(this);
         }
         this.supplements.add(supplement);
     }
@@ -187,16 +166,16 @@ public class RpgStory implements Story {
 
     @Override
     public int compareTo(Object obj) {
-        if (obj instanceof Story) {
-            return this.getIndex() - ((Story) obj).getIndex();
+        if (obj instanceof Episode) {
+            return this.getIndex() - ((Episode) obj).getIndex();
         }
         return 0;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -208,11 +187,10 @@ public class RpgStory implements Story {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RpgStory other = (RpgStory) obj;
+        final RpgEpisode other = (RpgEpisode) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
-
 }

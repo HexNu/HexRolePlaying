@@ -54,4 +54,12 @@ public abstract class AbstractResource {
     public UriBuilder getClassContextUriBuilder() {
         return UriBuilder.fromUri(URI.create(getBaseUri())).path(this.getClass());
     }
+
+    protected static String getSuffixFromMediaType(String mediaType) {
+        return "." + mediaType.substring(mediaType.lastIndexOf("/") + 1);
+    }
+
+    protected String getAttachmentStringFromFilename(String filename) {
+        return "attachment; filename=\"" + filename + "\"";
+    }
 }

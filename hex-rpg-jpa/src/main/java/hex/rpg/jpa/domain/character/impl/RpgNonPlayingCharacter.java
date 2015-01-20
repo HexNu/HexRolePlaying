@@ -1,11 +1,11 @@
-package hex.rpg.core.domain.character.impl;
+package hex.rpg.jpa.domain.character.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.CharacterEntity;
 import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.campaign.impl.RpgCampaign;
 import hex.rpg.core.domain.character.NonPlayingCharacter;
+import hex.rpg.jpa.domain.campaign.impl.RpgCampaign;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -91,6 +91,11 @@ public class RpgNonPlayingCharacter implements NonPlayingCharacter {
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Campaign getCampaign() {
+        return campaign;
     }
 
     @Override

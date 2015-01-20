@@ -9,6 +9,8 @@ import hex.rpg.core.domain.campaign.Campaign;
  */
 public interface NonPlayingCharacter extends CharacterEntity {
 
+    Campaign getCampaign();
+
     void setCampaign(Campaign campaign);
 
     String getRefereeInfo();

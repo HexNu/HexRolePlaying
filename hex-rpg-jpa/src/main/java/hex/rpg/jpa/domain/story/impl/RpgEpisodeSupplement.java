@@ -1,9 +1,9 @@
-package hex.rpg.core.domain.campaign.impl;
+package hex.rpg.jpa.domain.story.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.core.domain.campaign.CampaignSupplement;
+import hex.rpg.core.domain.story.Episode;
+import hex.rpg.core.domain.story.EpisodeSupplement;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -23,8 +23,8 @@ import javax.persistence.Table;
  * @author hln
  */
 @Entity
-@Table(name = "CampaignSupplement")
-public class RpgCampaignSupplement implements CampaignSupplement {
+@Table(name = "EpisodeSupplement")
+public class RpgEpisodeSupplement implements EpisodeSupplement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +33,8 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     private String title;
     @Column(length = 32 * Constants.KB)
     private String refereeInfo;
+    @Column
+    private Integer supplementIndex;
     @Column(length = Constants.KB)
     private String shortDescription;
     @Column(length = 32 * Constants.KB)
@@ -40,14 +42,12 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     @Column(length = 2 * Constants.KB)
     private String refereeNotes;
     @Column
-    private Integer supplementIndex;
-    @Column
     private String mediaType;
     @Lob
     @Column(length = 64 * Constants.MB)
     private byte[] content;
-    @ManyToOne(targetEntity = RpgCampaign.class)
-    private Campaign campaign;
+    @ManyToOne(targetEntity = RpgEpisode.class)
+    private Episode episode;
     @Enumerated(EnumType.STRING)
     private Type type;
 
@@ -58,7 +58,7 @@ public class RpgCampaignSupplement implements CampaignSupplement {
 
     @Override
     public Long getParentId() {
-        return getCampaign().getId();
+        return getEpisode().getId();
     }
 
     @Override
@@ -177,18 +177,18 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     }
 
     @Override
-    public Campaign getCampaign() {
-        return campaign;
+    public Episode getEpisode() {
+        return episode;
     }
 
     @Override
-    public void setCampaign(Campaign campaign) {
-        this.campaign = campaign;
+    public void setEpisode(Episode episode) {
+        this.episode = episode;
     }
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Campaign/supplement-" + id;
+        String result = BASE_PATH + "Episode/supplement-" + id;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

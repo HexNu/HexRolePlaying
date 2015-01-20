@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:stf="http://docs.blinfo.se/rdf/1.0/stf/#"
+    xmlns:file="http://docs.blinfo.se/rdf/1.0/file/#">
+
+    <rdf:Description rdf:about="/">
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:title xml:lang="en">STF - Simple Text Format for Campaigns</dc:title>
+        <dc:title xml:lang="sv">STF - Textformat för kampanjer</dc:title>
+        <dc:date>[[date]]</dc:date>
+        <dc:format>application/vnd.hex.rpg-stf</dc:format>
+        <dc:language>en</dc:language>
+        <dc:source>HexRpg - 0.1</dc:source>
+        <stf:vendor>HexRpg</stf:vendor>
+        <stf:version>0.1</stf:version>
+        <stf:homepage>http://rpg.hex.nu/rdf/1.0/stf/</stf:homepage>
+        <stf:organisation>
+            <rdf:Bag>
+                <rdf:li>[[campaign]]</rdf:li>
+            </rdf:Bag>
+        </stf:organisation>
+        <stf:comments>Created [[date]]</stf:comments>
+        <stf:checksum>[[checksum]]</stf:checksum>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="[[stf-file]]">
+        <dc:description xml:lang="en">Contains campaign data in stf format</dc:description>
+        <dc:description xml:lang="sv">Innehåller kampanjdata i stf-format</dc:description>
+        <dc:date>[[stf-date]]</dc:date>
+        <file:size>[[stf-file-size]]</file:size>
+        <dc:format>application/vnd.hex.rpg-stff</dc:format>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="Image">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:description xml:lang="en">Contains image files</dc:description>
+        <dc:description xml:lang="sv">Innehåller bildfiler</dc:description>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="Image/[[campaign-logo]]">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:date>[[logo-creation-date]]</dc:date>
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:description xml:lang="en">The logotype for the campaign</dc:description>
+        <dc:description xml:lang="sv">Kampanjens logotyp</dc:description>
+        <file:size>[[campaign-logo-size]]</file:size>
+        <dc:format>[[campaign-logo-media-type]]</dc:format>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="Supplement">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:date>[[date]]</dc:date>
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:description xml:lang="en">Supplementary files for the campaign</dc:description>
+        <dc:description xml:lang="sv">Bilagefiler till kampanjen</dc:description>
+        <dc:language>sv</dc:language>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="Portrait">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:date>[[date]]</dc:date>
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:description xml:lang="en">Portraits of characters in the campaign</dc:description>
+        <dc:description xml:lang="sv">Porträtt av personer i kampanjen</dc:description>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="Supplement/Campaign">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:date>[[date]]</dc:date>
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:description xml:lang="en">Supplements for the entire campaign</dc:description>
+        <dc:description xml:lang="sv">Bilagor till hela kampanjen</dc:description>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="Supplement/Story">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:date>[[date]]</dc:date>
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:description xml:lang="en">Supplements for the separate stories</dc:description>
+        <dc:description xml:lang="sv">Bilagor till de enskilda historierna</dc:description>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="Supplement/Episode">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:date>[[date]]</dc:date>
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:description xml:lang="en">Supplements for the separate episodes</dc:description>
+        <dc:description xml:lang="sv">Bilagor till de enskilda episoderna</dc:description>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="Supplement/NonPlayingCharacter">
+        <dc:publisher>Hex Rpg</dc:publisher>
+        <dc:date>[[date]]</dc:date>
+        <dc:creator>Håkan Lidén</dc:creator>
+        <dc:description xml:lang="en">Supplements for each character</dc:description>
+        <dc:description xml:lang="sv">Bilagor till personer</dc:description>
+    </rdf:Description>
+    
+<!--Inte färdig-->
+</rdf:RDF>

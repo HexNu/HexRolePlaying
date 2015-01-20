@@ -59,7 +59,7 @@ public class FileResource extends AbstractResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         List<PlayingCharacter> playingCharacters = commandExecutor.execute(new FindAllPlayingCharactersCommand(), getKey());
-        String result = commandExecutor.execute(new CreateCfxDoc(resultList,playingCharacters), getKey()).toString();
+        String result = commandExecutor.execute(new CreateCfxDoc(resultList, playingCharacters), getKey()).toString();
         return Response.ok(result).type(HexMediaType.APPLICATION_CFXF)
                 .header("Content-Disposition", "attachment; filename=\"campaigns.cfxf\"").build();
     }

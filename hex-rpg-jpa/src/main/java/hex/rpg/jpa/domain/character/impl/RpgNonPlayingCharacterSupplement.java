@@ -1,9 +1,9 @@
-package hex.rpg.core.domain.story.impl;
+package hex.rpg.jpa.domain.character.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.story.Story;
-import hex.rpg.core.domain.story.StorySupplement;
+import hex.rpg.core.domain.character.NonPlayingCharacter;
+import hex.rpg.core.domain.character.NonPlayingCharacterSupplement;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -23,8 +23,8 @@ import javax.persistence.Table;
  * @author hln
  */
 @Entity
-@Table(name = "StorySupplement")
-public class RpgStorySupplement implements StorySupplement {
+@Table(name = "PlayingCharacterSupplement")
+public class RpgNonPlayingCharacterSupplement implements NonPlayingCharacterSupplement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,8 +46,8 @@ public class RpgStorySupplement implements StorySupplement {
     @Lob
     @Column(length = 64 * Constants.MB)
     private byte[] content;
-    @ManyToOne(targetEntity = RpgStory.class)
-    private Story story;
+    @ManyToOne(targetEntity = RpgNonPlayingCharacter.class)
+    private NonPlayingCharacter character;
     @Enumerated(EnumType.STRING)
     private Type type;
 
@@ -58,7 +58,7 @@ public class RpgStorySupplement implements StorySupplement {
 
     @Override
     public Long getParentId() {
-        return getStory().getId();
+        return getCharacter().getId();
     }
 
     @Override
@@ -177,18 +177,18 @@ public class RpgStorySupplement implements StorySupplement {
     }
 
     @Override
-    public Story getStory() {
-        return story;
+    public NonPlayingCharacter getCharacter() {
+        return character;
     }
 
     @Override
-    public void setStory(Story story) {
-        this.story = story;
+    public void setCharacter(NonPlayingCharacter character) {
+        this.character = character;
     }
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Story/supplement-" + id;
+        String result = BASE_PATH + "NonPlayingCharacter/supplement-" + id;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }
@@ -208,11 +208,12 @@ public class RpgStorySupplement implements StorySupplement {
 
     @Override
     public int compareTo(Supplement obj) {
-        return this.getId().compareTo(((Supplement) obj).getId());
+        return this.getId().intValue() - ((Supplement) obj).getId().intValue();
     }
 
     @Override
     public boolean hasSupplements() {
         return false;
     }
+
 }

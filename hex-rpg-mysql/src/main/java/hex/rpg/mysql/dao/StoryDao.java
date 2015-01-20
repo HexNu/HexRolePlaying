@@ -1,7 +1,7 @@
 package hex.rpg.mysql.dao;
 
 import hex.rpg.core.domain.story.Story;
-import hex.rpg.core.domain.story.impl.RpgStory;
+import hex.rpg.jpa.domain.story.impl.RpgStory;
 import javax.persistence.EntityManager;
 
 /**

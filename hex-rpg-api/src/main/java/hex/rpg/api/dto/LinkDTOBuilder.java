@@ -1,12 +1,13 @@
 package hex.rpg.api.dto;
 
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.campaign.impl.RpgCampaignSupplement;
+import hex.rpg.core.domain.campaign.CampaignSupplement;
+import hex.rpg.core.domain.character.NonPlayingCharacter;
+import hex.rpg.core.domain.character.NonPlayingCharacterSupplement;
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.EpisodeSupplement;
 import hex.rpg.core.domain.story.Story;
-import hex.rpg.core.domain.story.impl.RpgEpisodeSupplement;
-import hex.rpg.core.domain.story.impl.RpgStorySupplement;
+import hex.rpg.core.domain.story.StorySupplement;
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
 
@@ -50,17 +51,25 @@ public class LinkDTOBuilder {
     }
     
     public LinkDTO createSupplementDownloadLink(Supplement supplement) {
-        String path = "campaign/download/" + supplement.getId();
-        if (supplement instanceof RpgEpisodeSupplement) {
-            path += "?type=episode-supplement";
-        } else if (supplement instanceof RpgStorySupplement) {
-            path += "?type=story-supplement";
-        } else if (supplement instanceof RpgCampaignSupplement){
-            path += "?type=campaign-supplement";
+        String path = "supplement/download/";
+        if (supplement instanceof EpisodeSupplement) {
+            path += "episode/";
+        } else if (supplement instanceof StorySupplement) {
+            path += "story/";
+        } else if (supplement instanceof CampaignSupplement){
+            path += "campaign/";
+        } else if (supplement instanceof NonPlayingCharacterSupplement){
+            path += "npc/";
         }
+        path += supplement.getId();
         return createLink("download", path);
     }
 
+    public LinkDTO createPortraitDownloadLink(NonPlayingCharacter character) {
+        String path = "character/" + character.getCampaign().getId() + "/portrait";
+        return createLink("download", path);
+    }
+    
     private String buildPath(Long... parts) {
         StringBuilder builder = new StringBuilder("campaign");
         for (Long l : parts) {

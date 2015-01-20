@@ -44,6 +44,24 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>hex-rpg-service</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>nu.hex</groupId>
+                    <artifactId>hex-rpg-jpa</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>nu.hex</groupId>
+                    <artifactId>hex-rpg-mysql</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>nu.hex</groupId>
+                    <artifactId>hex-rpg-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>nu.hex</groupId>
+                    <artifactId>hex-rpg-xml</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

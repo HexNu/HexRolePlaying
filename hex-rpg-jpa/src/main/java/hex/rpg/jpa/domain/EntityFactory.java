@@ -1,17 +1,18 @@
-package hex.rpg.core.domain;
+package hex.rpg.jpa.domain;
 
+import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.core.domain.campaign.CampaignSupplement;
-import hex.rpg.core.domain.campaign.impl.RpgCampaign;
-import hex.rpg.core.domain.campaign.impl.RpgCampaignSupplement;
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.EpisodeSupplement;
 import hex.rpg.core.domain.story.Story;
 import hex.rpg.core.domain.story.StorySupplement;
-import hex.rpg.core.domain.story.impl.RpgEpisode;
-import hex.rpg.core.domain.story.impl.RpgEpisodeSupplement;
-import hex.rpg.core.domain.story.impl.RpgStory;
-import hex.rpg.core.domain.story.impl.RpgStorySupplement;
+import hex.rpg.jpa.domain.campaign.impl.RpgCampaign;
+import hex.rpg.jpa.domain.campaign.impl.RpgCampaignSupplement;
+import hex.rpg.jpa.domain.story.impl.RpgEpisode;
+import hex.rpg.jpa.domain.story.impl.RpgEpisodeSupplement;
+import hex.rpg.jpa.domain.story.impl.RpgStory;
+import hex.rpg.jpa.domain.story.impl.RpgStorySupplement;
 
 /**
  *

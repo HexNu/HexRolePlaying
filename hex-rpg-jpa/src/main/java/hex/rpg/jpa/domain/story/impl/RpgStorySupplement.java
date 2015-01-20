@@ -1,9 +1,9 @@
-package hex.rpg.core.domain.story.impl;
+package hex.rpg.jpa.domain.story.impl;
 
 import hex.rpg.core.Constants;
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.story.Episode;
-import hex.rpg.core.domain.story.EpisodeSupplement;
+import hex.rpg.core.domain.story.Story;
+import hex.rpg.core.domain.story.StorySupplement;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -23,8 +23,8 @@ import javax.persistence.Table;
  * @author hln
  */
 @Entity
-@Table(name = "EpisodeSupplement")
-public class RpgEpisodeSupplement implements EpisodeSupplement {
+@Table(name = "StorySupplement")
+public class RpgStorySupplement implements StorySupplement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,8 +46,8 @@ public class RpgEpisodeSupplement implements EpisodeSupplement {
     @Lob
     @Column(length = 64 * Constants.MB)
     private byte[] content;
-    @ManyToOne(targetEntity = RpgEpisode.class)
-    private Episode episode;
+    @ManyToOne(targetEntity = RpgStory.class)
+    private Story story;
     @Enumerated(EnumType.STRING)
     private Type type;
 
@@ -58,7 +58,7 @@ public class RpgEpisodeSupplement implements EpisodeSupplement {
 
     @Override
     public Long getParentId() {
-        return getEpisode().getId();
+        return getStory().getId();
     }
 
     @Override
@@ -177,18 +177,18 @@ public class RpgEpisodeSupplement implements EpisodeSupplement {
     }
 
     @Override
-    public Episode getEpisode() {
-        return episode;
+    public Story getStory() {
+        return story;
     }
 
     @Override
-    public void setEpisode(Episode episode) {
-        this.episode = episode;
+    public void setStory(Story story) {
+        this.story = story;
     }
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Episode/supplement-" + id;
+        String result = BASE_PATH + "Story/supplement-" + id;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

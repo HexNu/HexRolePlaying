@@ -36,9 +36,6 @@ public class CreateCfxStream extends AbstractZippedStream {
         this.playingCharacters = playingCharacters;
         RootNode rootNode = new RootNode();
         rootNode.addCampaign(campaign);
-        if (playingCharacters != null && !playingCharacters.isEmpty()) {
-            rootNode.addPlayingCharacters(playingCharacters);
-        }
         result = new HexRpgDocument(rootNode);
     }
 
