@@ -1,13 +1,13 @@
 package hex.rpg.api.resource;
 
-import hex.rpg.api.dto.LinkDTOBuilder;
-import hex.rpg.api.dto.out.CampaignDTO;
-import hex.rpg.api.dto.out.EpisodeDTO;
-import hex.rpg.api.dto.out.FullCampaignDTO;
-import hex.rpg.api.dto.out.StoryDTO;
 import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
+import hex.rpg.dto.LinkDTOBuilder;
+import hex.rpg.dto.out.CampaignDTO;
+import hex.rpg.dto.out.EpisodeDTO;
+import hex.rpg.dto.out.FullCampaignDTO;
+import hex.rpg.dto.out.StoryDTO;
 import hex.rpg.service.command.campaign.GetCampaignCommand;
 import hex.rpg.service.command.episode.GetEpisodeCommand;
 import hex.rpg.service.command.story.GetStoryCommand;
