@@ -15,21 +15,21 @@ public interface Field {
          *
          * Field: id;
          */
-        x,
+        x("Id"),
         /**
          * Note lower case "p"!
          *
          * Field: parentId;
          */
-        p,
+        p("ParentId"),
         /**
          * Field: playerAlias;
          */
-        A,
+        A("PlayerAlias"),
         /**
          * Field: birthdate; (notedate for PlayerNote)
          */
-        B,
+        B("Date"),
         /**
          * Content.
          *
@@ -40,72 +40,90 @@ public interface Field {
          *
          * Field: content; (text for PlayerNote)
          */
-        C,
+        C("Content"),
         /**
          * Field: description;
          */
-        D,
+        D("Description"),
         /**
          * Field: gender; [F, M, O, N/A] or [Female, Male, Other, Not
          * applicable]
          */
-        G,
+        G("Gender"),
         /**
          * Field: habitation;
          */
-        H,
+        H("Habitation"),
         /**
          * Field: refereeInfo;
          */
-        I,
+        I("RefereeInfo"),
         /**
          * Field: stats; (gaming stats for character et al)
          */
-        J,
+        J("GamingStats"),
         /**
          * Field: mediaType; Must be of image type for CharacterEntity portaits
          */
-        M,
+        M("MediaType"),
         /**
          * Field: refereeNotes;
          */
-        N,
+        N("RefereeNotes"),
         /**
          * Field: occupation;
          */
-        O,
+        O("Occupation"),
         /**
          * Field: portrait; Valid file path to portrait image file
          */
-        P,
+        P("Portrait"),
         /**
          * Field: species;
          */
-        R,
+        R("Species"),
         /**
          * Field: shortDescription;
          */
-        S,
+        S("ShortDescription"),
         /**
          * Field: title; (name for CharacterEntity, label for PlayerNote)
          */
-        T,
+        T("Title"),
         /**
          * Field: playerName
          */
-        U,
+        U("PlayerName"),
         /**
          * Field: index; (in parents that have sorted children)
          */
-        X,
+        X("IndexInParent"),
         /**
          * Field: type; Campaign.Type or Supplement.Type
          *
          */
-        Y;
+        Y("Type");
+        private final String description;
+
+        private Label(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
 
         public String tag() {
             return name() + ":";
+        }
+        
+        public static Label getByTag(String tag) {
+            for (Label label : values()) {
+                if (label.name().equals(tag.replaceAll(":", ""))) {
+                    return label;
+                }
+            }
+            return null;
         }
 
         /**

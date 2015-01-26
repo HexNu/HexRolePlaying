@@ -188,7 +188,7 @@ public class RpgNonPlayingCharacterSupplement implements NonPlayingCharacterSupp
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "NonPlayingCharacter/supplement-" + id;
+        String result = BASE_PATH + "NonPlayingCharacter/" + getCharacter().getName() + "/" + title;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

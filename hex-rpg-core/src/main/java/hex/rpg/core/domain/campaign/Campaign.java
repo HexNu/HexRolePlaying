@@ -17,11 +17,15 @@ public interface Campaign extends NarrativeEntity {
 
     void addStory(Story story);
     
+    boolean hasStories();
+    
     List<NonPlayingCharacter> getCharacters();
     
     void addCharacters(List<NonPlayingCharacter> characters);
     
     void addCharacter(NonPlayingCharacter character);
+    
+    boolean hasCharacters();
 
     Type getType();
 

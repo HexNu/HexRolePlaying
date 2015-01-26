@@ -188,7 +188,7 @@ public class RpgStorySupplement implements StorySupplement {
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Story/supplement-" + id;
+        String result = BASE_PATH + "Story/" + getStory().getTitle() + "/" + title;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

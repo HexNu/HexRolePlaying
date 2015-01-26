@@ -188,7 +188,7 @@ public class RpgCampaignSupplement implements CampaignSupplement {
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Campaign/supplement-" + id;
+        String result = BASE_PATH + "Campaign/" + title;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

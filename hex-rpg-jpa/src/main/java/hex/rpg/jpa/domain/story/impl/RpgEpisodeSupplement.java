@@ -188,7 +188,7 @@ public class RpgEpisodeSupplement implements EpisodeSupplement {
 
     @Override
     public String createPath() {
-        String result = BASE_PATH + "Episode/supplement-" + id;
+        String result = BASE_PATH + "Episode/" + getEpisode().getTitle() + "/"+ title;
         if (getFileExtension() != null) {
             result += "." + getFileExtension();
         }

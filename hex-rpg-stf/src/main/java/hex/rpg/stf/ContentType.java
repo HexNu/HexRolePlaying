@@ -1,5 +1,8 @@
 package hex.rpg.stf;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author hln
@@ -39,5 +42,13 @@ public enum ContentType {
         } catch (IllegalArgumentException e) {
             return null;
         }
+    }
+    
+    public static List<String> getTypeStrings() {
+        List<String> result = new ArrayList<>();
+        for (ContentType type : values()) {
+            result.add(type.toString());
+        }
+        return result;
     }
 }

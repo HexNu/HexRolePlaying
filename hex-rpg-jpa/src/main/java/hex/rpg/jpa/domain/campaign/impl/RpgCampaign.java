@@ -163,6 +163,11 @@ public class RpgCampaign implements Campaign {
     }
 
     @Override
+    public boolean hasStories() {
+        return !stories.isEmpty();
+    }
+
+    @Override
     public List<NonPlayingCharacter> getCharacters() {
         return new ArrayList<>(characters);
     }
@@ -175,6 +180,11 @@ public class RpgCampaign implements Campaign {
     @Override
     public void addCharacters(List<NonPlayingCharacter> characters) {
         this.characters.addAll(characters);
+    }
+
+    @Override
+    public boolean hasCharacters() {
+        return !characters.isEmpty();
     }
 
     @Override

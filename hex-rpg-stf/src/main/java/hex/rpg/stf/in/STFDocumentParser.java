@@ -47,7 +47,7 @@ public class STFDocumentParser {
     private String basePath;
 
     public STFDocumentParser(InputStream stream) {
-        this(stream, null);
+        this.stream = stream;
     }
 
     public STFDocumentParser(InputStream stream, String basePath) {
