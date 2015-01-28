@@ -68,12 +68,12 @@ public final class CreateCampaignFromStfFileAction implements ActionListener {
         if (fileObject != null) {
             selectedFilePath = FileUtil.getFileDisplayName(fileObject);
         } else {
-                        JFileChooser stfFileChooser = new JFileChooser(new File(System.getProperty("user.home")), FileSystemView.getFileSystemView());
-                        stfFileChooser.setDialogTitle("Select STF file");
-                        stfFileChooser.setToolTipText("<html>"
-                                + "<b>Select STF file.</b><br>"
-                                + "This file will be imported as a Campaign.</html>");
-                        stfFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            JFileChooser stfFileChooser = new JFileChooser(new File(System.getProperty("user.home")), FileSystemView.getFileSystemView());
+            stfFileChooser.setDialogTitle("Select STF file");
+            stfFileChooser.setToolTipText("<html>"
+                    + "<b>Select STF file.</b><br>"
+                    + "This file will be imported as a Campaign.</html>");
+            stfFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         }
         if (selectedFilePath != null) {
