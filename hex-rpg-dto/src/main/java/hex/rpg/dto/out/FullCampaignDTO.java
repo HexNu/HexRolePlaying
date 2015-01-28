@@ -18,9 +18,6 @@ public class FullCampaignDTO extends AbstractDTO {
     private final String title;
     private final String refereeInfo;
     private final String refereeNotes;
-    private final boolean hasSupplements;
-    private final boolean hasStories;
-    private final boolean hasCharacters;
     private final Campaign.Type type;
     private final List<FullSupplementDTO> supplements = new ArrayList<>();
     private final List<FullStoryDTO> stories = new ArrayList<>();
@@ -34,9 +31,6 @@ public class FullCampaignDTO extends AbstractDTO {
         description = campaign.getDescription();
         refereeInfo = campaign.getRefereeInfo();
         refereeNotes = campaign.getRefereeNotes();
-        hasSupplements = campaign.hasSupplements();
-        hasStories = campaign.hasStories();
-        hasCharacters = campaign.hasCharacters();
         campaign.getSupplements().stream().forEach((supplement) -> {
             supplements.add(new FullSupplementDTO(supplement, linkBuilder));
         });
@@ -86,17 +80,5 @@ public class FullCampaignDTO extends AbstractDTO {
 
     public List<FullNonPlayingCharacterDTO> getCharacters() {
         return characters;
-    }
-
-    public boolean isHasSupplements() {
-        return hasSupplements;
-    }
-
-    public boolean isHasStories() {
-        return hasStories;
-    }
-
-    public boolean isHasCharacters() {
-        return hasCharacters;
     }
 }

@@ -32,12 +32,6 @@ public class CampaignDTO implements EntityDTO {
     public String refereeInfo;
     @XmlElement(name = "refereeNotes")
     public String refereeNotes;
-    @XmlElement(name = "hasSupplements")
-    public boolean hasSupplements;
-    @XmlElement(name = "hasStories")
-    public boolean hasStories;
-    @XmlElement(name = "hasCharacters")
-    public boolean hasCharacters;
     @XmlElementWrapper(name = "supplements")
     @XmlElement(name = "supplement")
     @JsonProperty("supplements")
