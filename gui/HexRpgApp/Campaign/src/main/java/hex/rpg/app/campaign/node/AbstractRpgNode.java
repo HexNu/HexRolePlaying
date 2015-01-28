@@ -10,9 +10,7 @@ import hex.rpg.app.domain.story.AppEpisode;
 import hex.rpg.app.domain.story.AppEpisodeSupplement;
 import hex.rpg.app.domain.story.AppStory;
 import hex.rpg.app.domain.story.AppStorySupplement;
-import hex.rpg.core.domain.CharacterEntity;
 import hex.rpg.core.domain.DomainEntity;
-import hex.rpg.core.domain.NarrativeEntity;
 import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.character.NonPlayingCharacter;
 import hex.rpg.core.domain.story.Episode;
@@ -67,11 +65,10 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
     private String createShortDescription() {
         StringBuilder builder = new StringBuilder("<html>");
         builder.append("<div style=\"background: #ffffee; color: #003300; padding: 10px; width: 300px;\">");
-        builder.append("<b>").append(entity.getClass().getSimpleName().replace("App", "")).append("</b><br/>");
-        if (entity instanceof NarrativeEntity) {
-            builder.append(((NarrativeEntity) entity).getShortDescription());
-        } else if (entity instanceof CharacterEntity) {
-            builder.append(((CharacterEntity) entity).getShortDescription());
+        builder.append("<b>").append(entity.getClass().getSimpleName().replace("App", "")).append(": ")
+                .append(entity.getName()).append("</b>");
+        if (entity.getShortDescription() != null && !entity.getShortDescription().equals("")) {
+            builder.append("<br/>").append(entity.getShortDescription());
         }
         builder.append("</div>");
         return builder.append("</html>").toString();
