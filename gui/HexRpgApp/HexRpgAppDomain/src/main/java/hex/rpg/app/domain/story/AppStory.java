@@ -7,6 +7,7 @@ import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
 import hex.rpg.core.domain.story.StorySupplement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public class AppStory extends AbstractNarrativeEntity implements Story {
 
     @Override
     public List<Supplement> getSupplements() {
+        Collections.sort(supplements);
         return supplements;
     }
 

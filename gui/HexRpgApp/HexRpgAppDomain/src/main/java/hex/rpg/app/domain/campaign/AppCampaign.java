@@ -7,6 +7,7 @@ import hex.rpg.core.domain.campaign.CampaignSupplement;
 import hex.rpg.core.domain.character.NonPlayingCharacter;
 import hex.rpg.core.domain.story.Story;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +34,12 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
 
     @Override
     public List<Supplement> getSupplements() {
+        Collections.sort(supplements);
         return supplements;
+    }
+    
+    public void setSupplements(List<Supplement> supplements) {
+        this.supplements.addAll(supplements);
     }
 
     @Override
@@ -66,6 +72,10 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
         story.setCampaign(this);
         stories.add(story);
     }
+    
+    public void setStories(List<Story> stories) {
+        this.stories.addAll(stories);
+    }
 
     @Override
     public boolean hasStories() {
@@ -79,6 +89,10 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
     @Override
     public List<NonPlayingCharacter> getCharacters() {
         return characters;
+    }
+    
+    public void setCharacters(List<NonPlayingCharacter> characters) {
+        this.characters.addAll(characters);
     }
 
     @Override

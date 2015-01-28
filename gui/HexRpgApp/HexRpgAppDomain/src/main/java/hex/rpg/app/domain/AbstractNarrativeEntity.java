@@ -6,7 +6,7 @@ import hex.rpg.core.domain.NarrativeEntity;
  *
  * @author hln
  */
-public abstract class AbstractNarrativeEntity implements NarrativeEntity {
+public abstract class AbstractNarrativeEntity implements NarrativeEntity, AppDomainEntity {
 
     
     private Long id;

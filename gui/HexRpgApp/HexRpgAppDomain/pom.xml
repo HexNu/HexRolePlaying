@@ -19,6 +19,7 @@
                 <configuration>
                     <publicPackages>
                         <publicPackage>hex.rpg.app.domain.*</publicPackage>
+                        <publicPackage>hex.rpg.core.domain.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author hln
  */
-public abstract class AbstractSupplement implements Supplement  {
+public abstract class AbstractSupplement implements Supplement, AppDomainEntity {
 
     private Long id;
     private String title;
@@ -27,6 +27,7 @@ public abstract class AbstractSupplement implements Supplement  {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
