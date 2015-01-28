@@ -33,6 +33,7 @@ public class RpgPlayerNote implements PlayerNote {
     private Date noteDate;
     @Column(length = 2 * Constants.KB)
     private String text;
+    private static final int SHORT_DESCRIPTION_PREFFERED_LENGTH = 50;
 
     @Override
     public Long getId() {
@@ -96,5 +97,17 @@ public class RpgPlayerNote implements PlayerNote {
     @Override
     public void setPlayingCharacter(PlayingCharacter character) {
         this.character = character;
+    }
+
+    @Override
+    public String getShortDescription() {
+        if (text != null) {
+            if (text.length() > 50 && text.substring(SHORT_DESCRIPTION_PREFFERED_LENGTH).contains(" ")) {
+                return text.substring(SHORT_DESCRIPTION_PREFFERED_LENGTH, text.indexOf(" ")) + "...";
+            } else {
+                return text;
+            }
+        }
+        return null;
     }
 }
