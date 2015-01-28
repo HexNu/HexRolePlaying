@@ -1,8 +1,9 @@
 package hex.rpg.app.campaign.gui;
 
-import hex.rpg.app.campaign.lookup.CampaignViewContext;
-import hex.rpg.app.campaign.node.CampaignNode;
-import hex.rpg.app.domain.campaign.AppCampaign;
+import hex.rpg.app.campaign.node.RpgRootNode;
+import hex.rpg.app.client.action.GetAllCampaignsAction;
+import hex.rpg.core.domain.campaign.Campaign;
+import java.util.List;
 import javax.swing.JComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -11,9 +12,6 @@ import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerUtils;
 import org.openide.explorer.view.BeanTreeView;
 import org.openide.explorer.view.TreeView;
-import org.openide.util.Lookup;
-import org.openide.util.LookupEvent;
-import org.openide.util.LookupListener;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -39,9 +37,10 @@ public final class CampaignBrowserTopComponent extends TopComponent implements E
 
     private final ExplorerManager explorerManager = new ExplorerManager();
 
-    private Lookup.Result<AppCampaign> lookupResult;
-    private CampaignNode currentCampaignNode;
+//    private Lookup.Result<AppCampaign> lookupResult;
+//    private CampaignNode currentCampaignNode;
     private final TreeView treeView = new BeanTreeView();
+    private RpgRootNode rootNode;
 
     public CampaignBrowserTopComponent() {
         initComponents();
@@ -50,24 +49,30 @@ public final class CampaignBrowserTopComponent extends TopComponent implements E
         setToolTipText(Bundle.HINT_CampaignBrowserTopComponent());
         setOpaque(false);
         add(treeView);
-        treeView.setRootVisible(true);
+        treeView.setRootVisible(false);
         initialize();
     }
 
     private void initialize() {
-        lookupResult = CampaignViewContext.getLookup().lookupResult(AppCampaign.class);
-        lookupResult.addLookupListener(new LookupListener() {
-            @Override
-            public void resultChanged(LookupEvent le) {
-                AppCampaign campaign;
-                if (!lookupResult.allInstances().isEmpty()) {
-                    campaign = lookupResult.allInstances().iterator().next();
-                    currentCampaignNode = new CampaignNode(campaign);
-                    explorerManager.setRootContext(currentCampaignNode);
-                    explorerManager.setExploredContext(explorerManager.getRootContext());
-                }
-            }
-        });
+        GetAllCampaignsAction allCampaignsAction = new GetAllCampaignsAction();
+        allCampaignsAction.performAction();
+        List<Campaign> campaigns = allCampaignsAction.getCampaigns();
+        rootNode = new RpgRootNode(campaigns);
+        explorerManager.setRootContext(rootNode);
+        explorerManager.setExploredContext(explorerManager.getRootContext());
+//        lookupResult = CampaignViewContext.getLookup().lookupResult(AppCampaign.class);
+//        lookupResult.addLookupListener(new LookupListener() {
+//            @Override
+//            public void resultChanged(LookupEvent le) {
+//                AppCampaign campaign;
+//                if (!lookupResult.allInstances().isEmpty()) {
+//                    campaign = lookupResult.allInstances().iterator().next();
+//                    currentCampaignNode = new CampaignNode(campaign);
+//                    explorerManager.setRootContext(currentCampaignNode);
+//                    explorerManager.setExploredContext(explorerManager.getRootContext());
+//                }
+//            }
+//        });
     }
 
     /**

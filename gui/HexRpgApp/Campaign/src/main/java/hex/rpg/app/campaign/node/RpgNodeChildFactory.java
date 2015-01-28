@@ -41,18 +41,13 @@ public class RpgNodeChildFactory<T> extends ChildFactory<AppDomainEntity> {
         nodeMap.put(AppNonPlayingCharacterSupplement.class, CharacterSupplementNode.class);
     }
 
-    public RpgNodeChildFactory() {
-        this(null);
-    }
-
     public RpgNodeChildFactory(T entity) {
         this.entity = entity;
     }
 
     @Override
     protected boolean createKeys(List<AppDomainEntity> list) {
-        if (entity == null) {
-        } else if (entity instanceof Campaign) {
+        if (entity instanceof Campaign) {
             addChildren((AppCampaign) entity, list);
         } else if (entity instanceof Story) {
             addChildren((AppStory) entity, list);

@@ -8,7 +8,6 @@ import hex.rpg.app.client.action.GetFullCampaignAction;
 import hex.rpg.app.domain.campaign.AppCampaign;
 import hex.rpg.core.domain.campaign.Campaign;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
@@ -20,7 +19,7 @@ import org.openide.util.NbBundle.Messages;
         iconBase = "hex/rpg/app/campaign/action/C.png",
         displayName = "#CTL_GetCampaignAction"
 )
-@ActionReference(path = "Menu/File", position = 1300)
+//@ActionReference(path = "Menu/File", position = 1300)
 @Messages("CTL_GetCampaignAction=Get Campaign")
 public final class GetCampaignAction extends HexAction {
 
