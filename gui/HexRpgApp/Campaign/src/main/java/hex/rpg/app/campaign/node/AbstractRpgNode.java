@@ -10,7 +10,9 @@ import hex.rpg.app.domain.story.AppEpisode;
 import hex.rpg.app.domain.story.AppEpisodeSupplement;
 import hex.rpg.app.domain.story.AppStory;
 import hex.rpg.app.domain.story.AppStorySupplement;
+import hex.rpg.core.domain.CharacterEntity;
 import hex.rpg.core.domain.DomainEntity;
+import hex.rpg.core.domain.NarrativeEntity;
 import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.character.NonPlayingCharacter;
 import hex.rpg.core.domain.story.Episode;
@@ -36,6 +38,7 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
     private final List<Action> actionList = new ArrayList<>();
     public static final Action CONTEXT_DELIMITER = null;
     private final static Map<Class<? extends AppDomainEntity>, String> iconMap = new HashMap<>();
+
     static {
         iconMap.put(AppCampaign.class, "library");
         iconMap.put(AppCampaignSupplement.class, "file-picture-text");
@@ -54,17 +57,28 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
     }
 
     private void init() {
-        setName(entity.getName());
+
         setDisplayName(entity.getName());
         setIcon(iconMap.get(entity.getClass()));
+        setShortDescription(createShortDescription());
         setup();
     }
 
+    private String createShortDescription() {
+        StringBuilder builder = new StringBuilder("<html>");
+        builder.append("<div style=\"background: #ffffee; color: #003300; padding: 10px; width: 300px;\">");
+        builder.append("<b>").append(entity.getClass().getSimpleName().replace("App", "")).append("</b><br/>");
+        if (entity instanceof NarrativeEntity) {
+            builder.append(((NarrativeEntity) entity).getShortDescription());
+        } else if (entity instanceof CharacterEntity) {
+            builder.append(((CharacterEntity) entity).getShortDescription());
+        }
+        builder.append("</div>");
+        return builder.append("</html>").toString();
+    }
+
     /**
-     * typically for 
-     * setName
-     * setIcon
-     * addAction
+     * typically for setName setIcon addAction
      */
     protected abstract void setup();
 
@@ -120,7 +134,7 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
             return !((Episode) entity).hasSupplements();
         } else if (entity instanceof Story) {
             Story s = (Story) entity;
-            return s.hasSupplements() || !s.getEpisodes().isEmpty();
+            return !s.hasSupplements() && s.getEpisodes().isEmpty();
         } else if (entity instanceof NonPlayingCharacter) {
             return !((NonPlayingCharacter) entity).hasSupplements();
         }

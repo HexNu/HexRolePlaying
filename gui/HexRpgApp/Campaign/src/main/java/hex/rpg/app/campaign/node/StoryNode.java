@@ -14,7 +14,6 @@ public class StoryNode extends AbstractRpgNode<AppStory> {
 
     @Override
     protected void setup() {
-        setIcon("book");
     }
 
 }

@@ -14,7 +14,6 @@ public class EpisodeSupplementNode extends AbstractRpgNode<AppEpisodeSupplement>
 
     @Override
     protected void setup() {
-        setIcon("file-picture-text");
     }
 
 }

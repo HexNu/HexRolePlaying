@@ -14,7 +14,6 @@ public class EpisodeNode extends AbstractRpgNode<AppEpisode> {
 
     @Override
     protected void setup() {
-        setIcon("document-text");
     }
 
 }

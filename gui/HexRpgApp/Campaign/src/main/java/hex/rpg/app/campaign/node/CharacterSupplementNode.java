@@ -14,7 +14,6 @@ public class CharacterSupplementNode extends AbstractRpgNode<AppNonPlayingCharac
 
     @Override
     protected void setup() {
-        setIcon("file-picture-text");
     }
 
 }

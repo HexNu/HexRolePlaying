@@ -2,9 +2,7 @@ package hex.rpg.app.campaign.gui;
 
 import hex.rpg.app.campaign.lookup.CampaignViewContext;
 import hex.rpg.app.campaign.node.CampaignNode;
-import hex.rpg.app.campaign.node.RpgRootNode;
 import hex.rpg.app.domain.campaign.AppCampaign;
-import java.awt.BorderLayout;
 import javax.swing.JComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -13,8 +11,6 @@ import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerUtils;
 import org.openide.explorer.view.BeanTreeView;
 import org.openide.explorer.view.TreeView;
-import org.openide.nodes.AbstractNode;
-import org.openide.nodes.Children;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -69,7 +65,6 @@ public final class CampaignBrowserTopComponent extends TopComponent implements E
                     currentCampaignNode = new CampaignNode(campaign);
                     explorerManager.setRootContext(currentCampaignNode);
                     explorerManager.setExploredContext(explorerManager.getRootContext());
-                    treeView.expandAll();
                 }
             }
         });

@@ -14,7 +14,6 @@ public class CampaignSupplementNode extends AbstractRpgNode<AppCampaignSupplemen
 
     @Override
     protected void setup() {
-        setIcon("file-picture-text");
     }
 
 }

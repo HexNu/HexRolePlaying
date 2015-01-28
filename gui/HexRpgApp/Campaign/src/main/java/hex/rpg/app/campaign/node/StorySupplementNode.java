@@ -14,7 +14,6 @@ public class StorySupplementNode extends AbstractRpgNode<AppStorySupplement> {
 
     @Override
     protected void setup() {
-        setIcon("file-picture-text");
     }
 
 }
