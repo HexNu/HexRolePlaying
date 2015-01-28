@@ -13,4 +13,6 @@ public interface DomainEntity extends Serializable {
     Long getParentId();
 
     String getName();
+    
+    String getShortDescription();
 }

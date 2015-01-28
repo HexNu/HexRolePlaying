@@ -48,8 +48,6 @@ public interface CharacterEntity extends DomainEntity, Comparable<CharacterEntit
 
     String createPortraitFilePath();
 
-    String getShortDescription();
-
     void setShortDescription(String shortDescription);
 
     String getDescription();

@@ -13,8 +13,6 @@ public interface Supplement extends NarrativeEntity, Comparable<Supplement> {
             DEFAULT_EPISODE_TYPE = Type.HANDOUT;
     public static final String BASE_PATH = "Supplement/";
 
-    void setId(Long id);
-
     String getMediaType();
 
     void setMediaType(String mediaType);

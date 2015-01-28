@@ -22,8 +22,6 @@ public interface NarrativeEntity extends DomainEntity {
 
     void setRefereeNotes(String refereeNotes);
 
-    String getShortDescription();
-
     void setShortDescription(String shortDescription);
 
     String getDescription();
