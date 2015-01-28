@@ -1,7 +1,7 @@
 package hex.rpg.dto.in;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,14 +15,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "order")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class StoryDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class StoryDTO implements EntityDTO {
 
     @XmlElement(name = "id")
     public Long id;
     @XmlElement(name = "title")
     public String title;
-    @XmlElement(name = "type")
-    public String type;
+    @XmlElement(name = "name")
+    public String name;
+    @XmlElement(name = "index")
+    public Integer index;
     @XmlElement(name = "shortDescription")
     public String shortDescription;
     @XmlElement(name = "description")
@@ -34,13 +37,43 @@ public class StoryDTO {
     @XmlElementWrapper(name = "episodes")
     @XmlElement(name = "episode")
     @JsonProperty("episodes")
-    public List<EpisodeDTO> episodes = new ArrayList<>();
+    public List<EpisodeDTO> episodes;
     @XmlElementWrapper(name = "supplements")
     @XmlElement(name = "supplement")
     @JsonProperty("supplements")
-    public List<SupplementDTO> supplements = new ArrayList<>();
-    
+    public List<SupplementDTO> supplements;
+
     public StoryDTO() {
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String getRefereeInfo() {
+        return refereeInfo;
+    }
+
+    @Override
+    public String getRefereeNotes() {
+        return refereeNotes;
     }
 
 }

@@ -57,6 +57,11 @@ public class RpgNonPlayingCharacterSupplement implements NonPlayingCharacterSupp
     }
 
     @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
     public Long getParentId() {
         return getCharacter().getId();
     }

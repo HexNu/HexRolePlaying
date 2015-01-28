@@ -61,6 +61,11 @@ public class RpgStory implements Story {
     }
 
     @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
     public Long getParentId() {
         return getCampaign().getId();
     }

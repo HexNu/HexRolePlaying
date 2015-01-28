@@ -1,6 +1,7 @@
 package hex.rpg.dto.in;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,33 +13,44 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author hln
  */
-@XmlRootElement(name = "supplement")
+@XmlRootElement(name = "character")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SupplementDTO {
+public class NonPlayingCharacterDTO {
 
+    
     @XmlElement(name = "id")
     public Long id;
-    @XmlElement(name = "index")
-    public Integer index;
-    @XmlElement(name = "title")
-    public String title;
     @XmlElement(name = "name")
     public String name;
-    @XmlElement(name = "type")
-    public String type;
     @XmlElement(name = "shortDescription")
     public String shortDescription;
     @XmlElement(name = "description")
     public String description;
+    @XmlElement(name = "birthdate")
+    public String birthdate;
+    @XmlElement(name = "gender")
+    public String gender;
+    @XmlElement(name = "habitation")
+    public String habitation;
+    @XmlElement(name = "occupation")
+    public String occupation;
+    @XmlElement(name = "species")
+    public String species;
+    @XmlElement(name = "mediaType")
+    public String mediaType;
     @XmlElement(name = "refereeInfo")
     public String refereeInfo;
     @XmlElement(name = "refereeNotes")
     public String refereeNotes;
-    @XmlElement(name = "mediaType")
-    public String mediaType;
+    @XmlElementWrapper(name = "supplements")
+    @XmlElement(name = "supplement")
+    @JsonProperty("supplements")
+    public List<SupplementDTO> supplements;
     @XmlElementWrapper(name = "links")
     @XmlElement(name = "link")
     @JsonProperty("links")
     public List<LinkDTO> links;
+
+    
 
 }

@@ -64,6 +64,11 @@ public class RpgCampaign implements Campaign {
     }
 
     @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
     public Long getParentId() {
         return null;
     }

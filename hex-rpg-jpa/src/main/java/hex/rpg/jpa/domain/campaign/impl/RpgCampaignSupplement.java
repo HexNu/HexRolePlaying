@@ -57,6 +57,11 @@ public class RpgCampaignSupplement implements CampaignSupplement {
     }
 
     @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
     public Long getParentId() {
         return getCampaign().getId();
     }

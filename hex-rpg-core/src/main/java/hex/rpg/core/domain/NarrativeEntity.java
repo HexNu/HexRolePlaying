@@ -8,6 +8,8 @@ import java.util.List;
  */
 public interface NarrativeEntity extends DomainEntity {
 
+    void setId(Long id);
+
     String getTitle();
 
     void setTitle(String title);
