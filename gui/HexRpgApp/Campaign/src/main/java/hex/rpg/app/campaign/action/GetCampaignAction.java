@@ -3,10 +3,10 @@ package hex.rpg.app.campaign.action;
 import hex.rpg.api.modulesuport.action.HexAction;
 import hex.rpg.api.modulesuport.gui.dialog.HexDialog;
 import hex.rpg.api.modulesuport.gui.dialog.TextInputDialog;
+import hex.rpg.app.campaign.lookup.CampaignViewContext;
 import hex.rpg.app.client.action.GetFullCampaignAction;
+import hex.rpg.app.domain.campaign.AppCampaign;
 import hex.rpg.core.domain.campaign.Campaign;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -24,7 +24,7 @@ import org.openide.util.NbBundle.Messages;
 @Messages("CTL_GetCampaignAction=Get Campaign")
 public final class GetCampaignAction extends HexAction {
 
-    private Campaign campaign = null;
+    private AppCampaign campaign = null;
 
     public GetCampaignAction() {
         super("Hämta kampanj");
@@ -32,11 +32,18 @@ public final class GetCampaignAction extends HexAction {
 
     @Override
     public void performAction(Object... params) {
-        TextInputDialog dialog = HexDialog.showTextInputDialog("Set campaign-id", "1");
-        if (dialog.getResult().equals(HexDialog.Result.OK)) {
-            Long id = Long.valueOf(dialog.getText());
-            campaign = new GetFullCampaignAction().getCampaign(id);
+        Long id = null;
+        if (params.length > 0 && params[0] instanceof Long) {
+            id = (Long) params[0];
         }
+        if (id == null) {
+            TextInputDialog dialog = HexDialog.showTextInputDialog("Set campaign-id", "1");
+            if (dialog.getResult().equals(HexDialog.Result.OK)) {
+                id = Long.valueOf(dialog.getText());
+            }
+        }
+        campaign = new GetFullCampaignAction().getCampaign(id);
+        CampaignViewContext.publishCampaign(campaign);
     }
 
     public Campaign getCampaign() {

@@ -1,5 +1,7 @@
 package hex.rpg.app.campaign.node;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 
@@ -9,8 +11,14 @@ import org.openide.nodes.Children;
  */
 public class RpgRootNode extends AbstractNode {
 
-    public RpgRootNode(Children children) {
-        super(children);
+    List<CampaignNode> campaignNodes = new ArrayList<>();
+    public RpgRootNode() {
+        super(Children.create(new RpgNodeChildFactory<>(), true));
     }
 
+    public void addChild(CampaignNode campaignNode) {
+        campaignNodes.add(campaignNode);
+    }
+    
+    
 }
