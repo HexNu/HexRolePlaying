@@ -19,6 +19,7 @@
                 <configuration>
                     <publicPackages>
                         <publicPackage>hex.rpg.app.client.action</publicPackage>
+                        <publicPackage>hex.rpg.app.client.resource</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
@@ -92,22 +93,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>HexRpgAppDomain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>hex-rpg-io</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>hex-rpg-dto</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>hex-rpg-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -129,6 +120,11 @@
             <groupId>com.google.http-client</groupId>
             <artifactId>google-http-client-gson</artifactId>
             <version>1.19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>HexRpgAppDomain</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <properties>
