@@ -8,9 +8,12 @@ import hex.rpg.dto.out.CampaignDTO;
 import hex.rpg.dto.out.EpisodeDTO;
 import hex.rpg.dto.out.FullCampaignDTO;
 import hex.rpg.dto.out.StoryDTO;
+import hex.rpg.service.command.campaign.FindAllCampaignsCommand;
 import hex.rpg.service.command.campaign.GetCampaignCommand;
 import hex.rpg.service.command.episode.GetEpisodeCommand;
 import hex.rpg.service.command.story.GetStoryCommand;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,6 +27,21 @@ import javax.ws.rs.core.Response;
  */
 @Path("campaign")
 public class CampaignResource extends AbstractResource {
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCampaigns() {
+        List<Campaign> campaigns = commandExecutor.execute(new FindAllCampaignsCommand(), getKey());
+        if (campaigns == null || campaigns.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        LinkDTOBuilder linkDTOBuilder = new LinkDTOBuilder(getBaseUri());
+        List<FullCampaignDTO> result = new ArrayList<>();
+        campaigns.stream().forEach((campaign) -> {
+            result.add(new FullCampaignDTO(campaign, linkDTOBuilder));
+        });
+        return Response.ok(result).build();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
