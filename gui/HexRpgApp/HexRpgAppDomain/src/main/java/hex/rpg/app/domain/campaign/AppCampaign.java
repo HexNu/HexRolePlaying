@@ -20,9 +20,6 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
     private final List<Story> stories = new ArrayList<>();
     private final List<Supplement> supplements = new ArrayList<>();
     private final List<NonPlayingCharacter> characters = new ArrayList<>();
-    private boolean hasStories = true;
-    private boolean hasCharacters = true;
-    private boolean hasSupplements = true;
 
     @Override
     public void addSupplement(Supplement supplement) {
@@ -44,11 +41,7 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
 
     @Override
     public boolean hasSupplements() {
-        return !hasSupplements ? !supplements.isEmpty() : true;
-    }
-
-    public void setHasSupplements(boolean hasSupplements) {
-        this.hasSupplements = hasSupplements;
+        return !supplements.isEmpty();
     }
 
     @Override
@@ -79,11 +72,7 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
 
     @Override
     public boolean hasStories() {
-        return !hasStories ? !stories.isEmpty() : true;
-    }
-
-    public void setHasStories(boolean hasStories) {
-        this.hasStories = hasStories;
+        return !stories.isEmpty();
     }
 
     @Override
@@ -111,11 +100,7 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
 
     @Override
     public boolean hasCharacters() {
-        return !hasCharacters ? !characters.isEmpty() : true;
-    }
-
-    public void setHasCharacters(boolean hasCharacters) {
-        this.hasCharacters = hasCharacters;
+        return !characters.isEmpty();
     }
 
     @Override
