@@ -1,6 +1,7 @@
 package hex.rpg.app.client.action;
 
 import hex.rpg.api.modulesuport.action.HexAction;
+import hex.rpg.app.client.resource.CampaignClient;
 import hex.rpg.core.domain.campaign.Campaign;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,11 @@ import java.util.List;
  */
 public class GetAllCampaignsAction extends HexAction {
 
-    private final List<Campaign> campaigns = new ArrayList<>();
+    private List<Campaign> campaigns = new ArrayList<>();
 
     @Override
     public void performAction(Object... params) {
+        campaigns = new CampaignClient().getAllCampaigns();
     }
 
     public List<Campaign> getCampaigns() {
