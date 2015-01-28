@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  */
 public class HexIcon extends ImageIcon {
 
-    private static final IconType DEFAULT_ICON_TYPE = IconType.IMAGES;
+    private static final IconType DEFAULT_ICON_TYPE = IconType.ICONS;
 
     public HexIcon(String name) {
         this(name, DEFAULT_ICON_TYPE);
@@ -48,14 +48,14 @@ public class HexIcon extends ImageIcon {
                 return ImageIO.read(imageStream);
             } catch (IOException ex) {
                 try {
-                    return ImageIO.read(type.getStream("bullet_error"));
+                    return ImageIO.read(type.getStream("warning"));
                 } catch (IOException ex1) {
                     throw new RuntimeException(ex1);
                 }
             }
         } else {
             try {
-                return ImageIO.read(type.getStream("bullet_error"));
+                return ImageIO.read(type.getStream("warning"));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

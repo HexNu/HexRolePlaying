@@ -1,5 +1,6 @@
 package hex.rpg.api.modulesuport.gui;
 
+import hex.rpg.api.modulesuport.ResourceProvider;
 import java.io.InputStream;
 
 /**
@@ -8,21 +9,17 @@ import java.io.InputStream;
  */
 public enum IconType {
 
-    IMAGES("fatcow", 16),
-    IMAGES24("fatcow", 24),
-    System("graphics", 0);
-    private final String dirName;
+    ICONS(16),
+    ICONS24(24);
     private final int size;
-    private static final String BASE_PATH = IconType.class.getPackage().getName().replace('.', '/') + "/";
 
-    private IconType(String dirName, int size) {
-        this.dirName = dirName;
+    private IconType(int size) {
         this.size = size;
     }
 
     public InputStream getStream(String name) {
-        String path = BASE_PATH + dirName + "/" + name + getSizeAppendix() + ".png";
-        return getClass().getClassLoader().getResourceAsStream(path);
+        String path = name + getSizeAppendix() + ".png";
+        return ResourceProvider.ICONS.getResourceStream(path);
     }
 
     private String getSizeAppendix() {
