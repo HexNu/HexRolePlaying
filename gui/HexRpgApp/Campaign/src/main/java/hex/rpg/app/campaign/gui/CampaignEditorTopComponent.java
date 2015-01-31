@@ -27,6 +27,10 @@ public class CampaignEditorTopComponent extends AbstractNarrativeEntityEditorTop
     }
 
     @Override
+    protected void setupEntitySpecificListeners() {
+    }
+
+    @Override
     void writeProperties(Properties p) {
     }
 
@@ -41,6 +45,11 @@ public class CampaignEditorTopComponent extends AbstractNarrativeEntityEditorTop
     @Override
     protected boolean entitySpecificFieldsNeedsSaving() {
         return false;
+    }
+
+    @Override
+    public void save() {
+
     }
 
 }

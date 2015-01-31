@@ -33,6 +33,10 @@ public class StorySupplementEditorTopComponent extends AbstractNarrativeEntityEd
     }
 
     @Override
+    protected void setupEntitySpecificListeners() {
+    }
+
+    @Override
     protected void populateEntitySpecificFields() {
         ((SupplementImageContentPanel) getPanel(CONTENT_TAB_LABEL)).setContent(getEntity().getContentAsByteArray());
     }
@@ -50,5 +54,9 @@ public class StorySupplementEditorTopComponent extends AbstractNarrativeEntityEd
     @Override
     void readProperties(Properties p) {
         String version = p.getProperty("version");
+    }
+
+    @Override
+    public void save() {
     }
 }

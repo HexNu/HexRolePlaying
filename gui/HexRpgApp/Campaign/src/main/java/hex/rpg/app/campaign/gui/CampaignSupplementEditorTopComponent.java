@@ -4,6 +4,7 @@ import hex.rpg.api.modulesuport.gui.HexIcon;
 import hex.rpg.app.campaign.gui.panel.SupplementImageContentPanel;
 import hex.rpg.app.domain.campaign.AppCampaignSupplement;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Properties;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -18,7 +19,7 @@ import org.openide.windows.TopComponent;
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
 @ActionID(category = "Window", id = "hex.rpg.app.campaign.gui.CampaignSupplementEditorTopComponent")
 public class CampaignSupplementEditorTopComponent extends AbstractNarrativeEntityEditorTopComponent<AppCampaignSupplement> {
-    
+
     SupplementImageContentPanel contentPanel;
     private static final String CONTENT_TAB_LABEL = "Content";
 
@@ -30,6 +31,10 @@ public class CampaignSupplementEditorTopComponent extends AbstractNarrativeEntit
         super(entity, null, Collections.singletonMap(CONTENT_TAB_LABEL, new SupplementImageContentPanel()));
         setIcon(HexIcon.getImage("file-picture-text"));
         contentPanel = (SupplementImageContentPanel) getPanel(CONTENT_TAB_LABEL);
+    }
+
+    @Override
+    protected void setupEntitySpecificListeners() {
     }
 
     @Override
@@ -47,6 +52,10 @@ public class CampaignSupplementEditorTopComponent extends AbstractNarrativeEntit
 
     @Override
     protected boolean entitySpecificFieldsNeedsSaving() {
-        return false;
+        return Objects.equals(contentPanel.getContent(), getEntity().getContentAsByteArray());
+    }
+
+    @Override
+    public void save() {
     }
 }

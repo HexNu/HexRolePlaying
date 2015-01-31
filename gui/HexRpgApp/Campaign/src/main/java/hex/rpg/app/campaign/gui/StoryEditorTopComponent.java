@@ -27,6 +27,10 @@ public class StoryEditorTopComponent extends AbstractNarrativeEntityEditorTopCom
     }
 
     @Override
+    protected void setupEntitySpecificListeners() {
+    }
+
+    @Override
     protected void populateEntitySpecificFields() {
     }
 
@@ -43,5 +47,9 @@ public class StoryEditorTopComponent extends AbstractNarrativeEntityEditorTopCom
     @Override
     void readProperties(Properties p) {
         String version = p.getProperty("version");
+    }
+
+    @Override
+    public void save() {
     }
 }

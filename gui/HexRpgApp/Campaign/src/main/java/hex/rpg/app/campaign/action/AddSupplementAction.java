@@ -16,7 +16,10 @@ import hex.rpg.app.domain.story.AppStorySupplement;
 import hex.rpg.core.domain.DomainEntity;
 import hex.rpg.core.domain.NarrativeEntity;
 import hex.rpg.core.domain.Supplement;
+import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.core.domain.character.NonPlayingCharacter;
+import hex.rpg.core.domain.story.Episode;
+import hex.rpg.core.domain.story.Story;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -50,9 +53,9 @@ public class AddSupplementAction<S extends Supplement> extends HexAction {
         TextInputDialog titleDialog = HexDialog.showTextInputDialog("Add Supplement", "Supplement Title", "");
         if (titleDialog.getResult().equals(HexDialog.Result.OK)) {
             final String title = titleDialog.getText();
-            new HexWorker<Boolean>() {
+            new HexWorker<S>() {
                 @Override
-                protected Boolean executeWork() {
+                protected S executeWork() {
                     boolean added = false;
                     try {
                         supplement = (S) supplementMap.get(node.getEntity().getClass()).newInstance();
@@ -67,13 +70,20 @@ public class AddSupplementAction<S extends Supplement> extends HexAction {
                     } catch (InstantiationException | IllegalAccessException ex) {
                         Logger.getLogger(AddSupplementAction.class.getName()).log(Level.SEVERE, "Could not add supplement");
                     }
-                    return added;
+                    return supplement;
                 }
 
                 @Override
                 protected void updateGui() {
-                    if (getWorkResult()) {
+                    if (getWorkResult() != null) {
                         node.fireNodeChange();
+                        if (node.getEntity() instanceof Campaign) {
+                            new EditCampaignSupplementAction((AppCampaignSupplement) getWorkResult()).performAction();
+                        } else if (node.getEntity() instanceof Story) {
+                            new EditStorySupplementAction((AppStorySupplement) getWorkResult()).performAction();
+                        } else if (node.getEntity() instanceof Episode) {
+                            new EditEpisodeSupplementAction((AppEpisodeSupplement) getWorkResult()).performAction();
+                        }
                     }
                 }
             }.execute();

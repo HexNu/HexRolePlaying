@@ -119,5 +119,4 @@ public abstract class DataEditorTopComponent<T> extends TopComponent implements 
             notifyChange();
         }
     }
-
 }

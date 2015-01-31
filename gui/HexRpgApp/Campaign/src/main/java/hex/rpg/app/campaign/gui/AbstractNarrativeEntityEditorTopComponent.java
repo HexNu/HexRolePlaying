@@ -41,8 +41,18 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
             }
             setEditedEntity(entity);
         }
+        setupListeners();
     }
 
+    private void setupListeners() {
+        titleTextField.getDocument().addDocumentListener(new ContentDocumentListener());
+        shortDescriptionTextArea.getDocument().addDocumentListener(new ContentDocumentListener());
+        descriptionTextArea.getDocument().addDocumentListener(new ContentDocumentListener());
+        refereeInfoTextArea.getDocument().addDocumentListener(new ContentDocumentListener());
+        refereeNotesTextArea.getDocument().addDocumentListener(new ContentDocumentListener());
+        setupEntitySpecificListeners();
+    }
+    
     @Override
     public String toString() {
         return getName();
@@ -285,6 +295,8 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
     protected abstract void populateEntitySpecificFields();
 
     protected abstract boolean entitySpecificFieldsNeedsSaving();
+    
+    protected abstract void setupEntitySpecificListeners();
 
     @Override
     protected final boolean needsSaving() {
@@ -310,9 +322,5 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void save() {
     }
 }

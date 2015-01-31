@@ -33,6 +33,10 @@ public class EpisodeSupplementEditorTopComponent extends AbstractNarrativeEntity
     }
 
     @Override
+    protected void setupEntitySpecificListeners() {
+    }
+
+    @Override
     void writeProperties(Properties p) {
         p.setProperty("version", "1.0");
     }
@@ -50,5 +54,9 @@ public class EpisodeSupplementEditorTopComponent extends AbstractNarrativeEntity
     @Override
     protected boolean entitySpecificFieldsNeedsSaving() {
         return false;
+    }
+
+    @Override
+    public void save() {
     }
 }

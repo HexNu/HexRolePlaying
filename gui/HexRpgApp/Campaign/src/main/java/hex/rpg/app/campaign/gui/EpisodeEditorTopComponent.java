@@ -34,6 +34,11 @@ public class EpisodeEditorTopComponent extends AbstractNarrativeEntityEditorTopC
     }
 
     @Override
+    protected void setupEntitySpecificListeners() {
+        contentPanel.getContentTextArea().getDocument().addDocumentListener(new ContentDocumentListener());
+    }
+
+    @Override
     void writeProperties(Properties p) {
         p.setProperty("version", "1.0");
     }
@@ -51,5 +56,9 @@ public class EpisodeEditorTopComponent extends AbstractNarrativeEntityEditorTopC
     @Override
     protected boolean entitySpecificFieldsNeedsSaving() {
         return !Objects.equals(getEntity().getContent(), contentPanel.getContent());
+    }
+
+    @Override
+    public void save() {
     }
 }
