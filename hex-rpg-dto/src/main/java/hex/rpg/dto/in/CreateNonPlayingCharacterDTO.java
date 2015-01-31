@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "character")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class NonPlayingCharacterDTO {
+public class CreateNonPlayingCharacterDTO {
 
     
     @XmlElement(name = "id")
@@ -45,7 +45,7 @@ public class NonPlayingCharacterDTO {
     @XmlElementWrapper(name = "supplements")
     @XmlElement(name = "supplement")
     @JsonProperty("supplements")
-    public List<SupplementDTO> supplements;
+    public List<CreateSupplementDTO> supplements;
     @XmlElementWrapper(name = "links")
     @XmlElement(name = "link")
     @JsonProperty("links")

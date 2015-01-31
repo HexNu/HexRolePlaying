@@ -34,6 +34,7 @@ public class AddStoryAction extends HexAction {
                     story.setTitle(title);
                     story.setCampaign(node.getEntity());
                     node.getEntity().addStory(story);
+                    story.setIndex(node.getEntity().getStories().size());
                     return null;
                 }
 

@@ -57,19 +57,15 @@ public class AppCampaign extends AbstractNarrativeEntity implements Campaign {
     @Override
     public void addStory(int index, Story story) {
         story.setCampaign(this);
+        story.setIndex(index);
         stories.add(index, story);
     }
 
     @Override
     public void addStory(Story story) {
-        story.setCampaign(this);
-        stories.add(story);
+        addStory(this.stories.size(), story);
     }
     
-    public void setStories(List<Story> stories) {
-        this.stories.addAll(stories);
-    }
-
     @Override
     public boolean hasStories() {
         return !stories.isEmpty();

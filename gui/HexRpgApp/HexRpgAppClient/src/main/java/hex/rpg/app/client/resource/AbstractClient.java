@@ -22,18 +22,4 @@ public abstract class AbstractClient {
         Client client = Client.create(config);
         return client.resource(BASEPATH);
     }
-
-    protected ClientResponse getClientResponse(String uri) {
-        ClientConfig config = new DefaultClientConfig();
-        config.getClasses().add(JacksonJsonProvider.class);
-        Client client = Client.create(config);
-        WebResource resource = client.resource(uri);
-        ClientResponse response = resource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        if (!ClientResponse.Status.OK.equals(ClientResponse.Status.fromStatusCode(response.getStatus()))) {
-            throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-        } else {
-            return response;
-        }
-    }
-
 }

@@ -1,5 +1,6 @@
 package hex.rpg.dto.in;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -12,9 +13,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author hln
  */
-@XmlRootElement(name = "campaign")
+@XmlRootElement(name = "order")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CampaignDTO implements EntityDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CreateStoryDTO implements CreateEntityDTO {
 
     @XmlElement(name = "id")
     public Long id;
@@ -22,8 +24,8 @@ public class CampaignDTO implements EntityDTO {
     public String title;
     @XmlElement(name = "name")
     public String name;
-    @XmlElement(name = "type")
-    public String type;
+    @XmlElement(name = "index")
+    public Integer index;
     @XmlElement(name = "shortDescription")
     public String shortDescription;
     @XmlElement(name = "description")
@@ -32,20 +34,16 @@ public class CampaignDTO implements EntityDTO {
     public String refereeInfo;
     @XmlElement(name = "refereeNotes")
     public String refereeNotes;
+    @XmlElementWrapper(name = "episodes")
+    @XmlElement(name = "episode")
+    @JsonProperty("episodes")
+    public List<CreateEpisodeDTO> episodes;
     @XmlElementWrapper(name = "supplements")
     @XmlElement(name = "supplement")
     @JsonProperty("supplements")
-    public List<SupplementDTO> supplements;
-    @XmlElementWrapper(name = "stories")
-    @XmlElement(name = "story")
-    @JsonProperty("stories")
-    public List<StoryDTO> stories;
-    @XmlElementWrapper(name = "characters")
-    @XmlElement(name = "character")
-    @JsonProperty("characters")
-    public List<StoryDTO> characters;
+    public List<CreateSupplementDTO> supplements;
 
-    public CampaignDTO() {
+    public CreateStoryDTO() {
     }
 
     @Override
@@ -77,4 +75,5 @@ public class CampaignDTO implements EntityDTO {
     public String getRefereeNotes() {
         return refereeNotes;
     }
+
 }

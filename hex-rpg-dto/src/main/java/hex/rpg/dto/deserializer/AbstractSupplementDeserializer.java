@@ -1,20 +1,20 @@
-package hex.rpg.app.client.assembler;
+package hex.rpg.dto.deserializer;
 
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.dto.in.SupplementDTO;
+import hex.rpg.dto.in.CreateSupplementDTO;
 
 /**
  *
  * @author hln
  */
-public abstract class AbstractSupplementAssembler<T> {
+public abstract class AbstractSupplementDeserializer<T> {
 
-    private final SupplementDTO supplementDTO;
+    private final CreateSupplementDTO supplementDTO;
     private final Supplement supplement;
     
     // TODO: Hantering av content.
 
-    public AbstractSupplementAssembler(SupplementDTO dto, Supplement supplement) {
+    public AbstractSupplementDeserializer(CreateSupplementDTO dto, Supplement supplement) {
         this.supplementDTO = dto;
         this.supplement = supplement;
     }

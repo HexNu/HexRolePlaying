@@ -1,14 +1,16 @@
 package hex.rpg.app.client.resource;
 
 import com.sun.jersey.api.client.GenericType;
-import hex.rpg.app.client.assembler.CampaignAssembler;
+import hex.rpg.app.client.deserialize.CampaignDeserializer;
 import hex.rpg.core.domain.Supplement;
 import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
-import hex.rpg.dto.in.CampaignDTO;
+import hex.rpg.dto.in.CreateCampaignDTO;
+import hex.rpg.dto.out.FullCampaignDTO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -18,18 +20,23 @@ public class CampaignClient extends AbstractClient {
 
     public List<Campaign> getAllCampaigns() {
         List<Campaign> result = new ArrayList<>();
-        List<CampaignDTO> dtos = getWebResource().path("campaign").get(new GenericType<List<CampaignDTO>>() {
+        List<CreateCampaignDTO> dtos = getWebResource().path("campaign").get(new GenericType<List<CreateCampaignDTO>>() {
         });
-        for (CampaignDTO dto : dtos) {
-            result.add(new CampaignAssembler(dto).createEntity());
+        for (CreateCampaignDTO dto : dtos) {
+            result.add(new CampaignDeserializer(dto).createEntity());
         }
         return result;
     }
+    
+    public void saveCampaign(Campaign campaign) {
+        FullCampaignDTO fullCampaignDTO = new FullCampaignDTO(campaign, null);
+        getWebResource().path("campaign/").accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).post(fullCampaignDTO);
+    }
 
     public Campaign getCampaign(Long id) {
-        CampaignDTO result = getWebResource().path("campaign/" + id + "/full").get(new GenericType<CampaignDTO>() {
+        CreateCampaignDTO result = getWebResource().path("campaign/" + id + "/full").get(new GenericType<CreateCampaignDTO>() {
         });
-        return new CampaignAssembler(result).createEntity();
+        return new CampaignDeserializer(result).createEntity();
     }
 
     public static void main(String[] args) {

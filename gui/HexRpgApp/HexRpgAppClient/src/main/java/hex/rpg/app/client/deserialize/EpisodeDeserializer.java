@@ -1,19 +1,19 @@
-package hex.rpg.app.client.assembler;
+package hex.rpg.app.client.deserialize;
 
 import hex.rpg.app.domain.story.AppEpisode;
 import hex.rpg.app.domain.story.AppEpisodeSupplement;
 import hex.rpg.app.domain.story.AppStorySupplement;
-import hex.rpg.dto.in.EpisodeDTO;
-import hex.rpg.dto.in.SupplementDTO;
+import hex.rpg.dto.in.CreateEpisodeDTO;
+import hex.rpg.dto.in.CreateSupplementDTO;
 import java.util.List;
 
 /**
  *
  * @author hln
  */
-public class EpisodeAssembler extends AbstractEntityAssembler<AppEpisode, EpisodeDTO>{
+public class EpisodeDeserializer extends AbstractEntityDeserializer<AppEpisode, CreateEpisodeDTO>{
 
-    public EpisodeAssembler(EpisodeDTO dto) {
+    public EpisodeDeserializer(CreateEpisodeDTO dto) {
         super(dto, new AppEpisode());
     }
 
@@ -24,9 +24,9 @@ public class EpisodeAssembler extends AbstractEntityAssembler<AppEpisode, Episod
         getEntity().setContent(getDto().content);
         return getEntity();
     }
-    private void createSupplements(List<SupplementDTO> supplementDTOs) {
-        for (SupplementDTO dto : supplementDTOs) {
-            AppEpisodeSupplement supplement = new EpisodeSupplementAssembler(dto).createSupplement();
+    private void createSupplements(List<CreateSupplementDTO> supplementDTOs) {
+        for (CreateSupplementDTO dto : supplementDTOs) {
+            AppEpisodeSupplement supplement = new EpisodeSupplementDeserializer(dto).createSupplement();
             supplement.setEpisode(getEntity());
             getEntity().addSupplement(supplement);
         }

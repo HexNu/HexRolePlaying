@@ -1,18 +1,18 @@
-package hex.rpg.app.client.assembler;
+package hex.rpg.dto.deserializer;
 
 import hex.rpg.core.domain.NarrativeEntity;
-import hex.rpg.dto.in.EntityDTO;
+import hex.rpg.dto.in.CreateEntityDTO;
 
 /**
  *
  * @author hln
  */
-public abstract class AbstractEntityAssembler<E, D> {
+public abstract class AbstractEntityDeserializer<E, D> {
 
-    protected final EntityDTO dto;
+    protected final CreateEntityDTO dto;
     private final NarrativeEntity entity;
 
-    public AbstractEntityAssembler(EntityDTO dto, NarrativeEntity entity) {
+    public AbstractEntityDeserializer(CreateEntityDTO dto, NarrativeEntity entity) {
         this.dto = dto;
         this.entity = entity;
         parse();

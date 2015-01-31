@@ -28,9 +28,11 @@ public class FullNonPlayingCharacterDTO extends AbstractDTO {
     private final String stats;
     private final String mediaType;
     private final List<FullSupplementDTO> supplements = new ArrayList<>();
-
+    
     public FullNonPlayingCharacterDTO(NonPlayingCharacter character, LinkDTOBuilder linkBuilder) {
-        addLink(linkBuilder.createPortraitDownloadLink(character));
+        if (linkBuilder != null) {
+            addLink(linkBuilder.createPortraitDownloadLink(character));
+        }
         id = character.getId();
         name = character.getName();
         shortDescription = character.getShortDescription();

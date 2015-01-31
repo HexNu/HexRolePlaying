@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "supplement")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SupplementDTO {
+public class CreateSupplementDTO {
 
     @XmlElement(name = "id")
     public Long id;

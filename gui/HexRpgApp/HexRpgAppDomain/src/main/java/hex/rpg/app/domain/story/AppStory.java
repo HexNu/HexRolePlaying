@@ -74,12 +74,12 @@ public class AppStory extends AbstractNarrativeEntity implements Story {
     public void addEpisode(int index, Episode episode) {
         episodes.add(index, episode);
         episode.setStory(this);
+        episode.setIndex(index);
     }
 
     @Override
     public void addEpisode(Episode episode) {
-        episodes.add(episode);
-        episode.setStory(this);
+        addEpisode(episodes.size(), episode);
     }
 
     @Override

@@ -1,21 +1,21 @@
-package hex.rpg.app.client.assembler;
+package hex.rpg.app.client.deserialize;
 
 import hex.rpg.app.domain.campaign.AppCampaign;
 import hex.rpg.app.domain.campaign.AppCampaignSupplement;
 import hex.rpg.app.domain.story.AppStory;
 import hex.rpg.core.domain.campaign.Campaign;
-import hex.rpg.dto.in.CampaignDTO;
-import hex.rpg.dto.in.StoryDTO;
-import hex.rpg.dto.in.SupplementDTO;
+import hex.rpg.dto.in.CreateCampaignDTO;
+import hex.rpg.dto.in.CreateStoryDTO;
+import hex.rpg.dto.in.CreateSupplementDTO;
 import java.util.List;
 
 /**
  *
  * @author hln
  */
-public class CampaignAssembler extends AbstractEntityAssembler<AppCampaign, CampaignDTO> {
+public class CampaignDeserializer extends AbstractEntityDeserializer<AppCampaign, CreateCampaignDTO> {
 
-    public CampaignAssembler(CampaignDTO dto) {
+    public CampaignDeserializer(CreateCampaignDTO dto) {
         super(dto, new AppCampaign());
     }
 
@@ -27,17 +27,17 @@ public class CampaignAssembler extends AbstractEntityAssembler<AppCampaign, Camp
         return getEntity();
     }
     
-    private void createSupplements(List<SupplementDTO> supplementDTOs) {
-        for (SupplementDTO dto : supplementDTOs) {
-            AppCampaignSupplement supplement = new CampaignSupplementAssembler(dto).createSupplement();
+    private void createSupplements(List<CreateSupplementDTO> supplementDTOs) {
+        for (CreateSupplementDTO dto : supplementDTOs) {
+            AppCampaignSupplement supplement = new CampaignSupplementDeserializer(dto).createSupplement();
             supplement.setCampaign(getEntity());
             getEntity().addSupplement(supplement);
         }
     }
 
-    private void createStories(List<StoryDTO> storieDTOs) {
-        for (StoryDTO dto : storieDTOs) {
-            AppStory story = new StoryAssembler(dto).createEntity();
+    private void createStories(List<CreateStoryDTO> storieDTOs) {
+        for (CreateStoryDTO dto : storieDTOs) {
+            AppStory story = new StoryDeserializer(dto).createEntity();
             story.setCampaign(getEntity());
             getEntity().addStory(story);
         }

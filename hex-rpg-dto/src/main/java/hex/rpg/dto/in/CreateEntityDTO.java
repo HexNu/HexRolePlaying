@@ -4,7 +4,7 @@ package hex.rpg.dto.in;
  *
  * @author hln
  */
-public interface EntityDTO {
+public interface CreateEntityDTO {
 
     Long getId();
 

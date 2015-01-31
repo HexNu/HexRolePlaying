@@ -4,6 +4,8 @@ import hex.rpg.core.domain.campaign.Campaign;
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
 import hex.rpg.dto.LinkDTOBuilder;
+import hex.rpg.dto.in.CreateCampaignDTO;
+import hex.rpg.dto.deserializer.CampaignDeserializer;
 import hex.rpg.dto.out.CampaignDTO;
 import hex.rpg.dto.out.EpisodeDTO;
 import hex.rpg.dto.out.FullCampaignDTO;
@@ -14,7 +16,9 @@ import hex.rpg.service.command.episode.GetEpisodeCommand;
 import hex.rpg.service.command.story.GetStoryCommand;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -41,6 +45,16 @@ public class CampaignResource extends AbstractResource {
             result.add(new FullCampaignDTO(campaign, linkDTOBuilder));
         });
         return Response.ok(result).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response saveCampaign(CreateCampaignDTO campaignDTO) {
+        Campaign result = new CampaignDeserializer(campaignDTO).createEntity();
+        System.out.println(result.getTitle());
+        System.out.println(result.getId());
+        return Response.ok().build();
     }
 
     @GET

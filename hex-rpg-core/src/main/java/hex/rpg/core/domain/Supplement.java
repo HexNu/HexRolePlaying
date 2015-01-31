@@ -40,12 +40,14 @@ public interface Supplement extends NarrativeEntity, Comparable<Supplement> {
         HANDOUT, ILLUSTRATION, LETTER, MAP, NEWS_ARTICLE, OTHER;
 
         public static Type getByString(String string) {
-            for (Type type : values()) {
-                if (type.name().replaceAll("_", "").equalsIgnoreCase(string.replaceAll("[-_]", ""))) {
-                    return type;
+            if (string != null) {
+                for (Type type : values()) {
+                    if (type.name().replaceAll("_", "").equalsIgnoreCase(string.replaceAll("[-_]", ""))) {
+                        return type;
+                    }
                 }
             }
-            return null;
+            return OTHER;
         }
     }
 }

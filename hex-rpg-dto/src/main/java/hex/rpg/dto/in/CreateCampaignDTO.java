@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author hln
  */
-@XmlRootElement(name = "order")
+@XmlRootElement(name = "campaign")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EpisodeDTO implements EntityDTO {
+public class CreateCampaignDTO implements CreateEntityDTO {
 
     @XmlElement(name = "id")
     public Long id;
@@ -22,14 +22,12 @@ public class EpisodeDTO implements EntityDTO {
     public String title;
     @XmlElement(name = "name")
     public String name;
-    @XmlElement(name = "index")
-    public Integer index;
+    @XmlElement(name = "type")
+    public String type;
     @XmlElement(name = "shortDescription")
     public String shortDescription;
     @XmlElement(name = "description")
     public String description;
-    @XmlElement(name = "content")
-    public String content;
     @XmlElement(name = "refereeInfo")
     public String refereeInfo;
     @XmlElement(name = "refereeNotes")
@@ -37,9 +35,17 @@ public class EpisodeDTO implements EntityDTO {
     @XmlElementWrapper(name = "supplements")
     @XmlElement(name = "supplement")
     @JsonProperty("supplements")
-    public List<SupplementDTO> supplements;
+    public List<CreateSupplementDTO> supplements;
+    @XmlElementWrapper(name = "stories")
+    @XmlElement(name = "story")
+    @JsonProperty("stories")
+    public List<CreateStoryDTO> stories;
+    @XmlElementWrapper(name = "characters")
+    @XmlElement(name = "character")
+    @JsonProperty("characters")
+    public List<CreateStoryDTO> characters;
 
-    public EpisodeDTO() {
+    public CreateCampaignDTO() {
     }
 
     @Override
@@ -71,5 +77,4 @@ public class EpisodeDTO implements EntityDTO {
     public String getRefereeNotes() {
         return refereeNotes;
     }
-
 }
