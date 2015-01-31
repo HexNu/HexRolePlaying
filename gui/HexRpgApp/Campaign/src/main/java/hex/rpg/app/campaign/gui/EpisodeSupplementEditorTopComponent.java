@@ -3,8 +3,14 @@ package hex.rpg.app.campaign.gui;
 import hex.rpg.api.modulesuport.gui.HexIcon;
 import hex.rpg.app.campaign.gui.panel.SupplementImageContentPanel;
 import hex.rpg.app.domain.story.AppEpisodeSupplement;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
+import javax.swing.JButton;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.windows.TopComponent;
@@ -34,6 +40,17 @@ public class EpisodeSupplementEditorTopComponent extends AbstractNarrativeEntity
 
     @Override
     protected void setupEntitySpecificListeners() {
+        ((SupplementImageContentPanel) getPanel(CONTENT_TAB_LABEL)).getImagePanel().getViewport().addContainerListener(new ContainerListener() {
+            @Override
+            public void componentAdded(ContainerEvent e) {
+                notifyChange();
+            }
+
+            @Override
+            public void componentRemoved(ContainerEvent e) {
+                notifyChange();
+            }
+        });
     }
 
     @Override
@@ -53,7 +70,7 @@ public class EpisodeSupplementEditorTopComponent extends AbstractNarrativeEntity
 
     @Override
     protected boolean entitySpecificFieldsNeedsSaving() {
-        return false;
+        return !Arrays.equals(contentPanel.getContent(), getEntity().getContentAsByteArray());
     }
 
     @Override

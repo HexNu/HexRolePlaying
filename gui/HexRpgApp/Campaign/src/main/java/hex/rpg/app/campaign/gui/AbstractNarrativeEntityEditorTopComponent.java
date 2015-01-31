@@ -16,7 +16,7 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
     public AbstractNarrativeEntityEditorTopComponent() {
         this(null);
     }
-    
+
     public AbstractNarrativeEntityEditorTopComponent(T entity) {
         this(entity, null, null);
     }
@@ -52,7 +52,7 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
         refereeNotesTextArea.getDocument().addDocumentListener(new ContentDocumentListener());
         setupEntitySpecificListeners();
     }
-    
+
     @Override
     public String toString() {
         return getName();
@@ -282,7 +282,7 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
     private void addTab(String label, JPanel panel) {
         entityTabbedPane.add(label, panel);
     }
-    
+
     protected JPanel getPanel(String label) {
         for (int i = 0; i < entityTabbedPane.getComponentCount(); i++) {
             if (entityTabbedPane.getTitleAt(i).equals(label)) {
@@ -295,7 +295,7 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
     protected abstract void populateEntitySpecificFields();
 
     protected abstract boolean entitySpecificFieldsNeedsSaving();
-    
+
     protected abstract void setupEntitySpecificListeners();
 
     @Override
@@ -306,19 +306,19 @@ public abstract class AbstractNarrativeEntityEditorTopComponent<T extends Narrat
         if (entitySpecificFieldsNeedsSaving()) {
             return true;
         }
-        if (!Objects.equals(titleTextField.getText(), originalEntity.getTitle())) {
+        if (!Objects.equals(titleTextField.getText(), originalEntity.getTitle() == null ? "" : originalEntity.getTitle())) {
             return true;
         }
-        if (!Objects.equals(shortDescriptionTextArea.getText(), originalEntity.getShortDescription())) {
+        if (!Objects.equals(shortDescriptionTextArea.getText(), originalEntity.getShortDescription() == null ? "" : originalEntity.getShortDescription())) {
             return true;
         }
-        if (!Objects.equals(descriptionTextArea.getText(), originalEntity.getDescription())) {
+        if (!Objects.equals(descriptionTextArea.getText(), originalEntity.getDescription() == null ? "" : originalEntity.getDescription())) {
             return true;
         }
-        if (!Objects.equals(refereeInfoTextArea.getText(), originalEntity.getRefereeInfo())) {
+        if (!Objects.equals(refereeInfoTextArea.getText(), originalEntity.getRefereeInfo() == null ? "" : originalEntity.getRefereeInfo())) {
             return true;
         }
-        if (!Objects.equals(refereeNotesTextArea.getText(), originalEntity.getRefereeNotes())) {
+        if (!Objects.equals(refereeNotesTextArea.getText(), originalEntity.getRefereeNotes() == null ? "" : originalEntity.getRefereeNotes())) {
             return true;
         }
         return false;

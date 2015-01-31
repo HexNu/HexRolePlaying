@@ -7,10 +7,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
 import org.openide.filesystems.FileChooserBuilder;
 import org.openide.util.Exceptions;
@@ -38,6 +42,10 @@ public class SupplementImageContentPanel extends javax.swing.JPanel {
 
     public byte[] getContent() {
         return contentByteArray;
+    }
+
+    public JScrollPane getImagePanel() {
+        return imagePanel;
     }
 
     /**

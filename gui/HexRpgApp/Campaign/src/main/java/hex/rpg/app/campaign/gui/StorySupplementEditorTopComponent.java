@@ -3,6 +3,9 @@ package hex.rpg.app.campaign.gui;
 import hex.rpg.api.modulesuport.gui.HexIcon;
 import hex.rpg.app.campaign.gui.panel.SupplementImageContentPanel;
 import hex.rpg.app.domain.story.AppStorySupplement;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -34,6 +37,17 @@ public class StorySupplementEditorTopComponent extends AbstractNarrativeEntityEd
 
     @Override
     protected void setupEntitySpecificListeners() {
+        ((SupplementImageContentPanel) getPanel(CONTENT_TAB_LABEL)).getImagePanel().getViewport().addContainerListener(new ContainerListener() {
+            @Override
+            public void componentAdded(ContainerEvent e) {
+                notifyChange();
+            }
+
+            @Override
+            public void componentRemoved(ContainerEvent e) {
+                notifyChange();
+            }
+        });
     }
 
     @Override
@@ -43,7 +57,7 @@ public class StorySupplementEditorTopComponent extends AbstractNarrativeEntityEd
 
     @Override
     protected boolean entitySpecificFieldsNeedsSaving() {
-        return false;
+        return !Arrays.equals(contentPanel.getContent(), getEntity().getContentAsByteArray());
     }
 
     @Override
