@@ -26,7 +26,7 @@ public final class GetCampaignAction extends HexAction {
     private AppCampaign campaign = null;
 
     public GetCampaignAction() {
-        super("Hämta kampanj");
+        super("Fetch Campaign");
     }
 
     @Override
@@ -36,7 +36,7 @@ public final class GetCampaignAction extends HexAction {
             id = (Long) params[0];
         }
         if (id == null) {
-            TextInputDialog dialog = HexDialog.showTextInputDialog("Set campaign-id", "1");
+            TextInputDialog dialog = HexDialog.showTextInputDialog("Fetch Campaign by ID","Set Campaign ID", "1");
             if (dialog.getResult().equals(HexDialog.Result.OK)) {
                 id = Long.valueOf(dialog.getText());
             }

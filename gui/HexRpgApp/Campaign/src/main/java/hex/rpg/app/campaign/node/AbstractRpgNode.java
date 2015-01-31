@@ -16,11 +16,14 @@ import hex.rpg.core.domain.character.NonPlayingCharacter;
 import hex.rpg.core.domain.story.Episode;
 import hex.rpg.core.domain.story.Story;
 import java.awt.Image;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.Action;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -36,6 +39,15 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
     private final List<Action> actionList = new ArrayList<>();
     public static final Action CONTEXT_DELIMITER = null;
     private final static Map<Class<? extends AppDomainEntity>, String> iconMap = new HashMap<>();
+    private static final ObservableNode commonObservable = new ObservableNode();
+    private final Observer observer = new Observer() {
+
+        @Override
+        public void update(Observable o, Object arg) {
+            fireIconChange();
+            fireOpenedIconChange();
+        }
+    };
 
     static {
         iconMap.put(AppCampaign.class, "library");
@@ -52,6 +64,16 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
         super(isLeafNode(entity) ? Children.LEAF : Children.create(new RpgNodeChildFactory<>(entity), true));
         this.entity = entity;
         init();
+    }
+
+    @Override
+    public void destroy() throws IOException {
+        getCommonObservable().notify(this);
+        super.destroy();
+    }
+
+    public void fireNodeChange() {
+        getCommonObservable().notify(this);
     }
 
     private void init() {
@@ -124,6 +146,11 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
         actionList.addAll(actions);
     }
 
+    @Override
+    public Action getPreferredAction() {
+        return !actionList.isEmpty() ? actionList.get(0) : super.getPreferredAction();
+    }
+
     private static boolean isLeafNode(DomainEntity entity) {
         if (entity instanceof Supplement) {
             return true;
@@ -137,4 +164,9 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
         }
         return false;
     }
+
+    public static ObservableNode getCommonObservable() {
+        return commonObservable;
+    }
+
 }

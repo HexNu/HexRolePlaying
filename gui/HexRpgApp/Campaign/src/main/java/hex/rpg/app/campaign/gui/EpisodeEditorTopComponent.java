@@ -1,12 +1,17 @@
 package hex.rpg.app.campaign.gui;
 
+import hex.rpg.api.modulesuport.gui.DataEditorTopComponent;
+import hex.rpg.app.domain.story.AppEpisode;
 import hex.rpg.core.domain.story.Episode;
+import java.util.Objects;
 import javax.swing.JComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
+import org.openide.windows.Mode;
+import org.openide.windows.WindowManager;
 
 @ConvertAsProperties(
         dtd = "-//hex.rpg.app.campaign.gui//EpisodeEditor//EN",
@@ -15,29 +20,40 @@ import org.openide.util.NbBundle.Messages;
 @TopComponent.Description(
         preferredID = EpisodeEditorTopComponent.PREFERRED_ID,
         iconBase = "hex/rpg/app/campaign/gui/document-text.png",
-        persistenceType = TopComponent.PERSISTENCE_ALWAYS
+        persistenceType = TopComponent.PERSISTENCE_NEVER
 )
 @TopComponent.Registration(mode = "editor", openAtStartup = false)
 @ActionID(category = "Window", id = "hex.rpg.app.campaign.gui.EpisodeEditorTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
-@TopComponent.OpenActionRegistration(
-        displayName = "#CTL_EpisodeEditorAction",
-        preferredID = EpisodeEditorTopComponent.PREFERRED_ID
-)
+//@TopComponent.OpenActionRegistration(
+//        displayName = "#CTL_EpisodeEditorAction",
+//        preferredID = EpisodeEditorTopComponent.PREFERRED_ID
+//)
 @Messages({
     "CTL_EpisodeEditorAction=EpisodeEditor",
     "CTL_EpisodeEditorTopComponent=EpisodeEditor Window",
     "HINT_EpisodeEditorTopComponent=This is a EpisodeEditor window"
 })
-public final class EpisodeEditorTopComponent extends TopComponent {
+public final class EpisodeEditorTopComponent extends DataEditorTopComponent<Episode> {
 
     public static final String PREFERRED_ID = "EpisodeEditorTopComponent";
-    private Episode episode;
+    private Episode originalEpisode;
+    private boolean initialized;
 
     public EpisodeEditorTopComponent() {
+        this(new AppEpisode());
+    }
+
+    public EpisodeEditorTopComponent(Episode episode) {
         initComponents();
-        setName(Bundle.CTL_EpisodeEditorTopComponent());
+        setEditedEntity(episode);
+        setName(episode.getTitle());
         setToolTipText(Bundle.HINT_EpisodeEditorTopComponent());
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 
     /**
@@ -60,17 +76,19 @@ public final class EpisodeEditorTopComponent extends TopComponent {
         descriptionPanel = new javax.swing.JPanel();
         descriptionScrollPane = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
-        contentPanel = new javax.swing.JPanel();
-        contentScrollPane = new javax.swing.JScrollPane();
-        contentTextArea = new javax.swing.JTextArea();
         refereeInfoPanel = new javax.swing.JPanel();
         refereeInfoScrollPane = new javax.swing.JScrollPane();
         refereeInfoTextArea = new javax.swing.JTextArea();
         refereeNotesPanel = new javax.swing.JPanel();
         refereeNotesScrollPane = new javax.swing.JScrollPane();
         refereeNotesTextArea = new javax.swing.JTextArea();
+        contentPanel = new javax.swing.JPanel();
+        contentScrollPane = new javax.swing.JScrollPane();
+        contentTextArea = new javax.swing.JTextArea();
 
         setLayout(new java.awt.BorderLayout());
+
+        episodeTabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
         org.openide.awt.Mnemonics.setLocalizedText(titleLabel, org.openide.util.NbBundle.getMessage(EpisodeEditorTopComponent.class, "EpisodeEditorTopComponent.titleLabel.text")); // NOI18N
 
@@ -106,7 +124,7 @@ public final class EpisodeEditorTopComponent extends TopComponent {
                             .addComponent(titleTextField)
                             .addGroup(metaDataPanelLayout.createSequentialGroup()
                                 .addComponent(indexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 324, Short.MAX_VALUE)))))
+                                .addGap(0, 230, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         metaDataPanelLayout.setVerticalGroup(
@@ -124,7 +142,7 @@ public final class EpisodeEditorTopComponent extends TopComponent {
                 .addComponent(shortDescriptionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(shortDescriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
 
         episodeTabbedPane.addTab(org.openide.util.NbBundle.getMessage(EpisodeEditorTopComponent.class, "EpisodeEditorTopComponent.metaDataPanel.TabConstraints.tabTitle"), metaDataPanel); // NOI18N
@@ -141,43 +159,18 @@ public final class EpisodeEditorTopComponent extends TopComponent {
             descriptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(descriptionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                 .addContainerGap())
         );
         descriptionPanelLayout.setVerticalGroup(
             descriptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(descriptionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addComponent(descriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         episodeTabbedPane.addTab(org.openide.util.NbBundle.getMessage(EpisodeEditorTopComponent.class, "EpisodeEditorTopComponent.descriptionPanel.TabConstraints.tabTitle"), descriptionPanel); // NOI18N
-
-        contentTextArea.setColumns(20);
-        contentTextArea.setLineWrap(true);
-        contentTextArea.setRows(5);
-        contentTextArea.setWrapStyleWord(true);
-        contentScrollPane.setViewportView(contentTextArea);
-
-        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
-        contentPanel.setLayout(contentPanelLayout);
-        contentPanelLayout.setHorizontalGroup(
-            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(contentPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(contentScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        contentPanelLayout.setVerticalGroup(
-            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(contentPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(contentScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        episodeTabbedPane.addTab(org.openide.util.NbBundle.getMessage(EpisodeEditorTopComponent.class, "EpisodeEditorTopComponent.contentPanel.TabConstraints.tabTitle"), contentPanel); // NOI18N
 
         refereeInfoTextArea.setColumns(20);
         refereeInfoTextArea.setLineWrap(true);
@@ -191,14 +184,14 @@ public final class EpisodeEditorTopComponent extends TopComponent {
             refereeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(refereeInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(refereeInfoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                .addComponent(refereeInfoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                 .addContainerGap())
         );
         refereeInfoPanelLayout.setVerticalGroup(
             refereeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(refereeInfoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(refereeInfoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addComponent(refereeInfoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -216,18 +209,43 @@ public final class EpisodeEditorTopComponent extends TopComponent {
             refereeNotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(refereeNotesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(refereeNotesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                .addComponent(refereeNotesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                 .addContainerGap())
         );
         refereeNotesPanelLayout.setVerticalGroup(
             refereeNotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(refereeNotesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(refereeNotesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addComponent(refereeNotesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         episodeTabbedPane.addTab(org.openide.util.NbBundle.getMessage(EpisodeEditorTopComponent.class, "EpisodeEditorTopComponent.refereeNotesPanel.TabConstraints.tabTitle"), refereeNotesPanel); // NOI18N
+
+        contentTextArea.setColumns(20);
+        contentTextArea.setLineWrap(true);
+        contentTextArea.setRows(5);
+        contentTextArea.setWrapStyleWord(true);
+        contentScrollPane.setViewportView(contentTextArea);
+
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(contentScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        contentPanelLayout.setVerticalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(contentScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        episodeTabbedPane.addTab(org.openide.util.NbBundle.getMessage(EpisodeEditorTopComponent.class, "EpisodeEditorTopComponent.contentPanel.TabConstraints.tabTitle"), contentPanel); // NOI18N
 
         add(episodeTabbedPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -257,6 +275,7 @@ public final class EpisodeEditorTopComponent extends TopComponent {
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
+        requestActive();
     }
 
     @Override
@@ -278,18 +297,54 @@ public final class EpisodeEditorTopComponent extends TopComponent {
         parent.setOpaque(false);
     }
 
-    public void setEpisode(Episode episode) {
-        this.episode = episode;
-        populateFields();
+    private void populateFields() {
+        titleTextField.setText(originalEpisode.getTitle());
+        indexSpinner.setValue(originalEpisode.getIndex());
+        shortDescriptionTextArea.setText(originalEpisode.getShortDescription());
+        descriptionTextArea.setText(originalEpisode.getDescription());
+        contentTextArea.setText(originalEpisode.getContent());
+        refereeInfoTextArea.setText(originalEpisode.getRefereeInfo());
+        refereeNotesTextArea.setText(originalEpisode.getRefereeNotes());
     }
 
-    private void populateFields() {
-        titleTextField.setText(episode.getTitle());
-        indexSpinner.setValue(episode.getIndex());
-        shortDescriptionTextArea.setText(episode.getShortDescription());
-        descriptionTextArea.setText(episode.getDescription());
-        contentTextArea.setText(episode.getContent());
-        refereeInfoTextArea.setText(episode.getRefereeInfo());
-        refereeNotesTextArea.setText(episode.getRefereeNotes());
+    @Override
+    protected void setEditedEntity(Episode episode) {
+        initialized = false;
+        originalEpisode = episode;
+        populateFields();
+        initialized = true;
+    }
+
+    @Override
+    protected boolean needsSaving() {
+        if (initialized == false) {
+            return false;
+        }
+        if (!Objects.equals(titleTextField.getText(), originalEpisode.getTitle())) {
+            return true;
+        }
+        if (!Objects.equals(indexSpinner.getValue(), originalEpisode.getIndex())) {
+            return true;
+        }
+        if (!Objects.equals(shortDescriptionTextArea.getText(), originalEpisode.getShortDescription())) {
+            return true;
+        }
+        if (!Objects.equals(shortDescriptionTextArea.getText(), originalEpisode.getDescription())) {
+            return true;
+        }
+        if (!Objects.equals(refereeInfoTextArea.getText(), originalEpisode.getRefereeInfo())) {
+            return true;
+        }
+        if (!Objects.equals(refereeNotesTextArea.getText(), originalEpisode.getRefereeNotes())) {
+            return true;
+        }
+        if (!Objects.equals(contentTextArea.getText(), originalEpisode.getContent())) {
+            return true;
+        }
+        return true;
+    }
+
+    @Override
+    public void save() {
     }
 }

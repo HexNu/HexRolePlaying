@@ -1,6 +1,5 @@
 package hex.rpg.api.modulesuport.gui.dialog;
 
-import hex.rpg.api.modulesuport.gui.HexIcon;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -16,6 +15,7 @@ import org.openide.windows.WindowManager;
  */
 public abstract class HexDialog extends JDialog {
 
+    private static final Frame MAIN_WINDOW = WindowManager.getDefault().getMainWindow();
     public enum Result {
 
         YES, NO, CANCEL, OK, HELP;
@@ -26,12 +26,28 @@ public abstract class HexDialog extends JDialog {
         super(owner, modal);
 //        setIconImage(HexIcon.getImage("kephra"));
     }
-
-    public static TextInputDialog showTextInputDialog(String message, String resultText) {
-        TextInputDialog dialog = new TextInputDialog(WindowManager.getDefault().getMainWindow(), true);
+    
+    public HexDialog() {
+        this(MAIN_WINDOW, true);
+    }
+    
+    public static TextInputDialog showTextInputDialog(String title, String message, String resultText) {
+        TextInputDialog dialog = new TextInputDialog(MAIN_WINDOW, title, true);
         dialog.setText(resultText);
         dialog.show(message);
         return dialog;
+    }
+    
+    public static Result showYesNoCancelDialog(String title, String message) {
+        YesNoCancelDialog dialog = new YesNoCancelDialog(MAIN_WINDOW, title, true);
+        dialog.show(message);
+        return dialog.getResult();
+    }
+    
+    public static Result showYesNoDialog(String title, String message) {
+        YesNoDialog dialog = new YesNoDialog(MAIN_WINDOW, title, true);
+        dialog.show(message);
+        return dialog.getResult();
     }
 
     protected Result show(String message) {

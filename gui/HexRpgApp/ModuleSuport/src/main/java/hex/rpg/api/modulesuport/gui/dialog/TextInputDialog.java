@@ -11,11 +11,8 @@ import javax.swing.KeyStroke;
  */
 public class TextInputDialog extends HexDialog {
 
-    /**
-     * Creates new form TextInputDialog
-     */
-    public TextInputDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public TextInputDialog(java.awt.Frame parent, String title, boolean modal) {
+        setTitle(title);
         initComponents();
         init();
     }
@@ -61,12 +58,11 @@ public class TextInputDialog extends HexDialog {
         inputTextFIeld = new javax.swing.JTextField();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        messageLabel.setText("jLabel1");
-
-        inputTextFIeld.setText("jTextField1");
+        messageLabel.setText("Message");
 
         okButton.setText("Ok");
         okButton.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +85,7 @@ public class TextInputDialog extends HexDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
                     .addComponent(inputTextFIeld)
                     .addComponent(messageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -105,7 +102,9 @@ public class TextInputDialog extends HexDialog {
                 .addComponent(messageLabel)
                 .addGap(18, 18, 18)
                 .addComponent(inputTextFIeld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
                     .addComponent(cancelButton))
@@ -128,6 +127,7 @@ public class TextInputDialog extends HexDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField inputTextFIeld;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel messageLabel;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
