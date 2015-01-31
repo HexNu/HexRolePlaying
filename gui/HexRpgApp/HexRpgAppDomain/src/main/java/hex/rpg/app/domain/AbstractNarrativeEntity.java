@@ -8,7 +8,6 @@ import hex.rpg.core.domain.NarrativeEntity;
  */
 public abstract class AbstractNarrativeEntity implements NarrativeEntity, AppDomainEntity {
 
-    
     private Long id;
     private String description;
     private String shortDescription;
