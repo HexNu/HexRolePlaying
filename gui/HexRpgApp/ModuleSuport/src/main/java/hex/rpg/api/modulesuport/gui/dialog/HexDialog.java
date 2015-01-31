@@ -49,6 +49,11 @@ public abstract class HexDialog extends JDialog {
         dialog.show(message);
         return dialog.getResult();
     }
+    
+    public static void showErrorDialog(Exception exception) {
+        ErrorDialog dialog = new ErrorDialog(MAIN_WINDOW, true);
+        dialog.show(exception.getLocalizedMessage());
+    }
 
     protected Result show(String message) {
         setLocationRelativeTo(getParent());
