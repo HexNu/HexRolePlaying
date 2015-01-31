@@ -153,7 +153,10 @@ public abstract class AbstractSupplement implements Supplement, AppDomainEntity 
 
     @Override
     public int compareTo(Supplement obj) {
-        return this.getId().compareTo(((Supplement) obj).getId());
+        if (this.getId() != null && obj.getId() != null) {
+            return this.getId().compareTo(obj.getId());
+        }
+        return 0;
     }
 
     @Override
