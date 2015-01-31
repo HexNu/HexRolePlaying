@@ -19,6 +19,7 @@
                 <configuration>
                     <publicPackages>
                         <publicPackage>hex.rpg.api.modulesuport.action</publicPackage>
+                        <publicPackage>hex.rpg.api.modulesuport.file</publicPackage>
                         <publicPackage>hex.rpg.api.modulesuport.gui</publicPackage>
                         <publicPackage>hex.rpg.api.modulesuport.gui.dialog</publicPackage>
                     </publicPackages>

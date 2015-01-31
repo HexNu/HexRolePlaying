@@ -36,6 +36,8 @@ public class CreateSupplementDTO {
     public String refereeNotes;
     @XmlElement(name = "mediaType")
     public String mediaType;
+    @XmlElement(name = "content")
+    public byte[] content;
     @XmlElementWrapper(name = "links")
     @XmlElement(name = "link")
     @JsonProperty("links")

@@ -19,7 +19,7 @@ public class FullSupplementDTO extends AbstractDTO {
     private final String refereeNotes;
     private final Supplement.Type type;
     private final String mediaType;
-//    private final byte[] content;
+    private final byte[] content;
 
     public FullSupplementDTO(Supplement supplement, LinkDTOBuilder linkBuilder) {
         if (linkBuilder != null) {
@@ -34,7 +34,7 @@ public class FullSupplementDTO extends AbstractDTO {
         refereeNotes = supplement.getRefereeNotes();
         type = supplement.getType();
         mediaType = supplement.getMediaType();
-//        content = supplement.getContentAsByteArray();
+        content = supplement.getContentAsByteArray();
     }
 
     public Long getId() {
@@ -72,8 +72,8 @@ public class FullSupplementDTO extends AbstractDTO {
     public String getMediaType() {
         return mediaType;
     }
-//
-//    public byte[] getContent() {
-//        return content;
-//    }
+
+    public byte[] getContent() {
+        return content;
+    }
 }

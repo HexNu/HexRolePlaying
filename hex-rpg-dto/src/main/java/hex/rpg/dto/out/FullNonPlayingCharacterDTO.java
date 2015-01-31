@@ -27,8 +27,9 @@ public class FullNonPlayingCharacterDTO extends AbstractDTO {
     private final String species;
     private final String stats;
     private final String mediaType;
+    private final byte[] portrait;
     private final List<FullSupplementDTO> supplements = new ArrayList<>();
-    
+
     public FullNonPlayingCharacterDTO(NonPlayingCharacter character, LinkDTOBuilder linkBuilder) {
         if (linkBuilder != null) {
             addLink(linkBuilder.createPortraitDownloadLink(character));
@@ -46,6 +47,7 @@ public class FullNonPlayingCharacterDTO extends AbstractDTO {
         species = character.getSpecies();
         stats = character.getGamingStats();
         mediaType = character.getPortraitMediaType();
+        portrait = character.getPortraitAsByteArray();
         character.getSupplements().stream().forEach((supplement) -> {
             supplements.add(new FullSupplementDTO(supplement, linkBuilder));
         });
@@ -101,6 +103,10 @@ public class FullNonPlayingCharacterDTO extends AbstractDTO {
 
     public String getMediaType() {
         return mediaType;
+    }
+
+    public byte[] getPortrait() {
+        return portrait;
     }
 
     public List<FullSupplementDTO> getSupplements() {

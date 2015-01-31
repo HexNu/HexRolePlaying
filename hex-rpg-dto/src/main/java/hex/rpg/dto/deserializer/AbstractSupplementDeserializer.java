@@ -27,6 +27,7 @@ public abstract class AbstractSupplementDeserializer<T> {
         supplement.setRefereeInfo(supplementDTO.refereeInfo);
         supplement.setRefereeNotes(supplementDTO.refereeNotes);
         supplement.setMediaType(supplementDTO.mediaType);
+        supplement.setContent(supplementDTO.content);
         supplement.setIndex(supplementDTO.index);
         supplement.setType(Supplement.Type.getByString(supplementDTO.type));
         return supplement;

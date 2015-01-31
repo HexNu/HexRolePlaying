@@ -50,6 +50,11 @@ public abstract class HexDialog extends JDialog {
         return dialog.getResult();
     }
     
+    public static void showMessageDialog(String title, String message) {
+        MessageDialog dialog = new MessageDialog(MAIN_WINDOW, title, true);
+        dialog.show(message);
+    }
+    
     public static void showErrorDialog(Exception exception) {
         ErrorDialog dialog = new ErrorDialog(MAIN_WINDOW, true);
         dialog.show(exception.getLocalizedMessage());

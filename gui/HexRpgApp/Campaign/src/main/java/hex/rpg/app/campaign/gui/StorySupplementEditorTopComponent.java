@@ -1,7 +1,9 @@
 package hex.rpg.app.campaign.gui;
 
 import hex.rpg.api.modulesuport.gui.HexIcon;
+import hex.rpg.app.campaign.gui.panel.SupplementImageContentPanel;
 import hex.rpg.app.domain.story.AppStorySupplement;
+import java.util.Collections;
 import java.util.Properties;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -17,17 +19,22 @@ import org.openide.windows.TopComponent;
 @ActionID(category = "Window", id = "hex.rpg.app.campaign.gui.StorySupplementEditorTopComponent")
 public class StorySupplementEditorTopComponent extends AbstractNarrativeEntityEditorTopComponent<AppStorySupplement> {
 
+    SupplementImageContentPanel contentPanel;
+    private static final String CONTENT_TAB_LABEL = "Content";
+
     public StorySupplementEditorTopComponent() {
-        this(null);
+        this(new AppStorySupplement());
     }
 
     public StorySupplementEditorTopComponent(AppStorySupplement entity) {
-        super(entity);
+        super(entity, null, Collections.singletonMap(CONTENT_TAB_LABEL, new SupplementImageContentPanel()));
         setIcon(HexIcon.getImage("file-picture-text"));
+        contentPanel = (SupplementImageContentPanel) getPanel(CONTENT_TAB_LABEL);
     }
 
     @Override
     protected void populateEntitySpecificFields() {
+        ((SupplementImageContentPanel) getPanel(CONTENT_TAB_LABEL)).setContent(getEntity().getContentAsByteArray());
     }
 
     @Override
