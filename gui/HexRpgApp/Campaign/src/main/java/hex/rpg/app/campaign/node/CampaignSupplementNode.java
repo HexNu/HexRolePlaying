@@ -1,5 +1,6 @@
 package hex.rpg.app.campaign.node;
 
+import hex.rpg.app.campaign.action.EditCampaignSupplementAction;
 import hex.rpg.app.domain.campaign.AppCampaignSupplement;
 
 /**
@@ -14,6 +15,7 @@ public class CampaignSupplementNode extends AbstractRpgNode<AppCampaignSupplemen
 
     @Override
     protected void setup() {
+        addAction(new EditCampaignSupplementAction(getEntity()));
     }
 
 }

@@ -1,5 +1,6 @@
 package hex.rpg.app.campaign.node;
 
+import hex.rpg.app.campaign.action.EditStoryAction;
 import hex.rpg.app.domain.story.AppStory;
 
 /**
@@ -14,6 +15,7 @@ public class StoryNode extends AbstractRpgNode<AppStory> {
 
     @Override
     protected void setup() {
+        addAction(new EditStoryAction(getEntity()));
     }
 
 }

@@ -1,5 +1,6 @@
 package hex.rpg.app.campaign.node;
 
+import hex.rpg.app.campaign.action.EditEpisodeSupplementAction;
 import hex.rpg.app.domain.story.AppEpisodeSupplement;
 
 /**
@@ -14,6 +15,7 @@ public class EpisodeSupplementNode extends AbstractRpgNode<AppEpisodeSupplement>
 
     @Override
     protected void setup() {
+        addAction(new EditEpisodeSupplementAction(getEntity()));
     }
 
 }

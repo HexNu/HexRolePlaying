@@ -1,5 +1,6 @@
 package hex.rpg.app.campaign.node;
 
+import hex.rpg.app.campaign.action.AbstractEditEntityAction;
 import hex.rpg.app.domain.AppDomainEntity;
 import hex.rpg.app.domain.campaign.AppCampaign;
 import hex.rpg.app.domain.campaign.AppCampaignSupplement;
@@ -17,9 +18,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -96,10 +98,8 @@ public class RpgNodeChildFactory<T> extends ChildFactory<AppDomainEntity> {
     protected Node createNodeForKey(AppDomainEntity key) {
         try {
             return nodeMap.get(key.getClass()).getConstructor(key.getClass()).newInstance(key);
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            Exceptions.printStackTrace(ex);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
+            Logger.getLogger(AbstractEditEntityAction.class.getName()).log(Level.SEVERE, "Could not instanciate the node: {0}", ex.getMessage());
         }
         return null;
     }
