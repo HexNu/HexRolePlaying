@@ -18,6 +18,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.nodes.ChildFactory;
@@ -31,6 +33,13 @@ public class RpgNodeChildFactory<T> extends ChildFactory<AppDomainEntity> {
 
     private final T entity;
     private static final Map<Class<? extends AppDomainEntity>, Class<? extends AbstractRpgNode>> nodeMap = new HashMap();
+    private final Observer observer = new Observer() {
+
+        @Override
+        public void update(Observable o, Object arg) {
+            refresh(false);
+        }
+    };
 
     static {
         nodeMap.put(AppCampaign.class, CampaignNode.class);
@@ -45,6 +54,12 @@ public class RpgNodeChildFactory<T> extends ChildFactory<AppDomainEntity> {
 
     public RpgNodeChildFactory(T entity) {
         this.entity = entity;
+        CampaignNode.getCommonObservable().addObserver(observer);
+        CampaignSupplementNode.getCommonObservable().addObserver(observer);
+        StoryNode.getCommonObservable().addObserver(observer);
+        StorySupplementNode.getCommonObservable().addObserver(observer);
+        EpisodeNode.getCommonObservable().addObserver(observer);
+        EpisodeSupplementNode.getCommonObservable().addObserver(observer);
     }
 
     @Override

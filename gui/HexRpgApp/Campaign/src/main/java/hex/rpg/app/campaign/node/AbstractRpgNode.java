@@ -12,9 +12,6 @@ import hex.rpg.app.domain.story.AppStory;
 import hex.rpg.app.domain.story.AppStorySupplement;
 import hex.rpg.core.domain.DomainEntity;
 import hex.rpg.core.domain.Supplement;
-import hex.rpg.core.domain.character.NonPlayingCharacter;
-import hex.rpg.core.domain.story.Episode;
-import hex.rpg.core.domain.story.Story;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +19,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.Action;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -40,14 +35,6 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
     public static final Action CONTEXT_DELIMITER = null;
     private final static Map<Class<? extends AppDomainEntity>, String> iconMap = new HashMap<>();
     private static final ObservableNode commonObservable = new ObservableNode();
-    private final Observer observer = new Observer() {
-
-        @Override
-        public void update(Observable o, Object arg) {
-            fireIconChange();
-            fireOpenedIconChange();
-        }
-    };
 
     static {
         iconMap.put(AppCampaign.class, "library");
@@ -152,21 +139,10 @@ public abstract class AbstractRpgNode<T extends AppDomainEntity> extends Abstrac
     }
 
     private static boolean isLeafNode(DomainEntity entity) {
-        if (entity instanceof Supplement) {
-            return true;
-        } else if (entity instanceof Episode) {
-            return !((Episode) entity).hasSupplements();
-        } else if (entity instanceof Story) {
-            Story s = (Story) entity;
-            return !s.hasSupplements() && s.getEpisodes().isEmpty();
-        } else if (entity instanceof NonPlayingCharacter) {
-            return !((NonPlayingCharacter) entity).hasSupplements();
-        }
-        return false;
+        return (entity instanceof Supplement);
     }
 
     public static ObservableNode getCommonObservable() {
         return commonObservable;
     }
-
 }

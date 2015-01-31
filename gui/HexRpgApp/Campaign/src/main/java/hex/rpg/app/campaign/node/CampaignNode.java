@@ -1,5 +1,7 @@
 package hex.rpg.app.campaign.node;
 
+import hex.rpg.app.campaign.action.AddStoryAction;
+import hex.rpg.app.campaign.action.AddSupplementAction;
 import hex.rpg.app.campaign.action.EditCampaignAction;
 import hex.rpg.app.domain.campaign.AppCampaign;
 
@@ -16,5 +18,7 @@ public class CampaignNode extends AbstractRpgNode<AppCampaign> {
     @Override
     protected void setup() {
         addAction(new EditCampaignAction(getEntity()));
+        addAction(new AddSupplementAction(this));
+        addAction(new AddStoryAction(this));
     }
 }

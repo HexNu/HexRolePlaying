@@ -17,7 +17,6 @@ public class EpisodeNode extends AbstractRpgNode<AppEpisode> {
     @Override
     protected void setup() {
         addAction(new EditEpisodeAction(getEntity()));
-        addAction(new AddSupplementAction<>(this));
+        addAction(new AddSupplementAction(this));
     }
-
 }
